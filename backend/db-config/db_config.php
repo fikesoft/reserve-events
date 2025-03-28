@@ -1,30 +1,47 @@
 <?php
-$host = 'localhost';
+// 1. Parámetros de conexión
+$host     = 'localhost';
 $username = 'root';
-$password = '';  // XAMPP default
-$database = 'test_db';
+$password = '';
+$database = 'reserver_events'; // Nombre de la BD que queremos crear
 
-// Create connection
+// 2. Conexión inicial (sin seleccionar base de datos)
 $conn = new mysqli($host, $username, $password);
-
-// Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Fallo la conexión: " . $conn->connect_error);
 }
 
-// Create the database if it doesn't exist
-$conn->query("CREATE DATABASE IF NOT EXISTS $database");
+// 3. Crear la base de datos si no existe
+$sqlCreateDB = "CREATE DATABASE IF NOT EXISTS $database 
+                CHARACTER SET utf8mb4 
+                COLLATE utf8mb4_general_ci";
+if (!$conn->query($sqlCreateDB)) {
+    die("Error creando la base de datos: " . $conn->error);
+}
 
-// Select the database
+// 4. Seleccionar la base de datos
 $conn->select_db($database);
 
-// Create the table if it doesn't exist
-$tableQuery = "CREATE TABLE IF NOT EXISTS users (
-    id INT(11) AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL,
-    email VARCHAR(100) NOT NULL
-)";
+// 5. Crear tablas (multi_query para ejecutar varias sentencias seguidas)
+$sql = "
+CREATE TABLE IF NOT EXISTS usuarios (
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    password VARCHAR(50) NOT NULL
+) ;
+";
 
-if ($conn->query($tableQuery) === FALSE) {
-    die("Error creating table: " . $conn->error);
+// 6. Ejecutar todas las sentencias de creación de tablas
+if ($conn->multi_query($sql)) {
+    // Liberar los resultados intermedios
+    do {
+        if ($result = $conn->store_result()) {
+            $result->free();
+        }
+    } while ($conn->next_result());
+    echo "¡Base de datos y tablas creadas correctamente!";
+} else {
+    die("Error creando tablas: " . $conn->error);
 }
+
+?>

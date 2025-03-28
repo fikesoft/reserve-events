@@ -5,11 +5,11 @@ form.addEventListener('submit', async (e) => {
 
     const formData = new FormData(form);
 
-    const response = await fetch('http://localhost/MyWebsite/index.php', {
+    const response = await fetch('http://localhost/reserve-events/backend/index.php', {
         method: 'POST',
         body: formData
     });
 
-    const result = await response.text();
+    const result = await response.text();  
     document.getElementById('response').innerText = result;
 });
