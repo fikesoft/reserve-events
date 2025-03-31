@@ -30,8 +30,8 @@ nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    justify-content: flex-start; /* Alinea los elementos a la izquierda */
-    align-items: center; /* Asegura que los elementos estén centrados verticalmente */
+    justify-content: flex-start;
+    align-items: center; 
     flex-grow: 1;
 }
 
@@ -47,7 +47,8 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    font-weight: bold;
+    color: #B44CB4;
+    transition: color 0.3s;
 }
 
 /* Barra de búsqueda */
@@ -87,4 +88,82 @@ nav ul li a:hover {
 
 .icons a:hover {
     color: #B44CB4;
+    transition: color 0.3s;
+}
+
+
+/* Footer */
+footer {
+    background-color: #4D194D; /* Color de fondo */
+    color: white;
+    padding: 40px 0;
+    font-family: "Montserrat", sans-serif;
+}
+
+/* Contenedor principal */
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Menú de navegación del footer */
+.footer-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.footer-nav li {
+    margin: 10px 0;
+}
+
+.footer-nav li a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-nav li a:hover {
+    color: #B44CB4;
+    transition: color 0.3s;
+}
+
+/* Información de contacto */
+.footer-contact {
+    font-size: 14px;
+}
+
+.footer-contact p {
+    margin: 5px 0;
+}
+
+.footer-contact i {
+    margin-right: 8px;
+}
+
+/* Redes Sociales */
+.footer-social {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-social a {
+    color: white;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+.footer-social a:hover {
+    color: #B44CB4;
+}
+
+/* Derechos de autor */
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 12px;
+    opacity: 0.8;
 }
