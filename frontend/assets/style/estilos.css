@@ -13,22 +13,26 @@ header {
 }
 
 /* Logo */
-.logo {
-    font-size: 24px;
-    font-weight: bold;
+.logo img{
+    width: 40px;
+    height: auto;
+    margin-right: 50px;
 }
 
 /* Menú de navegación */
 nav{
     display: flex;
-    justify-content: flex-start;
+    flex-grow: 1;
 }
 
 nav ul {
-    list-style: none;
     display: flex;
+    list-style: none;
     margin: 0;
     padding: 0;
+    justify-content: flex-start; /* Alinea los elementos a la izquierda */
+    align-items: center; /* Asegura que los elementos estén centrados verticalmente */
+    flex-grow: 1;
 }
 
 nav ul li {
@@ -38,7 +42,7 @@ nav ul li {
 nav ul li a {
     color: white;
     text-decoration: none;
-    font-size: 10px;
+    font-size: 13px;
     
 }
 
