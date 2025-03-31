@@ -117,7 +117,7 @@ footer {
 }
 
 .footer-nav li {
-    margin: 10px 0;
+    margin: 5px 0;
 }
 
 .footer-nav li a {
@@ -138,6 +138,7 @@ footer {
 
 .footer-contact p {
     margin: 5px 0;
+    white-space: nowrap;
 }
 
 .footer-contact i {
@@ -147,17 +148,20 @@ footer {
 /* Redes Sociales */
 .footer-social {
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 15px;
+    
 }
 
 .footer-social a {
     color: white;
     font-size: 20px;
-    transition: color 0.3s;
 }
 
 .footer-social a:hover {
     color: #B44CB4;
+    transition: color 0.3s;
 }
 
 /* Derechos de autor */
