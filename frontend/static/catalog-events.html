@@ -25,7 +25,7 @@
     <!--Filtros-->
     <div class="container">
         <div class="row">
-            <div class="col-sm-5">
+            <div class="col" id="all-filters">
                 <div class="container mt-4">
                     <select name="location" id="location" class="filter">
                         <option selected>Ibiza </option>
@@ -33,10 +33,13 @@
                         <option value="2">Opción 2</option>
                         <option value="3">Opción 3</option>
                     </select>
+                    
+                    <button id="btn-date" name="btn-date">Fecha</button>
+                    <input type="date" class="filter" id="date" hidden>
 
-                    <input type="date" class="filter" id="date">
-
-                    <button class="filter" id="price" type="buton" name="price">Precio</button>
+                    <button class="filter" id="price" type="buton" name="price" onclick="convertToRange()">Precio</button>
+                    <input type="range" id="range-price" class="filter" name="range-price" min="0" max="1000" step="10" value="10" hidden><span id="value" hidden>0</span>
+                    <button class="filter" id="aceptar-rango" onclick="aceptarRango" hidden>Aceptar</button>
 
                     <select name="style" id="style" class="filter">
                         <option selected> Style </option>
@@ -47,9 +50,6 @@
                     </select>
 
                 </div>
-            </div>
-            <div class="col-sm-7">
-
             </div>
         </div>
 
@@ -64,58 +64,58 @@
     </div>
 
     <!--Tipos de entradas e imagen de entrada-->
-    <div class="container" background-color="blueviolet">
+    <div class="container">
         <div class="row">
             <div class="col">
-                <div class="row mb-4 border border-dark rounded-start-3 w-100 p-2" id="ticket">
-                    <div class="col-sm-1">
-                        <p>date</p>
-                        <p>day</p>
+                <div class="row mb-4 border border-dark w-100" id="target">
+                    <div class="col-sm-2" id="info-ticket">
+                        <p>date</p><br>
+                        <p>day</p><br>
                         <p>hour</p>
                     </div>
-                    <div class="col-sm-8">
+                    <div class="col-sm-7" id="info-ticket-2">
                         <h6>titulo</h6>
                         <p>lugar</p>
                         <p>sitio</p>
                         <p>clase ticket</p>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3" id="price-btn">
                         <p>precio por persona</p>
-                        <button>Book Now</button>
+                        <button name="book-now" class="btn-book-now-normal">Book Now</button>
                     </div>
                 </div>
-                <div class="row mb-4 border border-dark rounded-start-3 w-100 p-2">
-                    <div class="col-sm-1">
-                        <p>date</p>
-                        <p>day</p>
+                <div class="row mb-4 border border-dark w-100" id="target">
+                    <div class="col-sm-2" id="info-ticket">
+                        <p>date</p><br>
+                        <p>day</p><br>
                         <p>hour</p>
                     </div>
-                    <div class="col-sm-8">
+                    <div class="col-sm-7" id="info-ticket-2">
                         <h6>titulo</h6>
                         <p>lugar</p>
                         <p>sitio</p>
                         <p>clase ticket</p>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3" id="price-btn">
                         <p>precio por persona</p>
-                        <button>Book Now</button>
+                        <button name="book-now" class="btn-book-now-vip">Book Now</button>
                     </div>
                 </div>
-                <div class="row mb-4 border border-dark rounded-start-3 w-100 p2">
-                    <div class="col-sm-1">
-                        <p>date</p>
-                        <p>day</p>
+                <div class="row mb-4 border border-dark w-100" id="target">
+                    <div class="col-sm-2" id="info-ticket">
+                        <p>date</p><br>
+                        <p>day</p><br>
                         <p>hour</p>
                     </div>
-                    <div class="col-sm-8">
+                    <div class="col-sm-7" id="info-ticket-2">
                         <h6>titulo</h6>
                         <p>lugar</p>
                         <p>sitio</p>
                         <p>clase ticket</p>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3" id="price-btn">
                         <p>precio por persona</p>
-                        <button>Book Now</button>
+                        <button name="book-now" class="btn-book-now-all">Book Now</button>
                     </div>
                 </div>
             </div>
@@ -129,6 +129,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-
 
 </html>

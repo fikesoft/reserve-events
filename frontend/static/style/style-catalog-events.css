@@ -1,6 +1,124 @@
-.col-sm-1{
+/*botones filtros*/
+#location, #style{
+    
     background-color: #4D194D;
     color: white;
+    width: 80px;
+    height: 48px;
+    border-radius: 12px;
     text-align: center;
-    justify-content: space-around;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+}
+
+#all-filters{
+    margin-top: 30px; margin-bottom: 30px;
+    padding: 10px;
+    
+}
+
+#all-filters select,input,button{
+    padding: 10px;
+    margin-left: 10px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator, input[type="time"]::-webkit-calendar-picker-indicator{
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 2px;
+    opacity: 0;
+    filter: invert(0.5);
+}
+
+#btn-date, #price{
+    width: 80px;
+    height: 48px;
+    background-color: #4D194D;
+    color: white;
+    border-radius: 12px;
+    text-align:center;
+
+}
+
+#date{
+    padding: 10px;
+    background-color: #4D194D;
+    color: #4D194D;
+}
+
+
+
+
+
+#info-ticket{
+    background-color: #4D194D;    
+    color: white;
+    border-radius: 16px 0 0 16px;
+}
+
+#info-ticket p{
+    margin: 10px 0 10px 22px;
+}
+
+#target{
+    width: 20px;
+    border-radius: 19px 0 0 16px;
+}
+
+
+
+
+#info-ticket-2 h6,p{
+    text-align: start;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+#price-btn{
+
+    margin-top: 70px;
+    padding: 0px;
+}
+
+#price-btn p,button{
+    align-items: center;
+    margin-bottom: 10px;
+    text-align:left;
+}
+
+#price-btn p{
+    text-wrap-mode:nowrap;
+    align-items:flex-start;
+}
+
+#imagen-eventos{
+    width:max-content;
+    height: max-content;
+    align-items: end;
+    margin-top: 50px;
+}
+
+.btn-book-now-all, .btn-book-now-vip, .btn-book-now-normal{
+    color: white;
+    border-radius: 20px;
+    width: 120px;
+    height: 40px;
+    text-align: center;
+
+}
+
+
+
+.btn-book-now-normal{
+    background-color: #B21EB2;
+}
+
+.btn-book-now-vip{
+    background-color: #B44CB4;
+}
+
+.btn-book-now-all{
+    background-color: #F5A6F5;
 }
