@@ -4,7 +4,6 @@
 /* Estilos del Header */
 header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     background-color: #4D194D;
     padding: 15px 20px;
@@ -14,9 +13,8 @@ header {
 
 /* Logo */
 .logo img{
-    width: 40px;
+    width: 50px;
     height: auto;
-    margin-right: 50px;
 }
 
 /* Menú de navegación */
@@ -27,6 +25,7 @@ nav{
 
 nav ul {
     display: flex;
+    gap: 20px;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -35,15 +34,10 @@ nav ul {
     flex-grow: 1;
 }
 
-nav ul li {
-    margin: 0 15px;
-}
-
 nav ul li a {
     color: white;
     text-decoration: none;
-    font-size: 13px;
-    
+    font-size: 18px;
 }
 
 nav ul li a:hover {
@@ -94,7 +88,7 @@ nav ul li a:hover {
 
 /* Footer */
 footer {
-    background-color: #4D194D; /* Color de fondo */
+    background-color: #4D194D;
     color: white;
     padding: 40px 0;
     font-family: "Montserrat", sans-serif;
