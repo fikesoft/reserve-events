@@ -70,3 +70,9 @@ body {
     background-position: 8px center; /* Ajusta la posición del icono */
     background-size: 20px; /* Ajusta el tamaño del icono */
 }
+
+@media (max-width: 768px){
+    .container{
+        flex-direction: column;
+    }
+}
