@@ -9,10 +9,12 @@ body {
     border: 1px solid #4D194D; /* Color morado personalizado */
 }
 
+/*Tamaño de letra del formulario*/
 form, .form-label, .form-control{
     font-size: 12px !important;
 }
 
+/*Botón inicio de sesión*/
 button.btn {
     font-size: 12px;
     background-color: #4D194D;
@@ -26,6 +28,7 @@ button.btn:hover {
     color: #ffffff;
 }
 
+/*Olvidar contraseña*/
 .forgot-password a{
     font-size: 12px;
     color:#4D194D;
@@ -38,6 +41,7 @@ button.btn:hover {
     text-decoration: none;
 }
 
+/*Botón que lleva a registrarse*/
 .register-link {
     font-size: 12px;
     color:#4D194D;
