@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito Vacío</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .cart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 1200px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .empty-cart-button {
+            background-color: #4b2354;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .empty-cart-button:hover {
+            background-color: #3a1b40;
+        }
+        .summary-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-container">
+        <div class="row">
+            <div class="col-md-8 text-center">
+                <h2>Mi carrito</h2>
+                <hr>
+                <p>Tu carrito está vacío</p>
+                <button class="empty-cart-button">¡Busca tu evento aquí!</button>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-4">
+                    <h2>Resumen del pedido</h2>
+                    <hr>
+                    <p>Tu carrito está vacío</p>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <span>Impuestos</span>
+                        <span>0,00 €</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Gestión</span>
+                        <span>0,00 €</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <strong>Total</strong>
+                        <strong>0,00 €</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
