@@ -1,4 +1,6 @@
 
+/* Cargar la fuente Montserrat desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
 
 /*botones filtros*/
 #location,
@@ -142,3 +144,18 @@ button:hover {
     transform: scale(1.70);
 }
 
+@media (max-width: 767.98px) {
+    .row.ms-5.flex-nowrap.overflow-auto.d-flex.flex-nowrap {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .row.flex-nowrap.align-items-center {
+      justify-content: center;
+    }
+  }
+
+  .img-fluid .rounded .shadow img{
+    size: 315px;
+  }
