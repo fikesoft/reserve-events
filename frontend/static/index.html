@@ -12,27 +12,29 @@
 </head>
 <body>
     <!-- Encabezado -->
-    <header class="flex-md-row justify-content-md-between flex-column justify-content-center ">
-        <div class="d-flex flex-md-row flex-column align-items-center gap-5">
-            <div class="logo"><img src="../assets/img/logo.png" alt="Logo de la empresa"></div>
-            <nav>
-                <ul class="d-flex gap-4">
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="#Eventos">Eventos</a></li>
-                    <li><a href="#AboutUs">Sobre nosotros</a></li>
+    <header class="d-flex justify-content-center justify-content-md-between p-3 flex-md-row flex-column">
+        <div class="d-flex flex-md-row flex-column align-items-center gap-4">
+            <img class="logo-header" src="../assets/img/logo.png" alt="Logo de la empresa">
+            <nav class="d-flex flex-grow-1 justify-content-center justify-content-md-start">
+                <ul class="d-flex gap-4 m-0 p-0 list-unstyled align-items-center justify-content-start">
+                    <li><a href="index.html" class="nav-header">Inicio</a></li>
+                    <li><a href="#Eventos" class="nav-header">Eventos</a></li>
+                    <li><a href="#AboutUs" class="nav-header">Sobre nosotros</a></li>
                 </ul>
             </nav>
         </div>
         
-        <!-- Iconos -->
-        <div class="icons d-flex gap-3 ml-md-auto mt-5 mt-md-0">
-            <div class="search-box">
-                <input type="text" placeholder="Buscar...">
-                <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        <!-- Buscador e Iconos -->
+        <div class="d-flex align-items-center gap-4 mt-3 mt-md-0 flex-md-row flex-column">
+            <div class="d-flex align-items-center search-box">
+                <input class="search-box-input" type="text" placeholder="Search...">
+                <button class="search-box-button"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
-    
-            <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i></a>
-            <a href="login.html"><i class="fa-solid fa-user"></i></a>
+            <div class="d-flex">
+                <a href="carrito.html" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="login.html" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
+            </div>
+            
         </div>
     </header>
     
