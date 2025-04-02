@@ -1,6 +1,10 @@
+
+
 /*botones filtros*/
-#location, #style{
-    
+#location,
+#style,
+button {
+
     background-color: #4D194D;
     color: white;
     width: 80px;
@@ -10,115 +14,131 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    
+
 }
 
-#all-filters{
-    margin-top: 30px; margin-bottom: 30px;
-    padding: 10px;
-    
+#location,
+#style,
+button {
+    transition: transform 0.3s ease-in-out;
 }
 
-#all-filters select,input,button{
-    padding: 10px;
-    margin-left: 10px;
+
+
+#location:hover,
+#style:hover,
+button:hover {
+    transform: scale(1.05);
+    background-color: #6f42c1;
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator, input[type="time"]::-webkit-calendar-picker-indicator{
-    cursor: pointer;
-    border-radius: 4px;
-    margin-right: 2px;
-    opacity: 0;
-    filter: invert(0.5);
+#aceptar-filtros {
+    background-color: #6f42c1;
+    width: 130px;
 }
 
-#btn-date, #price{
-    width: 80px;
-    height: 48px;
+
+
+/*Sección de eventos populares */
+
+.event-card {
+    background-color: white;
+    border-left: 5px solid white;
+    transition: transform 0.3s ease-in-out;
+}
+
+.event-card:hover {
+    transform: scale(1.05);
+}
+
+.event-card .col-3 {
+    font-size: 0.9rem;
+}
+
+.event-card button {
+    font-size: 0.9rem;
+}
+
+.event-card button:hover {
+    background-color: #5a3791;
+}
+
+.event-card .col-3 {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+}
+
+/*colores custom*/
+
+.custom-bg-primary {
     background-color: #4D194D;
-    color: white;
-    border-radius: 12px;
-    text-align:center;
-
 }
 
-#date{
-    padding: 10px;
-    background-color: #4D194D;
+.custom-text-primary {
     color: #4D194D;
 }
 
-
-
-
-
-#info-ticket{
-    background-color: #4D194D;    
-    color: white;
-    border-radius: 16px 0 0 16px;
-}
-
-#info-ticket p{
-    margin: 10px 0 10px 22px;
-}
-
-#target{
-    width: 20px;
-    border-radius: 19px 0 0 16px;
-}
-
-
-
-
-#info-ticket-2 h6,p{
-    text-align: start;
-    margin-top: 20px;
-    margin-left: 10px;
-}
-
-#price-btn{
-
-    margin-top: 70px;
-    padding: 0px;
-}
-
-#price-btn p,button{
-    align-items: center;
-    margin-bottom: 10px;
-    text-align:left;
-}
-
-#price-btn p{
-    text-wrap-mode:nowrap;
-    align-items:flex-start;
-}
-
-#imagen-eventos{
-    width:max-content;
-    height: max-content;
-    align-items: end;
-    margin-top: 50px;
-}
-
-.btn-book-now-all, .btn-book-now-vip, .btn-book-now-normal{
-    color: white;
-    border-radius: 20px;
-    width: 120px;
-    height: 40px;
-    text-align: center;
-
-}
-
-
-
-.btn-book-now-normal{
-    background-color: #B21EB2;
-}
-
-.btn-book-now-vip{
+.custom-bs-dark {
     background-color: #B44CB4;
 }
 
-.btn-book-now-all{
+.custom-bs-info {
     background-color: #F5A6F5;
+
 }
+
+/*Catalogo*/
+
+.card {
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-body h6 {
+    color: #6f42c1;
+    font-size: 1rem;
+}
+
+.card-body p {
+    font-size: 0.9rem;
+}
+
+.card-body button {
+    background-color: #6f42c1;
+    border: none;
+}
+
+.card-body button:hover {
+    background-color: #5a3791;
+}
+
+.btn-primary {
+    border: none;
+}
+
+
+#container-img-btn > .container-btn-fav{
+    position: relative;
+}
+
+.btn-fav{
+    position: absolute;
+    bottom: 0;
+
+    background-color: transparent;
+    border-radius: 50%;
+    color: white;
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn-fav:hover{
+    color:#6f42c1;
+    transform: scale(1.70);
+}
+

@@ -20,26 +20,36 @@
 
 <body>
     <!--navbar-->
-
+   
 
     <!--Filtros-->
     <div class="container">
         <div class="row">
             <div class="col" id="all-filters">
                 <div class="container mt-4">
+
+                    <!--Filtro localización-->
+
                     <select name="location" id="location" class="filter">
-                        <option selected>Ibiza </option>
+                        <option selected> <i class="bi bi-geo"></i> Ibiza </option>
                         <option value="1">Opción 1</option>
                         <option value="2">Opción 2</option>
                         <option value="3">Opción 3</option>
                     </select>
-                    
+
+                    <!--Filtro fecha-->
+
                     <button id="btn-date" name="btn-date">Fecha</button>
                     <input type="date" class="filter" id="date" hidden>
 
-                    <button class="filter" id="price" type="buton" name="price" onclick="convertToRange()">Precio</button>
-                    <input type="range" id="range-price" class="filter" name="range-price" min="0" max="1000" step="10" value="10" hidden><span id="value" hidden>0</span>
+                    <!--Filtro precio-->
+
+                    <button class="filter" id="price" type="buton" name="price">Precio</button>
+                    <input type="range" id="range-price" class="filter" name="range-price" min="0" max="1000" step="10"
+                        value="10" hidden><span id="value" hidden>0</span>
                     <button class="filter" id="aceptar-rango" onclick="aceptarRango" hidden>Aceptar</button>
+
+                    <!--Filtro estilo-->
 
                     <select name="style" id="style" class="filter">
                         <option selected> Style </option>
@@ -49,85 +59,273 @@
                         <option value="Style 4">Style 4</option>
                     </select>
 
+                    <!--Botón aceptar filtros-->
+
+                    <button class="filter ms-4" id="aceptar-filtros" name="aceptar-filtros">Filtrar</button>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!--Eventos populares-->
-    
-    <div class="container">
-        <div class="row">
-            <h1>Popular events in <span style="color: blueviolet;"> Madrid </span></h1>
-        </div>
-    </div>
 
-    <!--Tipos de entradas e imagen de entrada-->
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="row mb-4 border border-dark w-100" id="target">
-                    <div class="col-sm-2" id="info-ticket">
-                        <p>date</p><br>
-                        <p>day</p><br>
-                        <p>hour</p>
+
+    <!--Popular Events Section-->
+
+    <div class="container mt-5 ms-4"></div>
+
+    <!--Título sección-->
+
+    <h2 class="fw-lighter ms-5">Popular events in <span class="custom-text-primary fw-bold">Madrid</span></h2>
+
+    <!--Tarjetas-->
+
+    <!--Tarjeta Uno-->
+
+    <div class="row ms-5">
+        <div class="col-lg-6">
+            <div class="event-card pe-3 border rounded shadow-sm mb-3">
+                <div class="row align-items-center">
+                    <div class="col-2 custom-bg-primary text-white p-5 text-center rounded-start">
+                        <p class="m-0">Date</p>
+                        <p class="m-0">Day</p>
+                        <p class="m-0">Hour</p>
                     </div>
-                    <div class="col-sm-7" id="info-ticket-2">
-                        <h6>titulo</h6>
-                        <p>lugar</p>
-                        <p>sitio</p>
-                        <p>clase ticket</p>
+                    <div class="col-7">
+                        <h6 class="fw-bold">Beach Please Festival</h6>
+                        <p>Location</p>
+                        <p>Venue</p>
+                        <p>Ticket Class</p>
                     </div>
-                    <div class="col-sm-3" id="price-btn">
-                        <p>precio por persona</p>
-                        <button name="book-now" class="btn-book-now-normal">Book Now</button>
-                    </div>
-                </div>
-                <div class="row mb-4 border border-dark w-100" id="target">
-                    <div class="col-sm-2" id="info-ticket">
-                        <p>date</p><br>
-                        <p>day</p><br>
-                        <p>hour</p>
-                    </div>
-                    <div class="col-sm-7" id="info-ticket-2">
-                        <h6>titulo</h6>
-                        <p>lugar</p>
-                        <p>sitio</p>
-                        <p>clase ticket</p>
-                    </div>
-                    <div class="col-sm-3" id="price-btn">
-                        <p>precio por persona</p>
-                        <button name="book-now" class="btn-book-now-vip">Book Now</button>
-                    </div>
-                </div>
-                <div class="row mb-4 border border-dark w-100" id="target">
-                    <div class="col-sm-2" id="info-ticket">
-                        <p>date</p><br>
-                        <p>day</p><br>
-                        <p>hour</p>
-                    </div>
-                    <div class="col-sm-7" id="info-ticket-2">
-                        <h6>titulo</h6>
-                        <p>lugar</p>
-                        <p>sitio</p>
-                        <p>clase ticket</p>
-                    </div>
-                    <div class="col-sm-3" id="price-btn">
-                        <p>precio por persona</p>
-                        <button name="book-now" class="btn-book-now-all">Book Now</button>
+                    <div class="col-3 text-end me-0 pt-5">
+                        <p class="text-muted">€XX per person</p>
+                        <button class="btn btn-primary custom-bg-primary w-100">Book Now</button>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <img src="img/event-item.png" alt="imagen-eventos" id="imagen-eventos" class="img-fluid rounded mx-auto d-block">
+
+            <!--Tarjeta dos-->
+
+            <div class="event-card pe-3 border rounded shadow-sm mb-3">
+                <div class="row align-items-center">
+                    <div class="col-2 custom-bs-dark text-white p-5 text-center rounded-start">
+                        <p class="m-0">Date</p>
+                        <p class="m-0">Day</p>
+                        <p class="m-0">Hour</p>
+                    </div>
+                    <div class="col-7">
+                        <h6 class="fw-bold">Beach Please Festival</h6>
+                        <p>Location</p>
+                        <p>Venue</p>
+                        <p>Ticket Class</p>
+                    </div>
+                    <div class="col-3 text-end me-0 pt-5">
+                        <p class="text-muted">€XX per person</p>
+                        <button class="btn btn-primary custom-bg-primary w-100">Book Now</button>
+                    </div>
+                </div>
             </div>
+
+            <!--Tarjeta tres-->
+
+            <div class="event-card pe-3 border rounded shadow-sm mb-3">
+                <div class="row align-items-center">
+                    <div class="col-2 custom-bs-info text-white p-5 text-center rounded-start">
+                        <p class="m-0">Date</p>
+                        <p class="m-0">Day</p>
+                        <p class="m-0">Hour</p>
+                    </div>
+                    <div class="col-7">
+                        <h6 class="fw-bold">Beach Please Festival</h6>
+                        <p>Location</p>
+                        <p>Venue</p>
+                        <p>Ticket Class</p>
+                    </div>
+                    <div class="col-3 text-end me-0 pt-5">
+                        <p class="text-muted">€XX per person</p>
+                        <button class="btn btn-primary custom-bg-primary w-100">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Imagen + botón guardar favoritos-->
+
+        <div class="col-lg-6" id="container-img-btn">
+            <img src="img/imagen-evento.png" alt="imagen evento" class="img-fluid rounded shadow">
+            <div class="container-btn-fav">
+                <button class="btn btn-fav"><i class="bi bi-heart-fill"></i></button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!--Separador-->
+
+    <hr class="my-4 me-4 ms-4 border-4 custom-bg-primary">
+
+    <!--Igual pero al revés-->
+
+    <div class="container mt-5 ms-4 d-flex"></div>
+    <div class="row ms-5 me-5">
+
+        <!--Imagen - botón guardar favoritos-->
+
+        <div class="col-lg-6 order-lg-1 mb-4 mb-lg-0" id="container-img-btn">
+            <img src="img/imagen-evento.png" alt="imagen evento" class="img-fluid rounded shadow">
+            <div class="container-btn-fav">
+                <button class="btn btn-fav"><i class="bi bi-heart-fill"></i></button>
+            </div>
+        </div>
+        <div class="col-lg-6 order-lg-2">
+
+            <!--Tarjeta uno-->
+
+            <div class="event-card pe-3 border rounded shadow-sm mb-3">
+                <div class="row align-items-center">
+                    <div class="col-2 custom-bg-primary text-white p-5 text-center rounded-start">
+                        <p class="m-0">Date</p>
+                        <p class="m-0">Day</p>
+                        <p class="m-0">Hour</p>
+                    </div>
+                    <div class="col-7">
+                        <h6 class="fw-bold">Beach Please Festival</h6>
+                        <p>Location</p>
+                        <p>Venue</p>
+                        <p>Ticket Class</p>
+                    </div>
+                    <div class="col-3 text-end me-0 pt-5">
+                        <p class="text-muted">€XX per person</p>
+                        <button class="btn btn-primary custom-bg-primary w-100">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Tarjeta dos-->
+
+            <div class="event-card pe-3 border rounded shadow-sm mb-3">
+                <div class="row align-items-center">
+                    <div class="col-2 custom-bs-dark text-white p-5 text-center rounded-start">
+                        <p class="m-0">Date</p>
+                        <p class="m-0">Day</p>
+                        <p class="m-0">Hour</p>
+                    </div>
+                    <div class="col-7">
+                        <h6 class="fw-bold">Beach Please Festival</h6>
+                        <p>Location</p>
+                        <p>Venue</p>
+                        <p>Ticket Class</p>
+                    </div>
+                    <div class="col-3 text-end me-0 pt-5">
+                        <p class="text-muted">€XX per person</p>
+                        <button class="btn btn-primary custom-bg-primary w-100">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Tarjeta tres-->
+
+            <div class="event-card pe-3 border rounded shadow-sm mb-3">
+                <div class="row align-items-center">
+                    <div class="col-2 custom-bs-info text-white p-5 text-center rounded-start">
+                        <p class="m-0">Date</p>
+                        <p class="m-0">Day</p>
+                        <p class="m-0">Hour</p>
+                    </div>
+                    <div class="col-7">
+                        <h6 class="fw-bold">Beach Please Festival</h6>
+                        <p>Location</p>
+                        <p>Venue</p>
+                        <p>Ticket Class</p>
+                    </div>
+                    <div class="col-3 text-end me-0 pt-5">
+                        <p class="text-muted">€XX per person</p>
+                        <button class="btn btn-primary custom-bg-primary w-100">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!--Catalog Section-->
+    <div class="container mt-5">
+
+        <!--Título de sección-->
+
+        <h2 class="fw-bold text-uppercase">Catalog</h2>
+        <div class="row g-4">
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card shadow-sm">
+                    <img src="img/imagen-evento.png" alt="evento" class="card-img-top">
+                    <div class="card-body text-center">
+                        <h6 class="fw-bold">Beach Please Festival</h6>
+                        <p class="text-muted">4 days pass</p>
+                        <button class="btn btn-primary w-100 custom">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card shadow-sm">
+                    <img src="img/imagen-evento.png" alt="evento" class="card-img-top">
+                    <div class="card-body text-center">
+                        <h6 class="fw-bold">Beach Please Festival</h6>
+                        <p class="text-muted">4 days pass</p>
+                        <button class="btn btn-primary w-100">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card shadow-sm">
+                    <img src="img/imagen-evento.png" alt="evento" class="card-img-top">
+                    <div class="card-body text-center">
+                        <h6 class="fw-bold">Beach Please Festival</h6>
+                        <p class="text-muted">4 days pass</p>
+                        <button class="btn btn-primary w-100">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4"></div>
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card shadow-sm">
+                    <img src="img/imagen-evento.png" alt="evento" class="card-img-top">
+                    <div class="card-body text-center">
+                        <h6 class="fw-bold">Beach Please Festival</h6>
+                        <p class="text-muted">4 days pass</p>
+                        <button class="btn btn-primary w-100">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card shadow-sm">
+                    <img src="img/imagen-evento.png" alt="evento" class="card-img-top">
+                    <div class="card-body text-center">
+                        <h6 class="fw-bold">Beach Please Festival</h6>
+                        <p class="text-muted">4 days pass</p>
+                        <button class="btn btn-primary w-100">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card shadow-sm">
+                    <img src="img/imagen-evento.png" alt="evento" class="card-img-top">
+                    <div class="card-body text-center">
+                        <h6 class="fw-bold">Beach Please Festival</h6>
+                        <p class="text-muted">4 days pass</p>
+                        <button class="btn btn-primary w-100">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
     </div>
+
+    <!--Script Bootstrap-->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+</body>
 
 </html>
