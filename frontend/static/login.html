@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <!--CSS Header y Footer -->
-    <link rel="stylesheet" href="../assets/style/estilos.css">
+    <link rel="stylesheet" href="../assets/style/style-global.css">
     <!-- CSS Login -->
     <link rel="stylesheet" href="../assets/style/login.css">
     <!-- Importar Bootstrap CSS -->
@@ -16,29 +16,32 @@
 </head>
 <body>
     <!-- Encabezado -->
-    <header class="flex-md-row justify-content-md-between flex-column justify-content-center ">
-        <div class="d-flex flex-md-row flex-column align-items-center gap-5">
-            <div class="logo"><img src="../assets/img/logo.png" alt="Logo de la empresa"></div>
-            <nav>
-                <ul class="d-flex gap-4">
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="#Eventos">Eventos</a></li>
-                    <li><a href="#AboutUs">Sobre nosotros</a></li>
+    <header class="d-flex justify-content-center justify-content-md-between p-3 flex-md-row flex-column">
+        <div class="d-flex flex-md-row flex-column align-items-center gap-4">
+            <img class="logo-header" src="../assets/img/logo.png" alt="Logo de la empresa">
+            <nav class="d-flex flex-grow-1 justify-content-center justify-content-md-start">
+                <ul class="d-flex gap-4 m-0 p-0 list-unstyled align-items-center justify-content-start">
+                    <li><a href="index.html" class="nav-header">Home</a></li>
+                    <li><a href="#Eventos" class="nav-header">Events</a></li>
+                    <li><a href="#AboutUs" class="nav-header">About us</a></li>
                 </ul>
             </nav>
         </div>
         
-        <!-- Iconos -->
-        <div class="icons d-flex gap-3 ml-md-auto mt-5 mt-md-0">
-            <div class="search-box">
-                <input type="text" placeholder="Buscar...">
-                <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        <!-- Buscador e Iconos -->
+        <div class="d-flex align-items-center gap-4 mt-3 mt-md-0 flex-md-row flex-column">
+            <div class="d-flex align-items-center search-box">
+                <input class="search-box-input" type="text" placeholder="Search...">
+                <button class="search-box-button"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
-    
-            <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i></a>
-            <a href="login.html"><i class="fa-solid fa-user"></i></a>
+            <div class="d-flex">
+                <a href="carrito.html" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="login.html" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
+            </div>
+            
         </div>
     </header>
+
     <!-- Página principal -->
     <main class="min-vh-100 d-flex align-items-center justify-content-center mt-md-4 mb-md-4">
         <div class="container d-flex justify-content-center">
@@ -78,40 +81,40 @@
         </div>
     </main>
     
-    <!-- Pie de página -->
-    <footer class="container-fluid">
-        <div class="footer-container">
+    <!-- Footer -->
+    <footer class="container-fluid p-5">
+        <div class="d-flex flex-column align-items-center">
             <div class="row">
                 <!-- Menú de navegación -->
-                <div class=" col-12 col-md-6 mt-3">    
-                    <ul class="footer-nav">
-                        <li><a href="#">Inicio</a></li>
-                        <li><a href="#">Eventos</a></li>
-                        <li><a href="#">Sobre nosotros</a></li>
+                <nav class=" col-12 col-md-6 mt-3">    
+                    <ul class=" list-unstyled">
+                        <li><a href="#" class="nav-footer">Home</a></li>
+                        <li><a href="#" class="nav-footer">Events</a></li>
+                        <li><a href="#" class="nav-footer">About us</a></li>
                     </ul>
-                </div>
+                </nav>
             
                 <!-- Información de contacto -->
                 <div class="footer-contact col-12 col-md-6 mt-3">
-                    <p><i class="fa-solid fa-phone"></i> +34 123 456 789</p>
-                    <p><i class="fa-solid fa-envelope"></i> contacto@empresa.com</p>
-                    <p><i class="fa-solid fa-map-marker-alt"></i> Calle Falsa 123, Madrid, España</p>
+                    <p class="text-nowrap m-1"><i class="fa-solid fa-phone me-2"></i> +34 123 456 789</p>
+                    <p class="text-nowrap m-1"><i class="fa-solid fa-envelope me-2"></i> contacto@empresa.com</p>
+                    <p class="text-nowrap m-1"><i class="fa-solid fa-map-marker-alt me-2"></i> Calle Falsa 123, Madrid, España</p>
                 </div>
             </div>
         </div>
 
             <!-- Redes Sociales -->
-            <div class="footer-social col-12 mt-3">
-                <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+            <div class="d-flex justify-content-center align-items-center gap-3 mt-3 col-12">
+                <a href="#" class="footer-social"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="footer-social"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="footer-social"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="footer-social"><i class="fa-brands fa-linkedin"></i></a>
             </div>
         
     
         <!-- Derechos de autor -->
-        <div class="footer-bottom col-12">
-            <p>&copy; 2025 Random Events. Todos los derechos reservados.</p>
+        <div class="footer-bottom text-center pt-4 col-12">
+            <p>&copy; 2025 Random Events. All rights reserved.</p>
         </div>
         
     </footer>
