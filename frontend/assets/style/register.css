@@ -51,6 +51,11 @@ form,
     color: #000;
 }
 
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+}
 
 @media (max-width: 425px) {
     .image-container {
