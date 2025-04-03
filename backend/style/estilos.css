@@ -1,0 +1,167 @@
+/* Cargar la fuente Montserrat desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+/* Estilos del Header */
+header {
+    display: flex;
+    align-items: center;
+    background-color: #4D194D;
+    padding: 15px 20px;
+    color: white;
+    font-family:"Montserrat", sans-serif;
+}
+
+/* Logo */
+.logo img{
+    width: 50px;
+    height: auto;
+}
+
+/* Menú de navegación */
+nav{
+    display: flex;
+    flex-grow: 1;
+}
+
+nav ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: flex-start;
+    align-items: center; 
+    flex-grow: 1;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+nav ul li a:hover {
+    color: #B44CB4;
+    transition: color 0.3s;
+}
+
+/* Barra de búsqueda */
+.search-box {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    padding: 5px;
+}
+
+.search-box button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Iconos */
+.icons {
+    display: flex;
+    align-items: center;
+}
+
+.icons a {
+    color: white;
+    font-size: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
+    text-decoration: none;
+}
+
+.icons a:hover {
+    color: #B44CB4;
+    transition: color 0.3s;
+}
+
+
+/* Footer */
+footer {
+    background-color: #4D194D;
+    color: white;
+    padding: 40px 0;
+    font-family: "Montserrat", sans-serif;
+}
+
+/* Contenedor principal */
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Menú de navegación del footer */
+.footer-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.footer-nav li {
+    margin: 5px 0;
+}
+
+.footer-nav li a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-nav li a:hover {
+    color: #B44CB4;
+    transition: color 0.3s;
+}
+
+/* Información de contacto */
+.footer-contact {
+    font-size: 14px;
+}
+
+.footer-contact p {
+    margin: 5px 0;
+    white-space: nowrap;
+}
+
+.footer-contact i {
+    margin-right: 8px;
+}
+
+/* Redes Sociales */
+.footer-social {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    
+}
+
+.footer-social a {
+    color: white;
+    font-size: 20px;
+}
+
+.footer-social a:hover {
+    color: #B44CB4;
+    transition: color 0.3s;
+}
+
+/* Derechos de autor */
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 12px;
+    opacity: 0.8;
+}
