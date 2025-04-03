@@ -2,40 +2,42 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
 
 .font-family-login {
-    font-family: 'Montserrat', sans-serif !important ;
+    font-family: 'Montserrat', sans-serif;
 }
 
-.border-custom {
-    border: 1px solid #4D194D; /* Color morado personalizado */
+/*Container del login*/
+.border-custom-login {
+    border: 1px solid #4D194D;
+    max-width: 800px;
 }
 
-/*Tamaño de letra del formulario*/
-form, .form-label, .form-control{
-    font-size: 12px !important;
+/*Tamaño de letra del login*/
+.font-size-login{
+    font-size: 12px;
 }
 
 /*Botón inicio de sesión*/
-button.btn {
+.button-login.btn {
     font-size: 12px;
     background-color: #4D194D;
     border: 2px solid #4D194D;
     color: #ffffff;
 }
 
-button.btn:hover {
+.button-login.btn:hover {
     background-color: #B44CB4;
     border: 2px solid #B44CB4;
     color: #ffffff;
 }
 
-/*Olvidar contraseña*/
-.forgot-password a{
+/*Botón olvidé contraseña*/
+.forgot-password{
     font-size: 12px;
     color:#4D194D;
     text-decoration: none;
 }
 
-.forgot-password a:hover{
+.forgot-password:hover{
     font-size: 12px;
     color:#B44CB4;
     text-decoration: none;
@@ -43,20 +45,15 @@ button.btn:hover {
 
 /*Botón que lleva a registrarse*/
 .register-link {
-    font-size: 12px;
     color:#4D194D;
     text-decoration: none;
 }
 
 .register-link:hover {
-    font-size: 12px;
     color:#B44CB4;
     text-decoration: none;
 }
 
-div p{
-    font-size: 12px !important;
-}
 
 
 
