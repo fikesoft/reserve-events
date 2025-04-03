@@ -57,32 +57,40 @@
         </div>
     </header>
 
-    <main class="min-vh-100 d-flex align-items-center justify-content-center">
+    <main class="mt-5 mb-5 d-flex align-items-center justify-content-center">
         <div class="container bg-white d-flex p-0 shadow-lg rounded-3"
-            style="max-width: 900px; border: 1px solid #4D194D;">
+            style="max-width: 800px; border: 1px solid #4D194D;">
     
             <div class="p-5" style="flex: 1;">
-                <h3 class="text-center mr-4">Create account</h3>
+                <h1 class="text-center mr-4">CREATE ACCOUNT</h1>
                 <form>
                     <div class="mb-3 input-icon">
                         <label class="form-label">Name</label>
-                        <i class="fa-solid fa-user-pen single-icon"></i><input type="text" class="form-control icons"
-                            placeholder="Enter your name">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-user-pen"></i></span>
+                            <input type="text" class="form-control" id="name" required placeholder="Enter your name">
+                        </div> 
                     </div>
                     <div class="mb-3 input-icon">
                         <label class="form-label">Email</label>
-                        <i class="fa-solid fa-envelope single-icon"></i><input type="email" class="form-control icons"
-                            placeholder="Enter your email">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                            <input type="email" class="form-control" id="email" required placeholder="Enter your email">
+                        </div>
                     </div>
                     <div class="mb-3 input-icon">
                         <label class="form-label">Password</label>
-                        <i class="fa-solid fa-lock single-icon"></i><input type="password" class="form-control icons"
-                            placeholder="Create a password">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" class="form-control" id="password" required placeholder="Create a password">
+                        </div>
                     </div>
                     <div class="mb-4 input-icon">
                         <label class="form-label">Confirm Password</label>
-                        <i class="fa-solid fa-lock single-icon"></i><input type="password" class="form-control icons"
-                            placeholder="Confirm your password">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" class="form-control" id="password" required placeholder="Confirm your password">
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary w-100 mb-3">Create an account</button>
                     <div class="text-center">
