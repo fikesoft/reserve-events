@@ -36,6 +36,7 @@ form,
     padding-left: 40px;
 }
 
+
 .input-icon {
     position: relative;
 }
@@ -50,8 +51,9 @@ form,
     color: #000;
 }
 
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
+
+@media (max-width: 425px) {
+    .image-container {
+        display: none;
     }
 }
