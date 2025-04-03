@@ -45,7 +45,7 @@ body {
 
 .aboutUs {
     padding: 300px 20px;
-    background-image: url("assets/img/bgAboutUs.png");
+    background-image: url("../img/bgAboutUs.png");
     background-size: cover;
     background-position: center;
     color: white;
@@ -104,7 +104,6 @@ body {
         max-width: 300px;
     }
 }
-<<<<<<< HEAD
 
 @media(max-width:425px){
     
@@ -118,5 +117,3 @@ body {
     
 }
 
-=======
->>>>>>> 8641053563c2da9f8e98307e4b801e9251afc37c

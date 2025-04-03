@@ -1,0 +1,43 @@
+/* Cargar la fuente Montserrat desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+/* Footer */
+footer {
+    background-color: #4D194D;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+}
+
+/* Menú de navegación del footer */
+.nav-footer {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.nav-footer:hover {
+    color: #B44CB4;
+    transition: color 0.3s;
+}
+
+/* Información de contacto */
+.footer-contact {
+    font-size: 14px;
+}
+
+/* Redes Sociales */
+.footer-social{
+    color: white;
+    font-size: 20px;
+}
+
+.footer-social:hover {
+    color: #B44CB4;
+    transition: color 0.3s;
+}
+
+/* Derechos de autor */
+.footer-bottom {
+    font-size: 12px;
+    opacity: 0.8;
+}

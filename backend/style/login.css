@@ -1,7 +1,7 @@
 /* Cargar la fuente Montserrat desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
 
-.font-family-login {
+body {
     font-family: 'Montserrat', sans-serif !important ;
 }
 
