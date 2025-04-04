@@ -1,0 +1,29 @@
+/* Cargar la fuente Montserrat desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+.font-family_addYourEvent {
+    font-family: 'Montserrat', sans-serif;
+}
+/*Fondo de pantalla*/
+.background_addYourEvent{
+    background-image: url("/frontend/assets/img/background_AddYourEvent.jpg");
+}
+/*Container del formuclario*/
+.custom-form_addYourEvent {
+    border: 1px solid #4D194D;
+    max-width: 800px;
+    width: 50%;
+}
+
+
+/*Botón para enviar formulario*/
+.button_addYourEvent.btn {
+    background-color: #4D194D;
+    border: 2px solid #4D194D;
+    color: #ffffff;
+}
+.button_addYourEvent.btn:hover {
+    background-color: #B44CB4;
+    border: 2px solid #B44CB4;
+    color: #ffffff;
+}
