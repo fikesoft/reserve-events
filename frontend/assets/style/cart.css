@@ -1,0 +1,32 @@
+
+body {
+    background-color: white;
+    font-family: "Inter";
+}
+
+.empty-cart-button {
+    background-color: #4d194d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.empty-cart-button:hover {
+    background-color: #B44CB4;
+
+}
+
+.summary-box {
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.resumen-pedido {
+    font-weight: 400;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+}
