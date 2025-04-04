@@ -4,15 +4,46 @@
 .font-family_addYourEvent {
     font-family: 'Montserrat', sans-serif;
 }
+
 /*Fondo de pantalla*/
-.background_addYourEvent{
-    background-image: url("/frontend/assets/img/background_AddYourEvent.jpg");
+.bg_addYourEvent{
+    background-image: url('/frontend/assets/img/bg_AddYourEvent.png');
+    background-size: cover; 
 }
+
+/*Quitar fondo de pantalla en pantallas pequeñas*/
+@media (max-width: 767px) {
+    .bg_addYourEvent {
+        background-image: none !important;
+        background-color: #ffffff; /* opcional: fondo blanco o el que quieras */
+    }
+}
+
 /*Container del formuclario*/
 .custom-form_addYourEvent {
     border: 1px solid #4D194D;
     max-width: 800px;
     width: 50%;
+}
+
+/* Botones tipos de entradas*/
+/* Estilo base para todos los botones (no seleccionados) */
+#general + label[for="general"],
+#vip + label[for="vip"],
+#premium + label[for="premium"] {
+    background-color: #4D194D ;
+    color: white;
+    border-color: #4D194D;
+}
+
+
+/* Cuando el checkbox está seleccionado, cambia el estilo del label */
+#general:checked + label[for="general"],
+#vip:checked + label[for="vip"],
+#premium:checked + label[for="premium"] {
+  background-color: #B44CB4 ; /* color personalizado */
+    color: white;
+    border-color: #B44CB4;
 }
 
 
