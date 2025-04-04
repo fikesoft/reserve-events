@@ -12,6 +12,12 @@ switch ($page) {
     case 'register':
         include(__DIR__ . "/pages/register.php");
         break;
+<<<<<<< HEAD
+=======
+    case 'catalog-event':
+        include(__DIR__ . "/pages/catalog-event.php");
+
+>>>>>>> main
     default:
         include(__DIR__ . "/pages/home.php");
         break;

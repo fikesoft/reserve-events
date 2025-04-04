@@ -1,0 +1,44 @@
+body {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+/* Botón crear cuenta */
+.btn-primary {
+    font-size: 12px;
+    background-color: #4D194D;
+    border: none;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #B44CB4;
+}
+
+.login-btn {
+    font-size: 12px;
+    color: #4D194D;
+    text-decoration: none;
+}
+
+.login-btn:hover {
+    color: #B44CB4;
+}
+
+/* Tamaño de letra del formulario */
+form,
+.form-label,
+.form-control {
+    font-size: 12px !important;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 425px) {
+    .image-container {
+        display: none;
+    }
+}
