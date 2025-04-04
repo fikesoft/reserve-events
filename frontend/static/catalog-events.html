@@ -13,19 +13,20 @@
     <!-- Icons Bootstrap-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+    <!-- Cargar Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <!--CSS-->
-    <link rel="stylesheet" href="../assets/style/estilos.css">
     <link rel="stylesheet" href="../assets/style/style-catalog-events.css">
+    <link rel="stylesheet" href="../assets/style/estilos.css">
 
 </head>
 
-<body>
-    <!--navbar-->
-   
+<body>   
     <!-- Encabezado -->
     <header class="flex-md-row justify-content-md-between flex-column justify-content-center ">
         <div class="d-flex flex-md-row flex-column align-items-center gap-5">
-            <div class="logo"><img src="../assets/style/img/logo.png" alt="Logo de la empresa"></div>
+            <div class="logo"><img src="../assets/img/logo.png" alt="Logo de la empresa"></div>
             <nav>
                 <ul class="d-flex gap-4">
                     <li><a href="index.html">Inicio</a></li>
@@ -36,18 +37,22 @@
         </div>
         
         <!-- Iconos -->
-        <div class="icons d-flex gap-3 ml-md-auto mt-5 mt-md-0">
+        <div class="icons d-flex flex-sm-row flex-column gap-3 ml-md-auto mt-5 mt-md-0">
             <div class="search-box">
                 <input type="text" placeholder="Buscar...">
-                <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button class="custom-fa-solid"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
     
-            <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i></a>
-            <a href="login.html"><i class="fa-solid fa-user"></i></a>
+            <div class="d-felx gap-2">
+                <a href="carrito.html"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="login.html"><i class="fa-solid fa-user"></i></a> 
+            </div>
+     
         </div>
     </header>
 
     <!--Filtros-->
+    <main>
     <div class="container">
         <div class="row">
             <div class="col" id="all-filters">
@@ -55,7 +60,7 @@
 
                     <!--Filtro localización-->
 
-                    <select name="location" id="location" class="filter">
+                    <select name="location" id="location" class="c-e-location">
                         <option selected> <i class="bi bi-geo"></i> Ibiza </option>
                         <option value="1">Opción 1</option>
                         <option value="2">Opción 2</option>
@@ -64,19 +69,19 @@
 
                     <!--Filtro fecha-->
 
-                    <button id="btn-date" name="btn-date">Fecha</button>
-                    <input type="date" class="filter" id="date" hidden>
+                    <button class="c-e-btn" name="btn-date">Date</button>
+                    <input type="catalog-events-date" class="c-e-input-date" id="date" hidden>
 
                     <!--Filtro precio-->
 
-                    <button class="filter" id="price" type="buton" name="price">Precio</button>
-                    <input type="range" id="range-price" class="filter" name="range-price" min="0" max="1000" step="10"
+                    <button class="c-e-btn" id="price" type="buton" name="price">Price</button>
+                    <input type="range" id="range-price" class="c-e-range-price" name="range-price" min="0" max="1000" step="10"
                         value="10" hidden><span id="value" hidden>0</span>
-                    <button class="filter" id="aceptar-rango" onclick="aceptarRango" hidden>Aceptar</button>
+                    <button class="c-e-btn" id="aceptar-rango" onclick="aceptarRango" hidden>Aceptar</button>
 
                     <!--Filtro estilo-->
 
-                    <select name="style" id="style" class="filter">
+                    <select name="style" id="style" class="c-e-style">
                         <option selected> Style </option>
                         <option value="Rock">Rock</option>
                         <option value="Style 2">Style 2</option>
@@ -86,7 +91,7 @@
 
                     <!--Botón aceptar filtros-->
 
-                    <button class="filter ms-4" id="aceptar-filtros" name="aceptar-filtros">Filtrar</button>
+                    <button class="ms-4 c-e-btn-aceptar-filtros" id="aceptar-filtros" name="aceptar-filtros">Filter</button>
                 </div>
             </div>
         </div>
@@ -101,7 +106,7 @@
 
     <!--Título sección-->
 
-    <h2 class="fw-lighter ms-5">Popular events in <span class="custom-text-primary fw-bold">Madrid</span></h2>
+    <h2 class="fw-lighter ms-5">Popular events in <span class="c-e-custom-text-primary fw-bold">Madrid</span></h2>
 
     <!--Tarjetas-->
 
@@ -109,9 +114,9 @@
 
     <div class="row ms-5 flex-nowrap overflow-auto d-flex flex-nowrap align-items-center ">
         <div class="col-lg-6 col-md-8">
-            <div class="event-card pe-3 border rounded shadow-sm mb-3 overflow-visible">
+            <div class="c-e-event-card pe-3 border rounded shadow-sm mb-3 overflow-visible">
                 <div class="row flex-nowrap align-items-center">
-                    <div class="col-md-2 col-3 custom-bg-primary text-white p-5 text-center rounded-start">
+                    <div class="col-md-2 col-3 c-e-custom-bg-primary text-white p-5 text-center rounded-start">
                         <p class="m-0">Date</p>
                         <p class="m-0">Day</p>
                         <p class="m-0">Hour</p>
@@ -124,16 +129,16 @@
                     </div>
                     <div class="col-md-3 col-3 text-end me-0 pt-5 overflow-visible text-md-start">
                         <p class="text-muted">€XX per person</p>
-                        <button class="btn btn-primary custom-bg-primary w-100">Book Now</button>
+                        <button class="c-e-btn-event-card btn btn-primary c-e-custom-bg-primary w-100">Book Now</button>
                     </div>
                 </div>
             </div>
 
             <!--Tarjeta dos-->
 
-            <div class="event-card pe-3 border rounded shadow-sm mb-3 overflow-visible">
+            <div class="c-e-event-card pe-3 border rounded shadow-sm mb-3 overflow-visible">
                 <div class="row flex-nowrap align-items-center">
-                    <div class="col-md-2 col-3 custom-bs-dark text-white p-5 text-center rounded-start">
+                    <div class="col-md-2 col-3 c-e-custom-bs-dark text-white p-5 text-center rounded-start">
                         <p class="m-0">Date</p>
                         <p class="m-0">Day</p>
                         <p class="m-0">Hour</p>
@@ -146,16 +151,16 @@
                     </div>
                     <div class="col-md-3 col-3 text-end me-0 pt-5 overflow-visible text-md-start">
                         <p class="text-muted">€XX per person</p>
-                        <button class="btn btn-primary custom-bg-primary w-100">Book Now</button>
+                        <button class="c-e-btn-event-card btn btn-primary c-e-custom-bg-primary w-100">Book Now</button>
                     </div>
                 </div>
             </div>
 
             <!--Tarjeta tres-->
 
-            <div class="event-card pe-3 border rounded shadow-sm mb-3 overflow-visible">
+            <div class="c-e-event-card pe-3 border rounded shadow-sm mb-3 overflow-visible">
                 <div class="row flex-nowrap align-items-center">
-                    <div class="col-md-2 col-3 custom-bs-info text-white p-5 text-center rounded-start">
+                    <div class="col-md-2 col-3 c-e-custom-bs-info text-white p-5 text-center rounded-start">
                         <p class="m-0">Date</p>
                         <p class="m-0">Day</p>
                         <p class="m-0">Hour</p>
@@ -168,7 +173,7 @@
                     </div>
                     <div class="col-md-3 col-3 text-end me-0 pt-5 overflow-visible text-md-start">
                         <p class="text-muted">€XX per person</p>
-                        <button class="btn btn-primary custom-bg-primary w-100">Book Now</button>
+                        <button class="c-e-btn-event-card btn btn-primary c-e-custom-bg-primary w-100">Book Now</button>
                     </div>
                 </div>
             </div>
@@ -176,10 +181,10 @@
 
         <!--Imagen + botón guardar favoritos-->
 
-        <div class="col-lg-6 order-lg-1 custom-w" id="container-img-btn">
+        <div class="c-e-container-img-btn col-lg-6 order-lg-1 custom-w" id="container-img-btn">
             <img src="../assets/style/img/imagen-evento.png" alt="imagen evento" class="img-fluid rounded shadow ">
-            <div class="container-btn-fav">
-                <button class="btn btn-fav"><i class="bi bi-heart-fill"></i></button>
+            <div class="c-e-container-btn-fav">
+                <button class="c-e-btn-fav btn btn-fav"><i class="bi bi-heart-fill"></i></button>
             </div>
         </div>
     </div>
@@ -196,19 +201,19 @@
 
         <!--Imagen - botón guardar favoritos-->
 
-        <div class="col-lg-6 order-lg-1 mb-4 mb-lg-0" id="container-img-btn">
+        <div class="c-e-container-img-btn col-lg-6 order-lg-1 mb-4 mb-lg-0" id="container-img-btn">
             <img src="../assets/style/img/imagen-evento.png" alt="imagen evento" class="img-fluid rounded shadow">
-            <div class="container-btn-fav">
-                <button class="btn btn-fav"><i class="bi bi-heart-fill"></i></button>
+            <div class="c-e-container-btn-fav">
+                <button class="c-e-btn-fav btn btn-fav"><i class="bi bi-heart-fill"></i></button>
             </div>
         </div>
         <div class="col-lg-6 order-lg-2">
 
             <!--Tarjeta uno-->
 
-            <div class="event-card pe-3 border rounded shadow-sm mb-3 overflow-visible">
+            <div class="c-e-event-card pe-3 border rounded shadow-sm mb-3 overflow-visible">
                 <div class="row flex-nowrap align-items-center">
-                    <div class="col-md-2 col-3 custom-bg-primary text-white p-5 text-center rounded-start">
+                    <div class="col-md-2 col-3 c-e-custom-bg-primary text-white p-5 text-center rounded-start">
                         <p class="m-0">Date</p>
                         <p class="m-0">Day</p>
                         <p class="m-0">Hour</p>
@@ -221,16 +226,16 @@
                     </div>
                     <div class="col-md-3 col-3 text-end me-0 pt-5 overflow-visible text-md-start">
                         <p class="text-muted">€XX per person</p>
-                        <button class="btn btn-primary custom-bg-primary w-100">Book Now</button>
+                        <button class="c-e-btn-event-card btn btn-primary c-e-custom-bg-primary w-100">Book Now</button>
                     </div>
                 </div>
             </div>
 
             <!--Tarjeta dos-->
 
-            <div class="event-card pe-3 border rounded shadow-sm mb-3 overflow-visible">
+            <div class="c-e-event-card pe-3 border rounded shadow-sm mb-3 overflow-visible">
                 <div class="row flex-nowrap align-items-center">
-                    <div class="col-md-2 col-3 custom-bs-dark text-white p-5 text-center rounded-start">
+                    <div class="col-md-2 col-3 c-e-custom-bs-dark text-white p-5 text-center rounded-start">
                         <p class="m-0">Date</p>
                         <p class="m-0">Day</p>
                         <p class="m-0">Hour</p>
@@ -243,16 +248,16 @@
                     </div>
                     <div class="col-md-3 col-3 text-end me-0 pt-5 overflow-visible text-md-start">
                         <p class="text-muted">€XX per person</p>
-                        <button class="btn btn-primary custom-bg-primary w-100">Book Now</button>
+                        <button class="c-e-btn-event-card btn btn-primary c-e-custom-bg-primary w-100">Book Now</button>
                     </div>
                 </div>
             </div>
 
             <!--Tarjeta tres-->
 
-            <div class="event-card pe-3 border rounded shadow-sm mb-3 overflow-visible">
+            <div class="c-e-event-card pe-3 border rounded shadow-sm mb-3 overflow-visible">
                 <div class="row flex-nowrap align-items-center">
-                    <div class="col-md-2 col-3 custom-bs-info text-white p-5 text-center rounded-start">
+                    <div class="col-md-2 col-3 c-e-custom-bs-info text-white p-5 text-center rounded-start">
                         <p class="m-0">Date</p>
                         <p class="m-0">Day</p>
                         <p class="m-0">Hour</p>
@@ -265,7 +270,7 @@
                     </div>
                     <div class="col-md-3 col-3 text-end me-0 pt-5 overflow-visible text-md-start">
                         <p class="text-muted">€XX per person</p>
-                        <button class="btn btn-primary custom-bg-primary w-100">Book Now</button>
+                        <button class="c-e-btn-event-card btn btn-primary c-e-custom-bg-primary w-100">Book Now</button>
                     </div>
                 </div>
             </div>
@@ -281,63 +286,63 @@
         <h2 class="fw-bold text-uppercase">Catalog</h2>
         <div class="row g-4">
             <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card shadow-sm">
+                <div class="c-e-card shadow-sm">
                     <img src="../assets/style/img/imagen-evento.png" alt="evento" class="card-img-top">
-                    <div class="card-body text-center">
+                    <div class="c-e-card-body text-center">
                         <h6 class="fw-bold">Beach Please Festival</h6>
                         <p class="text-muted">4 days pass</p>
-                        <button class="btn btn-primary w-100 custom">Book Now</button>
+                        <button class="c-e-btn-card btn btn-primary w-100 custom">Book Now</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card shadow-sm">
+                <div class="c-e-card shadow-sm">
                     <img src="../assets/style/img/imagen-evento.png" alt="evento" class="card-img-top">
-                    <div class="card-body text-center">
+                    <div class="c-e-card-body text-center">
                         <h6 class="fw-bold">Beach Please Festival</h6>
                         <p class="text-muted">4 days pass</p>
-                        <button class="btn btn-primary w-100">Book Now</button>
+                        <button class="c-e-btn-card btn btn-primary w-100">Book Now</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card shadow-sm">
+                <div class="c-e-card shadow-sm">
                     <img src="../assets/style/img/imagen-evento.png" alt="evento" class="card-img-top">
-                    <div class="card-body text-center">
+                    <div class="c-e-card-body text-center">
                         <h6 class="fw-bold">Beach Please Festival</h6>
                         <p class="text-muted">4 days pass</p>
-                        <button class="btn btn-primary w-100">Book Now</button>
+                        <button class="c-e-btn-card btn btn-primary w-100">Book Now</button>
                     </div>
                 </div>
             </div>
             <div class="row g-4"></div>
             <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card shadow-sm">
+                <div class="c-e-card shadow-sm">
                     <img src="../assets/style/img/imagen-evento.png" alt="evento" class="card-img-top">
-                    <div class="card-body text-center">
+                    <div class="c-e-card-body text-center">
                         <h6 class="fw-bold">Beach Please Festival</h6>
                         <p class="text-muted">4 days pass</p>
-                        <button class="btn btn-primary w-100">Book Now</button>
+                        <button class="c-e-btn-card btn btn-primary w-100">Book Now</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card shadow-sm">
+                <div class="c-e-card shadow-sm">
                     <img src="../assets/style/img/imagen-evento.png" alt="evento" class="card-img-top">
-                    <div class="card-body text-center">
+                    <div class="c-e-card-body text-center">
                         <h6 class="fw-bold">Beach Please Festival</h6>
                         <p class="text-muted">4 days pass</p>
-                        <button class="btn btn-primary w-100">Book Now</button>
+                        <button class="c-e-btn-card btn btn-primary w-100">Book Now</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card shadow-sm">
+                <div class="c-e-card shadow-sm">
                     <img src="../assets/style/img/imagen-evento.png" alt="evento" class="card-img-top">
-                    <div class="card-body text-center">
+                    <div class="c-e-card-body text-center">
                         <h6 class="fw-bold">Beach Please Festival</h6>
                         <p class="text-muted">4 days pass</p>
-                        <button class="btn btn-primary w-100">Book Now</button>
+                        <button class="c-e-btn-card btn btn-primary w-100">Book Now</button>
                     </div>
                 </div>
             </div>
@@ -346,11 +351,53 @@
         </div>
     </div>
 
+
     <!--Script Bootstrap-->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    </main>
+
+   <!-- Footer -->
+   <footer class="container-fluid">
+    <div class="footer-container">
+        <div class="row">
+            <!-- Menú de navegación -->
+            <div class=" col-12 col-md-6 mt-3">    
+                <ul class="footer-nav">
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Eventos</a></li>
+                    <li><a href="#">Sobre nosotros</a></li>
+                </ul>
+            </div>
+        
+            <!-- Información de contacto -->
+            <div class="footer-contact col-12 col-md-6 mt-3">
+                <p><i class="fa-solid fa-phone"></i> +34 123 456 789</p>
+                <p><i class="fa-solid fa-envelope"></i> contacto@empresa.com</p>
+                <p><i class="fa-solid fa-map-marker-alt"></i> Calle Falsa 123, Madrid, España</p>
+
+            </div>
+        </div>
+    </div>
+
+        <!-- Redes Sociales -->
+        <div class="footer-social col-12 mt-3">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+    
+
+    <!-- Derechos de autor -->
+    <div class="footer-bottom col-12">
+        <p>&copy; 2025 Random Events. Todos los derechos reservados.</p>
+    </div>
+    
+</footer>
+  
 </body>
 
 </html>

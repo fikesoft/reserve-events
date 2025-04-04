@@ -3,9 +3,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
 
 /*botones filtros*/
-#location,
-#style,
-button {
+.c-e-location,
+.c-e-style,
+.c-e-btn{
 
     background-color: #4D194D;
     color: white;
@@ -19,117 +19,122 @@ button {
 
 }
 
-#location,
-#style,
-button {
+.c-e-location,
+.c-e-style,
+.c-e-btn {
     transition: transform 0.3s ease-in-out;
 }
 
 
 
-#location:hover,
-#style:hover,
-button:hover {
+.c-e-location:hover,
+.c-e-style:hover,
+.c-e-btn:hover {
     transform: scale(1.05);
     background-color: #6f42c1;
 }
 
-#aceptar-filtros {
+.c-e-btn-aceptar-filtros {
     background-color: #6f42c1;
     width: 130px;
+    color: white;
+    height: 48px;
+    border-radius: 12px;
+    text-align: center;
 }
 
 
 
 /*Sección de eventos populares */
 
-.event-card {
+.c-e-event-card {
     background-color: white;
     border-left: 5px solid white;
     transition: transform 0.3s ease-in-out;
 }
 
-.event-card:hover {
+.c-e-event-card:hover {
     transform: scale(1.05);
 }
 
-.event-card .col-3 {
+.c-e-event-card .col-3 {
     font-size: 0.9rem;
-}
-
-.event-card button {
-    font-size: 0.9rem;
-}
-
-.event-card button:hover {
-    background-color: #5a3791;
-}
-
-.event-card .col-3 {
     display: flex;
     flex-direction: column;
     height: 100%;
-
 }
+
+.c-e-event-card .c-e-btn-event-card {
+    font-size: 0.9rem;
+}
+
+.c-e-event-card .c-e-btn-event-card:hover {
+    background-color: #5a3791;
+}
+
 
 /*colores custom*/
 
-.custom-bg-primary {
+.c-e-custom-bg-primary {
     background-color: #4D194D;
 }
 
-.custom-text-primary {
+.c-e-custom-text-primary {
     color: #4D194D;
 }
 
-.custom-bs-dark {
+.c-e-custom-bs-dark {
     background-color: #B44CB4;
 }
 
-.custom-bs-info {
+.c-e-custom-bs-info {
     background-color: #F5A6F5;
 
 }
 
+.c-e-btn-event-card{
+    border: none;
+}
+
 /*Catalogo*/
 
-.card {
+.c-e-card {
     transition: transform 0.3s ease-in-out;
     position: relative;
 }
 
-.card:hover {
+.c-e-card:hover {
     transform: scale(1.05);
 }
 
-.card-body h6 {
+.c-e-card-body h6 {
     color: #6f42c1;
     font-size: 1rem;
 }
 
-.card-body p {
+.c-e-card-body p {
     font-size: 0.9rem;
 }
 
-.card-body button {
+.c-e-card-body .c-e-btn-card {
     background-color: #6f42c1;
     border: none;
 }
 
-.card-body button:hover {
+.c-e-card-body .c-e-btn-card:hover {
     background-color: #5a3791;
 }
 
-.btn-primary {
+.c-e-btn-card {
     border: none;
 }
 
 
-#container-img-btn > .container-btn-fav{
+.c-e-container-img-btn > .c-e-container-btn-fav{
     position: relative;
 }
 
-.btn-fav{
+.c-e-btn-fav{
     position: absolute;
     bottom: 0;
 
@@ -139,7 +144,7 @@ button:hover {
     transition: transform 0.3s ease-in-out;
 }
 
-.btn-fav:hover{
+.c-e-btn-fav:hover{
     color:#6f42c1;
     transform: scale(1.70);
 }
