@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Register</title>
+
     <!--CSS Header -->
     <link rel="stylesheet" href="../assets/style/header.css">
     <!-- CSS Footer -->
     <link rel="stylesheet" href="../assets/style/footer.css">
     <!-- CSS Login -->
-    <link rel="stylesheet" href="../assets/style/login.css">
+    <link rel="stylesheet" href="../assets/style/register.css">
 
     <!-- Importar Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Cargar Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 </head>
 
 <body>
@@ -25,7 +26,7 @@
             <img class="logo-header" src="../assets/img/logo.png" alt="Logo de la empresa">
             <nav class="d-flex flex-grow-1 justify-content-center justify-content-md-start">
                 <ul class="d-flex gap-4 m-0 p-0 list-unstyled align-items-center justify-content-start">
-                    <li><a href="home.html" class="nav-header">Home</a></li>
+                    <li><a href="index.html" class="nav-header">Home</a></li>
                     <li><a href="#Eventos" class="nav-header">Events</a></li>
                     <li><a href="#AboutUs" class="nav-header">About us</a></li>
                 </ul>
@@ -47,65 +48,100 @@
     </header>
 
     <!-- Página principal -->
-    <main class="d-flex align-items-center justify-content-center font-family_login mt-5 mb-5">
-        <div class="container d-flex justify-content-center align-items-center ">
-            <div class="row g-0 align-items-center rounded-3 shadow w-100 border-custom_login">
+    <main class="d-flex align-items-center justify-content-center font-family_register mt-5 mb-5">
+        <div class="container d-flex justify-content-center align-items-center">
+            <div class="row g-0 m-0 p-0 align-items-stretch rounded-3 shadow w-100 h-100 border-custom_register">
                 <!-- Columna Izquierda: Formulario -->
                 <div class="col-md-6 d-flex p-5">
                     <div class="w-100 d-flex flex-column justify-content-center">
-                        <h1 class="text-center mb-3">SIGN IN</h1>
-                        <form class="font-size_login">
+                        <h1 class="text-center mb-3">CREATE AN ACCOUNT</h1>
+                        <form class="font-size_register" action="../../backend/controllers/register.php" method="POST">
+
+                            <?php
+                            session_start();
+                            $form_data = $_SESSION['form_data'] ?? [];
+                            $errors = $_SESSION['error'] ?? '';
+                            unset($_SESSION['form_data'], $_SESSION['error']); // Limpiar variables
+                            ?>
+
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
+                                <label form="name" class="form-label">Name</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-user-pen"></i></span>
+                                    <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="name" required 
+                                    placeholder="Enter your name"
+                                    value="<?= htmlspecialchars($form_data['name'] ?? '') ?>">
+                                </div> 
+                            </div>
+                            <div class="mb-3">
+                                <label form="email" class="form-label">Email</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
-                                    <input type="email" class="form-control" id="email" required>
-                                </div> 
+                                    <input 
+                                    type="email" 
+                                    class="form-control" 
+                                    id="email" required 
+                                    placeholder="Enter your email"
+                                    value="<?= htmlspecialchars($form_data['email'] ?? '') ?>">
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                                    <input type="password" class="form-control" id="password" required>
+                                    <input 
+                                    type="password" 
+                                    class="form-control" 
+                                    id="password" required 
+                                    placeholder="Create a password">
                                 </div>
                             </div>
-                            <!-- Checkbox "Recuérdame" -->
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="rememberMe">
-                                <label class="form-check-label" for="rememberMe">Remember Me</label>
+                            <div class="mb-3">
+                                <label for="confirm-password" class="form-label">Confirm Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                    <input 
+                                    type="password" 
+                                    class="form-control" 
+                                    id="password" required 
+                                    placeholder="Confirm your password">
+                                </div>
                             </div>
 
-                            <button type="submit" class="button_login btn w-100 mt-3">Sign in</button>    
+                            <?php if (!empty($errors)): ?>
+                            <div class="alert alert-danger"><?= $errors ?></div>
+                            <?php endif; ?>
+
+                            <button type="submit" class="button_register btn w-100 mt-3">Create an account</button>
                         </form>
 
-                        <!-- Enlace a olvidé contraseña -->
+                        <!-- Botón al login -->
                         <div class="text-center mt-3">
-                            <a href="#" class="forgot-password">Forgot pasword?</a>
+                            <p class="font-size_register">Have an account? <a href="registro.html" class="login-link">Sign in</a></p>
                         </div>
                         
-                        <!-- Enlace para registro -->
-                        <div class="text-center mt-3">
-                            <p class="font-size_login">¿New in <strong>Random Events?</strong> <a href="registro.html" class="register-link">Sign up</a></p>
-                        </div>
                     </div>
                 </div>
-    
+
                 <!-- Columna Derecha: Imagen -->
                 <div class="col-md-6 d-flex d-none d-md-block"> <!-- En pantallas pequeñas no aparece la imagen -->
-                    <img src="../assets/img/Foto_Login.png" alt="Imagen Login" class="img-fluid w-100 rounded-end-3">
+                    <img src="../assets/img/Foto_Register.png" alt="Imagen Register" class="img-fluid w-100 h-100 rounded-end img_register">
                 </div>
-
+            
             </div>
         </div>
     </main>
-    
+
     <!-- Footer -->
     <footer class="container-fluid p-5">
         <div class="d-flex flex-column align-items-center">
             <div class="row">
                 <!-- Menú de navegación -->
                 <nav class=" col-12 col-md-6 mt-3">    
-                    <ul class=" list-unstyled">
+                    <ul class="list-unstyled">
                         <li><a href="#" class="nav-footer">Home</a></li>
                         <li><a href="#" class="nav-footer">Events</a></li>
                         <li><a href="#" class="nav-footer">About us</a></li>
@@ -136,7 +172,8 @@
         </div>
         
     </footer>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
