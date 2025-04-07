@@ -106,7 +106,7 @@
                         
                         <!-- Enlace para registro -->
                         <div class="text-center mt-3">
-                            <p class="font-size-login">¿New in <strong>Random Events?</strong> <a href="registro.html" class="register-link">Sign up</a></p>
+                            <p class="font-size-login">¿New in <strong>Random Events?</strong> <a href="registeer.php" class="register-link">Sign up</a></p>
                         </div>
                     </div>
                 </div>

@@ -120,7 +120,7 @@
                             class="form-control" 
                             id="password" required 
                             placeholder="Confirm your password"
-                            name="confirm_paswword">
+                            name="confirm_password">
                         </div>
                     </div>
 

@@ -44,6 +44,10 @@ if (!isset($_SESSION['user_id'])) {
             <a href="carrito.php" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
             <?php if (isset($_SESSION['user_id'])): ?>
                 <a href="perfil.php" class="icons mx-3"><?= $_SESSION['user_name'] ?></a>
+                <?php if ($_SESSION["user_role"] === "admin"): ?>
+                    <a><?php echo $_SESSION["user_role"]; ?></a>
+                <?php endif; ?>
+                
             <?php else: ?>
                 <a href="login.php" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
             <?php endif; ?>
@@ -77,6 +81,12 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="d-flex flex-column justify-content-center align-items-center  gap-4">
                     <div class="row d-flex flex-row justify-content-center flex-wrap w-100 gap-3 mt-5">
                         <div class="col-lg-2 col-md-4 col-6 event-card">
+                            <?php   if( $_SESSION['user_role'] === "admin"): ?>
+                                <div>
+                                    <p>Editar evento
+                                    <p>borrar evento
+                                </div>
+                            <?php   endif ?>
                             <img class="img-fluid" src="../assets/img/eventPhoto.png" alt="photoEvent">
                             <div class="text-start mt-2">
                                 <p>Beach Please Festival 4 days pass</p>
