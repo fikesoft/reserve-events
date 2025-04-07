@@ -27,9 +27,9 @@ if (!isset($_SESSION['user_id'])) {
             <img class="logo-header" src="../assets/img/logo.png" alt="Logo de la empresa">
             <nav class="d-flex flex-grow-1 justify-content-center justify-content-md-start">
                 <ul class="d-flex gap-4 m-0 p-0 list-unstyled align-items-center justify-content-start">
-                    <li><a href="index.html" class="nav-header">Home</a></li>
+                    <li><a href="home.php" class="nav-header">Home</a></li>
                     <li><a href="#Eventos" class="nav-header">Events</a></li>
-                    <li><a href="#AboutUs" class="nav-header">About us</a></li>
+                    <li><a href="about-us.html" class="nav-header">About us</a></li>
                 </ul>
             </nav>
         </div>
@@ -148,7 +148,7 @@ if (!isset($_SESSION['user_id'])) {
                     We’ve always believed that random can change lives. So we created a platform for fans to experience
                     more of the shows they love in the most hassle-free way possible.
                 </p>
-                <a href="#">About us</a>
+                <a href="about-us.html">About us</a>
             </div>
         </section>
     </div>

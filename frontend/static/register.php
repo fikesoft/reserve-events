@@ -26,9 +26,9 @@
             <img class="logo-header" src="../assets/img/logo.png" alt="Logo de la empresa">
             <nav class="d-flex flex-grow-1 justify-content-center justify-content-md-start">
                 <ul class="d-flex gap-4 m-0 p-0 list-unstyled align-items-center justify-content-start">
-                    <li><a href="index.html" class="nav-header">Home</a></li>
+                    <li><a href="home.php" class="nav-header">Home</a></li>
                     <li><a href="#Eventos" class="nav-header">Events</a></li>
-                    <li><a href="#AboutUs" class="nav-header">About us</a></li>
+                    <li><a href="about-us.html" class="nav-header">About us</a></li>
                 </ul>
             </nav>
         </div>
@@ -40,8 +40,8 @@
                 <button class="search-box-button"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
             <div class="d-flex">
-                <a href="carrito.html" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
-                <a href="login.html" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
+                <a href="cart.html" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="login.php" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
             </div>
             
         </div>
@@ -65,25 +65,29 @@
                             ?>
 
                             <div class="mb-3">
-                                <label form="name" class="form-label">Name</label>
+                                <label for="name" class="form-label">Name</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa-solid fa-user-pen"></i></span>
                                     <input 
                                     type="text" 
                                     class="form-control" 
-                                    id="name" required 
+                                    id="name"
+                                    name="name" 
+                                    required 
                                     placeholder="Enter your name"
                                     value="<?= htmlspecialchars($form_data['name'] ?? '') ?>">
                                 </div> 
                             </div>
                             <div class="mb-3">
-                                <label form="email" class="form-label">Email</label>
+                                <label for="email" class="form-label">Email</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
                                     <input 
                                     type="email" 
                                     class="form-control" 
-                                    id="email" required 
+                                    id="email" 
+                                    name="email" 
+                                    required 
                                     placeholder="Enter your email"
                                     value="<?= htmlspecialchars($form_data['email'] ?? '') ?>">
                                 </div>
@@ -95,18 +99,22 @@
                                     <input 
                                     type="password" 
                                     class="form-control" 
-                                    id="password" required 
+                                    id="password" 
+                                    name="password" 
+                                    required 
                                     placeholder="Create a password">
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="confirm-password" class="form-label">Confirm Password</label>
+                                <label for="confirm_password" class="form-label">Confirm Password</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                                     <input 
                                     type="password" 
                                     class="form-control" 
-                                    id="password" required 
+                                    id="confirm_password" 
+                                    name="confirm_password"
+                                    required 
                                     placeholder="Confirm your password">
                                 </div>
                             </div>
@@ -120,7 +128,7 @@
 
                         <!-- Botón al login -->
                         <div class="text-center mt-3">
-                            <p class="font-size_register">Have an account? <a href="registro.html" class="login-link">Sign in</a></p>
+                            <p class="font-size_register">Have an account? <a href="login.php" class="login-link">Sign in</a></p>
                         </div>
                         
                     </div>
@@ -142,9 +150,9 @@
                 <!-- Menú de navegación -->
                 <nav class=" col-12 col-md-6 mt-3">    
                     <ul class="list-unstyled">
-                        <li><a href="#" class="nav-footer">Home</a></li>
+                        <li><a href="home.php" class="nav-footer">Home</a></li>
                         <li><a href="#" class="nav-footer">Events</a></li>
-                        <li><a href="#" class="nav-footer">About us</a></li>
+                        <li><a href="about-us.html" class="nav-footer">About us</a></li>
                     </ul>
                 </nav>
             
