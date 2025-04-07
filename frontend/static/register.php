@@ -48,7 +48,7 @@
     </header>
 
     <!-- Página principal -->
-    <main class="d-flex align-items-center justify-content-center font-family_register mt-5 mb-5">
+    <main class="d-flex align-items-center justify-content-center font-family_register mt-5 mb-5 min-vh-100">
         <div class="container d-flex justify-content-center align-items-center">
             <div class="row g-0 m-0 p-0 align-items-stretch rounded-3 shadow w-100 h-100 border-custom_register">
                 <!-- Columna Izquierda: Formulario -->
