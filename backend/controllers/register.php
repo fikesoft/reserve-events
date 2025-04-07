@@ -13,7 +13,7 @@ $confirm_password = $_POST['confirm_password'] ?? '';
 if (empty($name)  ||empty($email) || empty($password)) {
     $_SESSION['error'] = "Todos los campos son obligatorios";
     $_SESSION['form_data'] = $_POST; // Guardar datos ingresados
-    header("Location: ../../frontend/static/register.php");
+    header("Location: ../../frontend/static/registeer.php");
     exit();
 }
 
@@ -21,7 +21,7 @@ if (empty($name)  ||empty($email) || empty($password)) {
 if ($password !== $confirm_password) {
     $_SESSION['error'] = "Las contraseñas no coinciden";
     $_SESSION['form_data'] = $_POST;
-    header("Location: ../../frontend/static/register.php");
+    header("Location: ../../frontend/static/registeer.php");
     exit();
 }
 
@@ -34,7 +34,7 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $_SESSION['error'] = "El email ya está registrado";
     $_SESSION['form_data'] = $_POST;
-    header("Location: ../../frontend/static/register.php");
+    header("Location: ../../frontend/static/registeer.php");
     exit();
 }
 
@@ -51,7 +51,7 @@ if ($stmt->execute()) {
     exit();
 } else {
     $_SESSION['error'] ="Error: " . $stmt->error;
-    header("Location: ../../frontend/static/register.php");
+    header("Location: ../../frontend/static/registeer.php");
     exit();
 }
 

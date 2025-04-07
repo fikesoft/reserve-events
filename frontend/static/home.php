@@ -41,19 +41,15 @@ if (!isset($_SESSION['user_id'])) {
                 <button class="search-box-button"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
             <div class="d-flex">
-                <a href="carrito.php" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
-                <a href="login.php" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
-            </div>
-
-        </div>
-        <div class="d-flex">
             <a href="carrito.php" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
             <?php if (isset($_SESSION['user_id'])): ?>
                 <a href="perfil.php" class="icons mx-3"><?= $_SESSION['user_name'] ?></a>
             <?php else: ?>
                 <a href="login.php" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
             <?php endif; ?>
+            </div>
         </div>
+        
 
     </header>
 

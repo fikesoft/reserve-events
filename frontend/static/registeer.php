@@ -63,35 +63,71 @@
     
             <div class="p-5" style="flex: 1;">
                 <h1 class="text-center mr-4">CREATE ACCOUNT</h1>
-                <form>
+                <form action="../../backend/controllers/register.php" method="POST">
+                    
+                    <?php
+                    session_start();
+                    $form_data = $_SESSION['form_data'] ?? [];
+                    $errors = $_SESSION['error'] ?? '';
+                    unset($_SESSION['form_data'], $_SESSION['error']); // Limpiar variables
+                    ?>
+
                     <div class="mb-3">
                         <label class="form-label">Name</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-user-pen"></i></span>
-                            <input type="text" class="form-control" id="name" required placeholder="Enter your name">
+                            <input 
+                            type="text" 
+                            name="name"
+                            class="form-control" 
+                            id="name" required 
+                            placeholder="Enter your name"
+                            value="<?= htmlspecialchars($form_data['name'] ?? '') ?>">
                         </div> 
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
-                            <input type="email" class="form-control" id="email" required placeholder="Enter your email">
+                            <input 
+                            type="email" 
+                            class="form-control"
+                            name="email" 
+                            id="email" required 
+                            placeholder="Enter your email"
+                            value="<?= htmlspecialchars($form_data['email'] ?? '') ?>">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Password</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                            <input type="password" class="form-control" id="password" required placeholder="Create a password">
+                            <input 
+                            type="password" 
+                            class="form-control" 
+                            id="password" 
+                            required 
+                            placeholder="Create a password"
+                            name="password">
                         </div>
                     </div>
                     <div class="mb-4">
                         <label class="form-label">Confirm Password</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                            <input type="password" class="form-control" id="password" required placeholder="Confirm your password">
+                            <input 
+                            type="password" 
+                            class="form-control" 
+                            id="password" required 
+                            placeholder="Confirm your password"
+                            name="confirm_paswword">
                         </div>
                     </div>
+
+                    <?php if (!empty($errors)): ?>
+                    <div class="alert alert-danger"><?= $errors ?></div>
+                    <?php endif; ?>
+                    
                     <button type="submit" class="btn btn-primary w-100 mb-3">Create an account</button>
                     <div class="text-center">
                         <a class="login-btn" href="#">Log in</a>
