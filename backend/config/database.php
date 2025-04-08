@@ -25,11 +25,11 @@ if ($conn->query($sql_create_database) === TRUE) {
 // Seleccionar la base de datos creada
 $conn->select_db($db_name);
 
-// Establecer el conjunto de caracteres a UTF-8
+
 $conn->set_charset("utf8");
 
-// Crear la tabla `users` si no existe
-$sql_create_table = "
+
+$sql_create_table_users = "
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -39,11 +39,30 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );";
 
-// Ejecutar la consulta para crear la tabla
-if ($conn->query($sql_create_table) === TRUE) {
-    // La tabla se creó correctamente o ya existía
-} else {
-    die("Error al crear la tabla: " . $conn->error);
+if ($conn->query($sql_create_table_users) !== TRUE) {
+    die("Error al crear la tabla de usuarios: " . $conn->error);
+}
+
+
+$sql_create_table_events = "
+CREATE TABLE IF NOT EXISTS events (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    event_name VARCHAR(150) NOT NULL,
+    description TEXT,
+    event_date DATE,
+    event_time TIME,
+    image_url VARCHAR(255),
+    location VARCHAR(255),
+    price DECIMAL(10, 2),
+    ticket_type ENUM('General', 'VIP', 'Premium') DEFAULT 'General',
+    number_of_tickets INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);";
+
+if ($conn->query($sql_create_table_events) !== TRUE) {
+    die("Error al crear la tabla de eventos: " . $conn->error);
 }
 
 ?>

@@ -43,7 +43,7 @@ if (!isset($_SESSION['user_id'])) {
             <div class="d-flex">
             <a href="carrito.php" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
             <?php if (isset($_SESSION['user_id'])): ?>
-                <a href="perfil.php" class="icons mx-3"><?= $_SESSION['user_name'] ?></a>
+                <a href="#" class="icons mx-3"><?= $_SESSION['user_name'] ?></a>
                 <?php if ($_SESSION["user_role"] === "admin"): ?>
                     <a><?php echo $_SESSION["user_role"]; ?></a>
                 <?php endif; ?>
@@ -53,8 +53,6 @@ if (!isset($_SESSION['user_id'])) {
             <?php endif; ?>
             </div>
         </div>
-        
-
     </header>
 
     <div class="d-flex flex-column">
@@ -62,6 +60,7 @@ if (!isset($_SESSION['user_id'])) {
             <section class="row d-flex justify-content-center gap-3 g-2 mb-4">
                 <div class="col-lg-4 d-flex flex-column align-items-lg-start align-items-center justify-content-center gap-3 contentHome">
                     <h1 class="text-lg-start">FIND MORE OF THE RANDOM EVENTS</h1>
+                    
                     <p class="text-start">Incredible live shows. Upfront pricing. Relevant recommendations. We make going out easy.</p>
                     <button class="browse-btn">Browse events</button>
                 </div>
@@ -77,14 +76,17 @@ if (!isset($_SESSION['user_id'])) {
             <section class="row d-flex flex-column align-items-center mt-5 w-100">
                 <div class="w-100 text-center">
                     <h1 class="titleRandom">RANDOM SELECTION</h1>
+                    <?php   if( $_SESSION['user_role'] === "admin"): ?>
+                    <a href="add_your_event.php">Create Event</a>
+                    <?php   endif ?>
                 </div>
                 <div class="d-flex flex-column justify-content-center align-items-center  gap-4">
                     <div class="row d-flex flex-row justify-content-center flex-wrap w-100 gap-3 mt-5">
                         <div class="col-lg-2 col-md-4 col-6 event-card">
                             <?php   if( $_SESSION['user_role'] === "admin"): ?>
-                                <div>
-                                    <p>Editar evento
-                                    <p>borrar evento
+                                <div class="d-flex justify-content-end gap-3 fs-5">
+                                    <a  href="add_your_event.php"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a class="text-danger" href="#"><i class="fa-solid fa-trash"></i></a>
                                 </div>
                             <?php   endif ?>
                             <img class="img-fluid" src="../assets/img/eventPhoto.png" alt="photoEvent">
