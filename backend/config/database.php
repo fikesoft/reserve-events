@@ -51,12 +51,12 @@ CREATE TABLE IF NOT EXISTS events (
     email VARCHAR(100) NOT NULL,
     event_name VARCHAR(150) NOT NULL,
     description TEXT,
-    event_date DATE,
-    event_time TIME,
+    event_date DATE NOT NULL,
+    event_time TIME NOT NULL,
     image_url VARCHAR(255),
     location VARCHAR(255),
     price DECIMAL(10, 2),
-    ticket_type ENUM('General', 'VIP', 'Premium') DEFAULT 'General',
+    ticket_type VARCHAR(255),
     number_of_tickets INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );";
