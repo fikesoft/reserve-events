@@ -21,14 +21,14 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-     <!-- Encabezado -->
-     <header class="d-flex justify-content-center justify-content-md-between p-3 flex-md-row flex-column">
+    <!-- Encabezado -->
+    <header class="d-flex justify-content-center justify-content-md-between p-3 flex-md-row flex-column">
         <div class="d-flex flex-md-row flex-column align-items-center gap-4">
             <img class="logo-header" src="../assets/img/logo.png" alt="Logo de la empresa">
             <nav class="d-flex flex-grow-1 justify-content-center justify-content-md-start">
                 <ul class="d-flex gap-4 m-0 p-0 list-unstyled align-items-center justify-content-start">
                     <li><a href="home.php" class="nav-header">Home</a></li>
-                    <li><a href="#Eventos" class="nav-header">Events</a></li>
+                    <li><a href="catalog-events.html" class="nav-header">Events</a></li>
                     <li><a href="about-us.html" class="nav-header">About us</a></li>
                 </ul>
             </nav>
