@@ -2,6 +2,11 @@
 session_start();
 require_once '../config/database.php';
 
+if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+    header('Location: ../../frontend/static/login.php');
+    exit();
+}
+
 // Recoger datos del formulario
 $name = $_POST['name'] ?? '';
 $email = $_POST['email'] ?? '';

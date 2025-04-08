@@ -101,8 +101,8 @@ if (!isset($_SESSION['user_id'])) {
                                     <div class="col-lg-2 col-md-4 col-6 event-card">
                                         <?php if ($_SESSION['user_role'] === "admin"): ?>
                                             <div class="d-flex justify-content-end gap-3 fs-5">
-                                                <a href="edit_event.php?id=<?= $event['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                                                <a class="text-danger" href="delete_event.php?id=<?= $event['id'] ?>"><i class="fa-solid fa-trash"></i></a>
+                                                <a href="../../backend/controllers/edit_event.php?id=<?= $event['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <a class="text-danger" href="../../backend/controllers/delete_event.php?id=<?= $event['id'] ?>"><i class="fa-solid fa-trash"></i></a>
                                             </div>
                                         <?php endif; ?>
                                         <img class="img-fluid" src="<?= htmlspecialchars($event['image_url']) ?>" alt="Event Photo" style="aspect-ratio: 1/1;">
