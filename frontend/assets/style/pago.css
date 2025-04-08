@@ -1,0 +1,136 @@
+.pago-container{
+    display: flex;
+    max-width: 80%;
+    padding-left: 0px;
+
+}
+
+.pago-form-container{
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin-top: 20px;
+}
+
+.pago-resumen-container{
+    float: right;
+    max-width: 300px;
+    margin-top: 35px;
+}
+
+@media (max-width: 768px) {
+    .pago-container{
+        display: flex;
+        flex-direction: column;
+        max-width: 100%;
+        padding-left: 0px;
+    }
+    .pago-form-container{
+        max-width: 100%;
+    }
+    .pago-resumen-container{
+        float: none;
+        max-width: 100%;
+    }
+}
+
+.pago-h1-datos{
+    font-size: 4rem;
+    padding-top: 20px; padding-bottom: 10px;
+}
+
+.pago-resumen-h3{
+
+    font-size: 1rem;
+    padding-top: 20px; 
+    text-align: center;
+}
+
+.pago-card-holder{
+    max-width: 180px;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+
+.pago-resumen-hr{
+    margin-top: 0;
+
+}
+
+.pago-input-cvv{
+    max-width: 50px;
+   
+}
+
+.pago-card-number{
+    max-width: 180px;
+}
+
+.pago-date-creditcard{
+    max-width: 35px;
+    --webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.pago-col-lista-resumen{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+
+.pago-carrito-vacio{
+    margin-bottom: 100px;
+}
+
+.pago-form-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 25px;
+}
+
+.pago-select{
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    width: 200px;
+
+}
+
+.pago-btn-paypal{
+    padding: 10px;
+    background-color: #4D194D;
+    color: white;
+}
+
+.pago-icon-paypal{
+    color: white;
+}
+
+.pago-datos-tarjeta{
+    border: 1px solid #4D194D;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px #4D194D;
+
+}
+
+.pago-formaenvio-row{
+    max-width: 300px;
+    height: 50px;
+    text-align: start;
+    align-items: center;
+}
+
+.pago-button-pagar{
+    background-color: #4D194D;
+    color: white;
+    padding: 10px;
+    border-radius: 12px;
+    border: none;
+}

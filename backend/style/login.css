@@ -1,43 +1,41 @@
 /* Cargar la fuente Montserrat desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
 
-.font-family_login {
-    font-family: 'Montserrat', sans-serif;
+body {
+    font-family: 'Montserrat', sans-serif !important ;
 }
 
-/*Container del login*/
-.border-custom_login {
-    border: 1px solid #4D194D;
-    max-width: 900px;
+.border-custom {
+    border: 1px solid #4D194D; /* Color morado personalizado */
 }
 
-/*Tamaño de letra del login*/
-.font-size_login{
-    font-size: 12px;
+/*Tamaño de letra del formulario*/
+form, .form-label, .form-control{
+    font-size: 12px !important;
 }
 
 /*Botón inicio de sesión*/
-.button_login.btn {
+button.btn {
     font-size: 12px;
     background-color: #4D194D;
     border: 2px solid #4D194D;
     color: #ffffff;
 }
 
-.button_login.btn:hover {
+button.btn:hover {
     background-color: #B44CB4;
     border: 2px solid #B44CB4;
     color: #ffffff;
 }
 
-/*Botón olvidé contraseña*/
-.forgot-password{
+/*Olvidar contraseña*/
+.forgot-password a{
     font-size: 12px;
     color:#4D194D;
     text-decoration: none;
 }
 
-.forgot-password:hover{
+.forgot-password a:hover{
     font-size: 12px;
     color:#B44CB4;
     text-decoration: none;
@@ -45,13 +43,19 @@
 
 /*Botón que lleva a registrarse*/
 .register-link {
+    font-size: 12px;
     color:#4D194D;
     text-decoration: none;
 }
 
 .register-link:hover {
+    font-size: 12px;
     color:#B44CB4;
     text-decoration: none;
+}
+
+div p{
+    font-size: 12px !important;
 }
 
 
