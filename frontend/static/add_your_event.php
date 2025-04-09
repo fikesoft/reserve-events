@@ -1,3 +1,15 @@
+<?php
+session_start();
+$editing = false;
+$eventData = [];
+
+if (isset($_GET['edit'])) {
+    $editing = true;
+    $eventData = $_SESSION['edit_event'] ?? [];
+    unset($_SESSION['edit_event']);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,12 +72,17 @@
 
             <!-- Formulario -->
             <div class="d-flex justify-content-center align-items-center w-100 bg_addYourEvent">
-                <form class="col-12 col-md-8 col-lg-6 p-5 shadow bg-white mt-3 mb-3 rounded-3 custom-form_addYourEvent" action="../../backend/controllers/crear_evento.php" method="POST">
+                <form class="col-12 col-md-8 col-lg-6 p-5 shadow bg-white mt-3 mb-3 rounded-3 custom-form_addYourEvent" action="<?= $editing ? '../../backend/controllers/update_event.php' : '../../backend/controllers/crear_evento.php' ?>" method="POST">
+
+                <?php if ($editing): ?>
+                <input type="hidden" name="event_id" value="<?= htmlspecialchars($eventData['id'] ?? '') ?>">
+                <?php endif; ?>
+
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-user-pen"></i></span>
-                            <input type="text" class="form-control" id="name" name="name" required>
+                            <input type="text" class="form-control" id="name" name="name" value="<?= htmlspecialchars($eventData['name'] ?? '') ?>" required>
                         </div>
                     </div>
 
@@ -73,7 +90,7 @@
                         <label for="email" class="form-label">Email</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                            <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($eventData['email'] ?? '') ?>" required>
                         </div>
                     </div>
 
@@ -81,7 +98,7 @@
                         <label for="eventName" class="form-label">Event name</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-ticket"></i></span>
-                            <input type="text" class="form-control" id="eventName" name="eventName" required>
+                            <input type="text" class="form-control" id="eventName" name="eventName" value="<?= htmlspecialchars($eventData['event_name'] ?? '') ?>" required>
                         </div>
                     </div>
 
@@ -89,7 +106,7 @@
                         <label for="description" class="form-label">Description</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-pen-to-square"></i></span>
-                            <textarea class="form-control auto-expand" id="description" name="description" rows="3" required></textarea>
+                            <textarea class="form-control auto-expand" id="description" name="description" rows="3" required><?= htmlspecialchars($eventData['description'] ?? '') ?></textarea>
                         </div>
                     </div>
 
@@ -97,7 +114,7 @@
                         <label for="date" class="form-label">Date</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-calendar"></i></span>
-                            <input type="date" class="form-control" id="date" name="date" required>
+                            <input type="date" class="form-control" id="date" name="date" value="<?= htmlspecialchars($eventData['event_date'] ?? '') ?>" required>
                         </div>
                     </div>
 
@@ -105,7 +122,7 @@
                         <label for="time" class="form-label">Time</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-clock"></i></span>
-                            <input type="time" class="form-control" id="time" name="time" required>
+                            <input type="time" class="form-control" id="time" name="time" value="<?= htmlspecialchars($eventData['event_time'] ?? '') ?>" required>
                         </div>
                     </div>
 
@@ -113,7 +130,7 @@
                         <label for="image" class="form-label">Image URL</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-file-image"></i></span>
-                            <input type="text" class="form-control" id="image" name="image" required>
+                            <input type="text" class="form-control" id="image" name="image" value="<?= htmlspecialchars($eventData['image_url'] ?? '') ?>" required>
                         </div>
                     </div>
 
@@ -121,7 +138,7 @@
                         <label for="location" class="form-label">Location</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-map-location"></i></span>
-                            <input type="text" class="form-control" id="location" name="location" required>
+                            <input type="text" class="form-control" id="location" name="location" value="<?= htmlspecialchars($eventData['location'] ?? '') ?>" required>
                         </div>
                     </div>
 
@@ -129,21 +146,34 @@
                         <label for="price" class="form-label">Price</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-money-check-dollar"></i></span>
-                            <input type="number" step="0.01" class="form-control" id="price" name="price" required>
+                            <input type="number" step="0.01" class="form-control" id="price" name="price" value="<?= htmlspecialchars($eventData['price'] ?? '') ?>" required>
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label d-block">Ticket Types</label>
                         <div class="btn-group w-100" role="group">
-                            <input type="checkbox" class="btn-check" id="general" name="ticket-types[]" value="general" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="general">General</label>
+                            <?php
+                            // Inicializar tipos de tickets
+                            $ticketTypes = isset($eventData['ticket_types']) 
+                                ? array_map('trim', explode(',', $eventData['ticket_types'])) 
+                                : [];
+                            $allowedTypes = ['general', 'vip', 'premium'];
 
-                            <input type="checkbox" class="btn-check" id="vip" name="ticket-types[]" value="vip" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="vip">VIP</label>
-
-                            <input type="checkbox" class="btn-check" id="premium" name="ticket-types[]" value="premium" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="premium">Premium</label>
+                            foreach ($allowedTypes as $type) {
+                                $checked = in_array($type, $ticketTypes) ? 'checked' : '';
+                            ?>
+                                <input type="checkbox" class="btn-check" 
+                                    id="<?= htmlspecialchars($type) ?>" 
+                                    name="ticket-types[]" 
+                                    value="<?= htmlspecialchars($type) ?>" 
+                                    autocomplete="off" 
+                                    <?= $checked ?>>
+                                <label class="btn btn-outline-primary" 
+                                    for="<?= htmlspecialchars($type) ?>">
+                                    <?= ucfirst(htmlspecialchars($type)) ?>
+                                </label>
+                            <?php } ?>
                         </div>
                     </div>
 
@@ -151,7 +181,7 @@
                         <label for="number_tickets" class="form-label">Number of tickets</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-ticket-simple"></i></span>
-                            <input type="number" class="form-control" id="number_tickets" name="number_tickets" required>
+                            <input type="number" class="form-control" id="number_tickets" name="number_tickets" value="<?= htmlspecialchars($eventData['number_of_tickets'] ?? '') ?>" required>
                         </div>
                     </div>
                     <!-- Botón enviar formulario -->

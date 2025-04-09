@@ -65,4 +65,32 @@ if ($conn->query($sql_create_table_events) !== TRUE) {
     die("Error al crear la tabla de eventos: " . $conn->error);
 }
 
+// Consulta para contar cuántos eventos existen en la tabla
+$sql_count_events = "SELECT COUNT(*) AS total_events FROM events";
+$result = $conn->query($sql_count_events);
+
+if ($result) {
+    $row = $result->fetch_assoc();
+    $total_events = $row['total_events'];
+
+    // Verificar si hay menos de 5 eventos
+    if ($total_events < 5) {
+        // Insertar los eventos predeterminados solo si hay menos de 5 eventos
+        $sql_insert_events = "
+        INSERT INTO events (name, email, event_name, description, event_date, event_time, image_url, location, price, ticket_type, number_of_tickets)
+        VALUES
+        ('Juan Pérez', 'juan@example.com', 'Concierto de Rock', 'Una noche inolvidable con las mejores bandas locales.', '2025-06-15', '20:00:00', 'https://dg9aaz8jl1ktt.cloudfront.net/uploaded_files/000/373/898/verkami_96a2aafefc1bb088f028e38424540650.jpg?1667978137', 'Auditorio Nacional', 45.00, 'General', 200),
+        ('María López', 'maria@example.com', 'Feria de Tecnología', 'Exposición de los últimos avances tecnológicos.', '2025-07-10', '10:00:00', 'https://www.shutterstock.com/image-vector/vector-poster-banner-rock-festival-600nw-1211649412.jpg', 'Centro de Convenciones', 25.00, 'Entrada', 500),
+        ('Carlos Gómez', 'carlos@example.com', 'Festival de Cine', 'Proyección de cortometrajes internacionales.', '2025-08-05', '18:00:00', 'https://i.pinimg.com/236x/a2/b0/c9/a2b0c97516575fa5363dc0e5a6f08f57.jpg', 'Cine Independiente', 30.00, 'VIP', 150),
+        ('Ana Torres', 'ana@example.com', 'Conferencia de Marketing', 'Aprende de los expertos en marketing digital.', '2025-05-20', '09:00:00', 'https://previews.123rf.com/images/paseven/paseven2011/paseven201100047/158662131-afiche-para-un-concierto-de-m%C3%BAsica-en-vivo-con-una-guitarra-abstracta-brillante-y-letras-sobre-un.jpg', 'Hotel Gran Vista', 60.00, 'Profesional', 100),
+        ('Luis Fernández', 'luis@example.com', 'Carrera 5K', 'Carrera familiar en el parque central.', '2025-09-12', '07:30:00', 'https://www.ritmo.es/Portals/0/EasyDNNnews/1275/RP201212_FOTO3.jpg', 'Parque Central', 15.00, 'Corredor', 300);
+        ";
+
+        if ($conn->query($sql_insert_events) !== TRUE) {
+            die("Error al insertar eventos predeterminados: " . $conn->error);
+        }
+    }
+    } else {
+    die("Error al contar los eventos: " . $conn->error);
+}
 ?>
