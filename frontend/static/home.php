@@ -8,6 +8,7 @@ if (!isset($_SESSION['user_id'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +21,7 @@ if (!isset($_SESSION['user_id'])) {
     <!-- Cargar Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
     <!-- Encabezado -->
     <header class="d-flex justify-content-center justify-content-md-between p-3 flex-md-row flex-column">
@@ -41,20 +43,18 @@ if (!isset($_SESSION['user_id'])) {
                 <button class="search-box-button"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
             <div class="d-flex">
-            <a href="carrito.php" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <a href="perfil.php" class="icons mx-3"><?= $_SESSION['user_name'] ?></a>
-                <?php if ($_SESSION["user_role"] === "admin"): ?>
-                    <a><?php echo $_SESSION["user_role"]; ?></a>
+                <a href="carrito.php" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="#" class="icons mx-3"><?= $_SESSION['user_name'] ?></a>
+                    <?php if ($_SESSION["user_role"] === "admin"): ?>
+                        <a><?php echo $_SESSION["user_role"]; ?></a>
+                    <?php endif; ?>
+
+                <?php else: ?>
+                    <a href="login.php" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
                 <?php endif; ?>
-                
-            <?php else: ?>
-                <a href="login.php" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
-            <?php endif; ?>
             </div>
         </div>
-        
-
     </header>
 
     <div class="d-flex flex-column">
@@ -62,6 +62,7 @@ if (!isset($_SESSION['user_id'])) {
             <section class="row d-flex justify-content-center gap-3 g-2 mb-4">
                 <div class="col-lg-4 d-flex flex-column align-items-lg-start align-items-center justify-content-center gap-3 contentHome">
                     <h1 class="text-lg-start">FIND MORE OF THE RANDOM EVENTS</h1>
+
                     <p class="text-start">Incredible live shows. Upfront pricing. Relevant recommendations. We make going out easy.</p>
                     <button class="browse-btn">Browse events</button>
                 </div>
@@ -77,64 +78,52 @@ if (!isset($_SESSION['user_id'])) {
             <section class="row d-flex flex-column align-items-center mt-5 w-100">
                 <div class="w-100 text-center">
                     <h1 class="titleRandom">RANDOM SELECTION</h1>
+                    <?php if ($_SESSION['user_role'] === "admin"): ?>
+                        <a href="add_your_event.php">Create Event</a>
+                    <?php endif ?>
                 </div>
-                <div class="d-flex flex-column justify-content-center align-items-center  gap-4">
+                <div class="d-flex flex-column justify-content-center align-items-center gap-4">
                     <div class="row d-flex flex-row justify-content-center flex-wrap w-100 gap-3 mt-5">
-                        <div class="col-lg-2 col-md-4 col-6 event-card">
-                            <?php   if( $_SESSION['user_role'] === "admin"): ?>
-                                <div>
-                                    <p>Editar evento
-                                    <p>borrar evento
-                                </div>
-                            <?php   endif ?>
-                            <img class="img-fluid" src="../assets/img/eventPhoto.png" alt="photoEvent">
-                            <div class="text-start mt-2">
-                                <p>Beach Please Festival 4 days pass</p>
-                                <p>Madrid, Plaza de Sol</p>
-                                <p>Monday 18 Jun.</p>
-                                <p>From 85 $</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-4 col-6 event-card">
-                            <img class="img-fluid" src="../assets/img/eventPhoto.png" alt="photoEvent">
-                            <div class="text-start mt-2">
-                                <p>Summer Music Festival</p>
-                                <p>Paris, Eiffel Tower</p>
-                                <p>July 15-17</p>
-                                <p>From 120 $</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-4 col-6 event-card">
-                            <img class="img-fluid" src="../assets/img/eventPhoto.png" alt="photoEvent">
-                            <div class="text-start mt-2">
-                                <p>Summer Music Festival</p>
-                                <p>Paris, Eiffel Tower</p>
-                                <p>July 15-17</p>
-                                <p>From 120 $</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-4 col-6 event-card">
-                            <img class="img-fluid" src="../assets/img/eventPhoto.png" alt="photoEvent">
-                            <div class="text-start mt-2">
-                                <p>Summer Music Festival</p>
-                                <p>Paris, Eiffel Tower</p>
-                                <p>July 15-17</p>
-                                <p>From 120 $</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-4 col-6 event-card">
-                            <img class="img-fluid" src="../assets/img/eventPhoto.png"alt="photoEvent">
-                            <div class="text-start mt-2">
-                                <p>Summer Music Festival</p>
-                                <p>Paris, Eiffel Tower</p>
-                                <p>July 15-17</p>
-                                <p>From 120 $</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 d-flex flex-md-row flex-column align-items-center justify-content-center gap-4 text-center mt-4 w-100 mb-2">
-                        <p class="text-center" style="max-width: 400px; font-size: 24px !important;">Check out some of the most popular events coming up in your city, from festivals to small events.</p>
-                        <button class="browse-btn">Browse events</button>
+                        <?php
+                        // Conexión a la base de datos
+                        require_once '../../backend/config/database.php';
+
+                        try {
+                            // Consulta SQL para obtener los eventos
+                            $sql = "SELECT * FROM events LIMIT 5";
+                            $result = $conn->query($sql);
+
+                            // Verificar si hay resultados
+                            if ($result->num_rows > 0) {
+                                // Iterar sobre los resultados
+                                while ($event = $result->fetch_assoc()) {
+                        ?>
+                                    <div class="col-lg-2 col-md-4 col-6 event-card">
+                                        <?php if ($_SESSION['user_role'] === "admin"): ?>
+                                            <div class="d-flex justify-content-end gap-3 fs-5">
+                                                <a href="../../backend/controllers/edit_event.php?id=<?= $event['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <a class="text-danger" href="../../backend/controllers/delete_event.php?id=<?= $event['id'] ?>"><i class="fa-solid fa-trash"></i></a>
+                                            </div>
+                                        <?php endif; ?>
+                                        <img class="img-fluid" src="<?= htmlspecialchars($event['image_url']) ?>" alt="Event Photo" style="aspect-ratio: 1/1;">
+                                        <div class="text-start mt-2">
+                                            <p><?= htmlspecialchars($event['event_name']) ?></p>
+                                            <p><?= htmlspecialchars($event['location']) ?></p>
+                                            <p><?= htmlspecialchars($event['event_date']) ?></p>
+                                            <p>From <?= htmlspecialchars($event['price']) ?> $</p>
+                                        </div>
+                                    </div>
+                        <?php
+                                }
+                            } else {
+                                // Si no hay eventos, mostrar un mensaje
+                                echo '<div class="col-12 text-center"><p>No events found.</p></div>';
+                            }
+                        } catch (Exception $e) {
+                            // Manejar errores
+                            echo '<div class="col-12 text-center"><p>Error loading events: ' . htmlspecialchars($e->getMessage()) . '</p></div>';
+                        }
+                        ?>
                     </div>
                 </div>
             </section>
@@ -153,4 +142,5 @@ if (!isset($_SESSION['user_id'])) {
         </section>
     </div>
 </body>
+
 </html>
