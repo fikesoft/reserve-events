@@ -81,8 +81,10 @@ if (!isset($_SESSION['user_id'])) {
 
                         try {
                             // Consulta SQL para obtener los eventos en el carrito para el usuario
-                            $sql = "SELECT * FROM cart WHERE user_id = {$_SESSION['user_id']}";                         
-                            $result = $conn->query($sql);
+                            $stmt = $conn->prepare("SELECT * FROM cart WHERE user_id = ?");
+                            $stmt->bind_param("i", $_SESSION['user_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
 
                             // Verificar si hay resultados
                             if ($result->num_rows > 0) {
@@ -213,6 +215,18 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
                 </div>
             </div>
+            <?php
+                if ($result->num_rows > 0) {
+            ?>
+            <div class=" d-flex justify-content-center row mb-4 mt-5 ">
+                <button class="empty-cart-button  w-50 p-3 " type="submit" onclick="window.location.href='pago.html'">Pagar</button>
+            </div>
+            <?php
+                            }
+            ?>
+            </form>
+        </div>
+
     </main>
 
         <!-- Footer -->
