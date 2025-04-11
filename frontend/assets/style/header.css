@@ -58,4 +58,8 @@
         transition: color 0.3s;
     }
 
-
+/*Fuente para body*/
+body{
+    font-family: "Montserrat", sans-serif;
+    
+}

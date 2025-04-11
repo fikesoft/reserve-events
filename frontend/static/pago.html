@@ -21,6 +21,32 @@
 </head>
 
 <body>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const radioCreditCard = document.getElementById("credit-card");
+            const radioPaypal = document.getElementById("paypal");
+            const divCreditCard = document.getElementById("div-credit-card");
+            const divPaypal = document.getElementById("div-paypal");
+
+            function togglePayment(){
+                if (radioCreditCard.checked){
+                    divCreditCard.removeAttribute("hidden");
+                    divPaypal.setAttribute("hidden", true);
+                }else if (radioPaypal.checked) {
+                    divCreditCard.setAttribute("hidden", true);
+                    divPaypal.removeAttribute("hidden");
+                }
+                
+            }
+
+            radioCreditCard.addEventListener("change", togglePayment);
+            radioPaypal.addEventListener("change", togglePayment);
+
+        });
+    </script>
+
+
     <!-- Encabezado -->
     <header class="d-flex justify-content-center justify-content-md-between p-3 flex-md-row flex-column">
         <div class="d-flex flex-md-row flex-column align-items-center gap-4">
@@ -155,7 +181,7 @@
 
             <!--Contenedor de la tarjeta, para poner los datos de la misma-->
 
-            <div class="pago-datos-tarjeta container p-2 mt-3 mb-3"  id="div-credit-card" style=" max-width: 280px; float: left;" hidden>
+            <div class="pago-datos-tarjeta container p-2 mt-3 mb-3"  id="div-credit-card" style=" max-width: 280px; float: left;" hidden >
 
                 <!--Fila titulo y imagen de tarjeta-->
 
@@ -219,7 +245,7 @@
 
 
             <!--Botón paypal hidden-->
-            <div class="row align-items-center justify-content-center mt-4 mb-4" id="div-paypal">
+            <div class="row align-items-center justify-content-center mt-4 mb-4" id="div-paypal" >
                 <button class="pago-btn-paypal w-50 rounded"> <i class="pago-icon-paypal bi bi-paypal"></i>
                     PayPal</button>
             </div>
