@@ -14,7 +14,9 @@ if (!isset($_SESSION['user_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Events</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@100;400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@100;400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="../assets/style/style_home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/style/header.css">
@@ -30,7 +32,7 @@ if (!isset($_SESSION['user_id'])) {
             <nav class="d-flex flex-grow-1 justify-content-center justify-content-md-start">
                 <ul class="d-flex gap-4 m-0 p-0 list-unstyled align-items-center justify-content-start">
                     <li><a href="home.php" class="nav-header">Home</a></li>
-                    <li><a href="catalog-events.html" class="nav-header">Events</a></li>
+                    <li><a href="catalog-events.php" class="nav-header">Events</a></li>
                     <li><a href="about-us.html" class="nav-header">About us</a></li>
                 </ul>
             </nav>
@@ -39,8 +41,12 @@ if (!isset($_SESSION['user_id'])) {
         <!-- Buscador e Iconos -->
         <div class="d-flex align-items-center gap-4 mt-3 mt-md-0 flex-md-row flex-column">
             <div class="d-flex align-items-center search-box">
-                <input class="search-box-input" type="text" placeholder="Search...">
-                <button class="search-box-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <form action="buscar.php" method="GET">
+                    <input class="search-box-input" type="text" name="query" placeholder="Search...">
+                    <button class="search-box-button">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
             </div>
             <div class="d-flex align-items-center gap-3">
                 <a href="cart.html" class="icons mx-3" aria-label="Ver carrito">
@@ -80,10 +86,12 @@ if (!isset($_SESSION['user_id'])) {
     <div class="d-flex flex-column">
         <div class="container d-flex flex-column align-items-center mt-5">
             <section class="row d-flex justify-content-center gap-3 g-2 mb-4">
-                <div class="col-lg-4 d-flex flex-column align-items-lg-start align-items-center justify-content-center gap-3 contentHome">
+                <div
+                    class="col-lg-4 d-flex flex-column align-items-lg-start align-items-center justify-content-center gap-3 contentHome">
                     <h1 class="text-lg-start">FIND MORE OF THE RANDOM EVENTS</h1>
 
-                    <p class="text-start">Incredible live shows. Upfront pricing. Relevant recommendations. We make going out easy.</p>
+                    <p class="text-start">Incredible live shows. Upfront pricing. Relevant recommendations. We make
+                        going out easy.</p>
                     <button class="browse-btn">Browse events</button>
                 </div>
                 <div class="row col-lg-7 d-flex justify-content-center">
@@ -117,15 +125,19 @@ if (!isset($_SESSION['user_id'])) {
                             if ($result->num_rows > 0) {
                                 // Iterar sobre los resultados
                                 while ($event = $result->fetch_assoc()) {
-                        ?>
+                                    ?>
                                     <div class="col-lg-2 col-md-4 col-6 event-card">
                                         <?php if ($_SESSION['user_role'] === "admin"): ?>
                                             <div class="d-flex justify-content-end gap-3 fs-5">
-                                                <a href="../../backend/controllers/edit_event.php?id=<?= $event['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                                                <a class="text-danger" href="../../backend/controllers/delete_event.php?id=<?= $event['id'] ?>"><i class="fa-solid fa-trash"></i></a>
+                                                <a href="../../backend/controllers/edit_event.php?id=<?= $event['id'] ?>"><i
+                                                        class="fa-solid fa-pen-to-square"></i></a>
+                                                <a class="text-danger"
+                                                    href="../../backend/controllers/delete_event.php?id=<?= $event['id'] ?>"><i
+                                                        class="fa-solid fa-trash"></i></a>
                                             </div>
                                         <?php endif; ?>
-                                        <img class="img-fluid" src="<?= htmlspecialchars($event['image_url']) ?>" alt="Event Photo" style="aspect-ratio: 1/1;">
+                                        <img class="img-fluid" src="<?= htmlspecialchars($event['image_url']) ?>" alt="Event Photo"
+                                            style="aspect-ratio: 1/1;">
                                         <div class="text-start mt-2">
                                             <p><?= htmlspecialchars($event['event_name']) ?></p>
                                             <p><?= htmlspecialchars($event['location']) ?></p>
@@ -133,7 +145,7 @@ if (!isset($_SESSION['user_id'])) {
                                             <p>From <?= htmlspecialchars($event['price']) ?> $</p>
                                         </div>
                                     </div>
-                        <?php
+                                    <?php
                                 }
                             } else {
                                 // Si no hay eventos, mostrar un mensaje
