@@ -4,6 +4,15 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
+require_once '../../backend/config/database.php';
+require_once '../../backend/controllers/cart.php';
+
+$userId = $_SESSION['user_id'];
+$cartLogic = new Cart($conn, $userId);
+$cartItems = $cartLogic->getCartItems();
+$cartTotals = $cartLogic->calculateCartTotals($cartItems);
+$cartItemsData = $cartLogic->getCartItemsData($cartItems);
+
 ?>
 
 <!DOCTYPE html>
@@ -75,72 +84,40 @@ if (!isset($_SESSION['user_id'])) {
                 </div>
                 <hr style="border: 1px solid #4d194d"/>
                 <div class="p-5 text-center">
-                    <?php
-                        // Conexión a la base de datos
-                        require_once '../../backend/config/database.php';
+                <?php if (!empty($cartItemsData)) : ?>
+                    <?php foreach ($cartItemsData as $data) : ?>
+                        <li class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="col-4 d-flex flex-column justify-content-center">
+                                <strong><?php echo htmlspecialchars($data['event']['event_name']); ?></strong>
+                                <p class="text-muted"><?php echo htmlspecialchars($data['event']['name']); ?> - <?php echo htmlspecialchars(date('d/m/Y', strtotime($data['event']['event_date']))); ?></p>
+                            </div>
 
-                        try {
-                            // Consulta SQL para obtener los eventos en el carrito para el usuario
-                            $stmt = $conn->prepare("SELECT * FROM cart WHERE user_id = ?");
-                            $stmt->bind_param("i", $_SESSION['user_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
+                            <div class="col-4 d-flex align-items-center justify-content-between rounded-pill px-3 py-1" style="background-color: #b44cb4; width: 100px;">
+                                <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
+                                    href="../../backend/controllers/update_cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=decrement"
+                                    style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
+                                    <i class="fas fa-minus"></i>
+                                </a>
 
-                            // Verificar si hay resultados
-                            if ($result->num_rows > 0) {
-                                $total_carrito = 0;
-                                // Iterar sobre los resultados
-                                while ($product_cart = $result->fetch_assoc()) {
-                                    $event_id = $product_cart['event_id'];
-                                    $quantity = $product_cart['quantity'];
+                                <span class="text-white fs-6"><?php echo $data['item']['quantity']; ?></span>
 
-                                    $sqlEvt = "SELECT * FROM events WHERE id = {$event_id}";                         
-                                    $resultEvt = $conn->query($sqlEvt);
-                                    $event = $resultEvt->fetch_assoc();
-
-                                    if($event){
-                                        $subtotal = $event['price'] * $quantity;
-                                        $total_carrito += $subtotal;
-                    ?>
-                                        <li class="d-flex justify-content-between align-items-center mb-3">
-                                            <div class="col-4 d-flex flex-column justify-content-center">
-                                                <strong><?php echo htmlspecialchars($event['event_name']); ?></strong>
-                                                <p class="text-muted"><?php echo htmlspecialchars($event['name']); ?> - <?php echo htmlspecialchars(date('d/m/Y', strtotime($event['event_date']))); ?></p>
-                                            </div>
-
-                                            <div class="col-4 d-flex align-items-center justify-content-between rounded-pill px-3 py-1" style="background-color: #b44cb4; width: 100px;">
-                                                <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                                                    href="../../backend/controllers/update_cart.php?id=<?= $product_cart['id'] ?>&quantity=<?= $quantity ?>&action=decrement"
-                                                    style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
-                                                    <i class="fas fa-minus"></i>
-                                                </a>
-
-                                                <span class="text-white fs-6"><?php echo $quantity; ?></span>
-
-                                                <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                                                    href="../../backend/controllers/update_cart.php?id=<?= $product_cart['id'] ?>&quantity=<?= $quantity ?>&action=increment"
-                                                    style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
-                                                    <i class="fas fa-plus"></i>
-                                                </a>
+                                <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
+                                    href="../../backend/controllers/update_cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=increment"
+                                    style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
+                                    <i class="fas fa-plus"></i>
+                                </a>
                                                 
-                                            </div>
-                                            <div class="col-4"><?php echo number_format($event['price'], 2); ?> € x <?php echo $quantity; ?> = <strong><?php echo number_format($subtotal, 2); ?> €</strong>
-                                            <a class=" ms-4 text-danger" href="../../backend/controllers/delete_cart.php?id=<?= $product_cart['id'] ?>"><i class="fa-solid fa-trash"></i></a></div>
-                                        </li>
+                            </div>
 
-                    <?php
-                                    }
-                                }
-                            } else {
-                                // Si no hay eventos en el carrito, mostrar un mensaje
-                                echo '<div class="col-12 text-center"><p>Your cart is empty</p></div>
-                                <button class="empty-cart-button">Find your event here!</button>';
-                            }
-                        } catch (Exception $e) {
-                            // Manejar errores
-                            echo '<div class="col-12 text-center"><p>Error loading cart: ' . htmlspecialchars($e->getMessage()) . '</p></div>';
-                        }
-                        ?>
+                            <div class="col-4"><?php echo number_format($data['event']['price'], 2); ?> € x <?php echo $data['item']['quantity']; ?> = <strong><?php echo number_format($data['subtotal'], 2); ?> €</strong>
+                            <a class=" ms-4 text-danger" href="../../backend/controllers/delete_cart.php?id=<?= $data['item']['id'] ?>"><i class="fa-solid fa-trash"></i></a></div>
+                        </li>
+
+                    <?php endforeach; ?>
+                    <?php else : ?>
+                        <div class="col-12 text-center"><p>Your cart is empty</p></div>
+                        <button class="empty-cart-button">Find your event here!</button>
+                <?php endif; ?>
                 </div>
             </div>
 
@@ -150,80 +127,40 @@ if (!isset($_SESSION['user_id'])) {
                     <h2 class="resumen-pedido">Order Summary</h2>
                     <hr style="margin-top: 0px; border: 1px solid #4d194d; font-size: 24px;"/>
                     <div class="text-center" style="height: 300px; font-size: 12px;">
-                    <?php
-                        // Conexión a la base de datos
-                        require_once '../../backend/config/database.php';
-
-                        try {
-                            // Consulta SQL para obtener los eventos en el carrito para el usuario
-                            $sql = "SELECT * FROM cart WHERE user_id = {$_SESSION['user_id']}";                         
-                            $result = $conn->query($sql);
-                            $total_carrito = 0;
-                            $total_quantity = 0;
-
-                            // Verificar si hay resultados
-                            if ($result->num_rows > 0) {
-
-                                // Iterar sobre los resultados
-                                while ($product_cart = $result->fetch_assoc()) {
-                                    $event_id = $product_cart['event_id'];
-                                    $quantity = $product_cart['quantity'];
-
-                                    $sqlEvt = "SELECT * FROM events WHERE id = {$product_cart['event_id']}";                         
-                                    $resultEvt = $conn->query($sqlEvt);
-                                    $event = $resultEvt->fetch_assoc();
-
-                                    if($event){
-                                        $subtotal = $event['price'] * $quantity;
-                                        $total_carrito += $subtotal;
-                                        $total_quantity += $quantity;
-                    ?>
-                                        <li class="d-flex justify-content-between ali
-                                        gn-items-center mb-3">
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <strong><?php echo htmlspecialchars($event['event_name']); ?></strong>
-                                            </div>
-                                            <div><strong><?php echo number_format($subtotal, 2); ?> €</strong></div>
-                                        </li>
-
-                    <?php
-                                    }
-                                }
-                            } else {
-                                // Si no hay eventos en el carrito, mostrar un mensaje
-                                echo '<div class="col-12 text-center"><p>Your cart is empty</p></div>';
-                            }
-                        } catch (Exception $e) {
-                            // Manejar errores
-                            echo '<div class="col-12 text-center"><p>Error loading cart: ' . htmlspecialchars($e->getMessage()) . '</p></div>';
-                        }
-                        ?>
-                    </div>
+                        <?php if (!empty($cartItemsData)) : ?>
+                            <?php foreach ($cartItemsData as $data) : ?>
+                                <li class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <strong><?php echo htmlspecialchars($data['event']['event_name']); ?></strong>
+                                    </div>
+                                    <div><strong><?php echo number_format($data['subtotal'], 2); ?> €</strong></div>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                        <div class="col-12 text-center"><p>Your cart is empty</p></div>
+                        <?php endif; ?>
+                </div>
                     <hr style="margin-top: 0px; border: 1px solid #4d194d" />
                     <div class="d-flex justify-content-between">
                         <span>Taxes</span>
-                        <div><?php echo number_format($total_carrito*0.1, 2); ?> €</div>
+                        <div><?php echo number_format($cartTotals['total_carrito']*0.1, 2); ?> €</div>
                     </div>
                     <div class="d-flex justify-content-between flex-wrap">
                         <span>Management</span>
-                        <div><?php echo number_format($total_quantity, 2); ?> €</div>
+                        <div><?php echo number_format($cartTotals['total_quantity'], 2); ?> €</div>
                     </div>
                     <hr style=" border: 1px solid #4d194d" >
                     <div class="d-flex justify-content-between flex-wrap">
                         <strong>Total</strong>
-                        <div><strong><?php echo number_format($total_carrito + $total_quantity, 2); ?> €</strong></div>
+                        <div><strong><?php echo number_format($cartTotals['total_carrito'] + $cartTotals['total_quantity'], 2); ?> €</strong></div>
                     </div>
                 </div>
             </div>
-            <?php
-                if ($result->num_rows > 0) {
-            ?>
+            <?php if (!empty($cartItemsData)) : ?>
             <div class=" d-flex justify-content-center row mb-4 mt-5 ">
                 <button class="empty-cart-button  w-50 p-3 " type="submit" onclick="window.location.href='pago.html'">Pagar</button>
             </div>
-            <?php
-                            }
-            ?>
+            <?php endif; ?>
             </form>
         </div>
 
