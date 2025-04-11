@@ -22,6 +22,30 @@
 
 <body>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const radioCreditCard = document.getElementById("credit-card");
+            const radioPaypal = document.getElementById("paypal");
+            const divCreditCard = document.getElementById("div-credit-card");
+            const divPaypal = document.getElementById("div-paypal");
+
+            function togglePayment(){
+                if (radioCreditCard.checked){
+                    divCreditCard.removeAttribute("hidden");
+                    divPaypal.setAttribute("hidden", true);
+                }else if (radioPaypal.checked) {
+                    divCreditCard.setAttribute("hidden", true);
+                    divPaypal.removeAttribute("hidden");
+                }
+                
+            }
+
+            radioCreditCard.addEventListener("change", togglePayment);
+            radioPaypal.addEventListener("change", togglePayment);
+
+        });
+    </script>
+
 
     <!-- Encabezado -->
     <header class="d-flex justify-content-center justify-content-md-between p-3 flex-md-row flex-column">
@@ -30,8 +54,8 @@
             <nav class="d-flex flex-grow-1 justify-content-center justify-content-md-start">
                 <ul class="d-flex gap-4 m-0 p-0 list-unstyled align-items-center justify-content-start">
                     <li><a href="home.html" class="nav-header">Home</a></li>
-                    <li><a href="#Eventos" class="nav-header">Events</a></li>
-                    <li><a href="#AboutUs" class="nav-header">About us</a></li>
+                    <li><a href="catalog-events.html" class="nav-header">Events</a></li>
+                    <li><a href="about-us.html" class="nav-header">About us</a></li>
                 </ul>
             </nav>
         </div>
@@ -43,8 +67,8 @@
                 <button class="search-box-button"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
             <div class="d-flex">
-                <a href="carrito.html" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
-                <a href="login.html" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
+                <a href="cart.html" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="login.php" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
             </div>
 
         </div>
@@ -365,9 +389,9 @@
                 <!-- Menú de navegación -->
                 <nav class=" col-12 col-md-6 mt-3">
                     <ul class="list-unstyled">
-                        <li><a href="#" class="nav-footer">Home</a></li>
-                        <li><a href="#" class="nav-footer">Events</a></li>
-                        <li><a href="#" class="nav-footer">About us</a></li>
+                        <li><a href="home.php" class="nav-footer">Home</a></li>
+                        <li><a href="catalog-events.html" class="nav-footer">Events</a></li>
+                        <li><a href="about-us.html" class="nav-footer">About us</a></li>
                     </ul>
                 </nav>
 
