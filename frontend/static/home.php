@@ -41,19 +41,45 @@ if (!isset($_SESSION['user_id'])) {
         <!-- Buscador e Iconos -->
         <div class="d-flex align-items-center gap-4 mt-3 mt-md-0 flex-md-row flex-column">
             <div class="d-flex align-items-center search-box">
-                <input class="search-box-input" type="text" placeholder="Search...">
-                <button class="search-box-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <!-- Buscador -->
+            <form action="/frontend/static/buscador.php" method="GET">
+                <input class="search-box-input" type="text" name="query" placeholder="Search...">
+                <button class="search-box-button">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+            
             </div>
-            <div class="d-flex">
-                <a href="cart.php" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
+            <div class="d-flex align-items-center gap-3">
+                <a href="cart.html" class="icons mx-3" aria-label="Ver carrito">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+                
                 <?php if (isset($_SESSION['user_id'])): ?>
-                    <a href="#" class="icons mx-3"><?= $_SESSION['user_name'] ?></a>
-                    <?php if ($_SESSION["user_role"] === "admin"): ?>
-                        <a><?php echo $_SESSION["user_role"]; ?></a>
-                    <?php endif; ?>
-                    <a href="logout.php" class="btn btn-danger">Logout</a>
+                    
+                    <!-- Menú desplegable de usuario -->
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?= htmlspecialchars($_SESSION['user_name']) ?>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <?php if ($_SESSION["user_role"] === "admin"): ?>
+                                <li>
+                                    <span class="dropdown-item-text">
+                                        <span class="badge badge-custom">Admin</span>
+                                    </span>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                            <?php endif; ?>
+                            <li><a class="dropdown-item text-danger" href="../../backend/controllers/logout.php">Sign out</a></li>
+                        </ul>
+                    </div>
                 <?php else: ?>
-                    <a href="login.php" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
+                    <!-- Enlace al login -->
+                    <a href="login.php" class="icons" aria-label="Iniciar sesión">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
                 <?php endif; ?>
             </div>
         </div>
@@ -149,6 +175,9 @@ if (!isset($_SESSION['user_id'])) {
             </div>
         </section>
     </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
