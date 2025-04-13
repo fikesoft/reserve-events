@@ -42,7 +42,7 @@ if (!isset($_SESSION['user_id'])) {
         <div class="d-flex align-items-center gap-4 mt-3 mt-md-0 flex-md-row flex-column">
             <div class="d-flex align-items-center search-box">
             <!-- Buscador -->
-            <form action="../../backend/controllers/buscador.php" method="GET">
+            <form action="/frontend/static/buscador.php" method="GET">
                 <input class="search-box-input" type="text" name="query" placeholder="Search...">
                 <button class="search-box-button">
                     <i class="fa-solid fa-magnifying-glass"></i>
