@@ -1,11 +1,11 @@
+/* Cargar la fuente Montserrat desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
 
-
-
-body {
-    background-color: white;
+.font-family_cart {
     font-family: 'Montserrat', sans-serif;
+    background-color: white;
 }
+
 
 .empty-cart-button {
     background-color: #4d194d;

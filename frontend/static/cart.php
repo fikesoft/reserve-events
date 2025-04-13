@@ -1,3 +1,20 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+require_once '../../backend/config/database.php';
+require_once '../../backend/controllers/cart.php';
+
+$userId = $_SESSION['user_id'];
+$cartLogic = new Cart($conn, $userId);
+$cartItems = $cartLogic->getCartItems();
+$cartTotals = $cartLogic->calculateCartTotals($cartItems);
+$cartItemsData = $cartLogic->getCartItemsData($cartItems);
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -48,17 +65,14 @@
                 <button class="search-box-button"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
             <div class="d-flex">
-                <a href="cart.html" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="cart.php" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
                 <a href="login.php" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
             </div>
             
         </div>
     </header>
-    
-</body>
 
-<body>
-    <main class="d-flex align-items-center justify-content-center mt-5 mb-5">
+    <main class="d-flex align-items-center justify-content-center font-family_cart mt-5 mb-5">
         <div class="container row d-flex flex-md-row flex-column">
 
             <div class="col-md-8 ">
@@ -70,8 +84,40 @@
                 </div>
                 <hr style="border: 1px solid #4d194d"/>
                 <div class="p-5 text-center">
-                    <p>Your cart is empty</p>
-                    <button class="empty-cart-button">Find your event here!</button>
+                <?php if (!empty($cartItemsData)) : ?>
+                    <?php foreach ($cartItemsData as $data) : ?>
+                        <li class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="col-4 d-flex flex-column justify-content-center">
+                                <strong><?php echo htmlspecialchars($data['event']['event_name']); ?></strong>
+                                <p class="text-muted"><?php echo htmlspecialchars($data['event']['name']); ?> - <?php echo htmlspecialchars(date('d/m/Y', strtotime($data['event']['event_date']))); ?></p>
+                            </div>
+
+                            <div class="col-4 d-flex align-items-center justify-content-between rounded-pill px-3 py-1" style="background-color: #b44cb4; width: 100px;">
+                                <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
+                                    href="../../backend/controllers/update_cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=decrement"
+                                    style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
+                                    <i class="fas fa-minus"></i>
+                                </a>
+
+                                <span class="text-white fs-6"><?php echo $data['item']['quantity']; ?></span>
+
+                                <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
+                                    href="../../backend/controllers/update_cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=increment"
+                                    style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                                                
+                            </div>
+
+                            <div class="col-4"><?php echo number_format($data['event']['price'], 2); ?> € x <?php echo $data['item']['quantity']; ?> = <strong><?php echo number_format($data['subtotal'], 2); ?> €</strong>
+                            <a class=" ms-4 text-danger" href="../../backend/controllers/delete_cart.php?id=<?= $data['item']['id'] ?>"><i class="fa-solid fa-trash"></i></a></div>
+                        </li>
+
+                    <?php endforeach; ?>
+                    <?php else : ?>
+                        <div class="col-12 text-center"><p>Your cart is empty</p></div>
+                        <button class="empty-cart-button">Find your event here!</button>
+                <?php endif; ?>
                 </div>
             </div>
 
@@ -81,27 +127,45 @@
                     <h2 class="resumen-pedido">Order Summary</h2>
                     <hr style="margin-top: 0px; border: 1px solid #4d194d; font-size: 24px;"/>
                     <div class="text-center" style="height: 300px; font-size: 12px;">
-                        <p>Your cart is empty</p>
-                    </div>
+                        <?php if (!empty($cartItemsData)) : ?>
+                            <?php foreach ($cartItemsData as $data) : ?>
+                                <li class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <strong><?php echo htmlspecialchars($data['event']['event_name']); ?></strong>
+                                    </div>
+                                    <div><strong><?php echo number_format($data['subtotal'], 2); ?> €</strong></div>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                        <div class="col-12 text-center"><p>Your cart is empty</p></div>
+                        <?php endif; ?>
+                </div>
                     <hr style="margin-top: 0px; border: 1px solid #4d194d" />
                     <div class="d-flex justify-content-between">
                         <span>Taxes</span>
-                        <span>0,00 €</span>
+                        <div><?php echo number_format($cartTotals['total_carrito']*0.1, 2); ?> €</div>
                     </div>
                     <div class="d-flex justify-content-between flex-wrap">
                         <span>Management</span>
-                        <span>0,00 €</span>
+                        <div><?php echo number_format($cartTotals['total_quantity'], 2); ?> €</div>
                     </div>
                     <hr style=" border: 1px solid #4d194d" >
                     <div class="d-flex justify-content-between flex-wrap">
                         <strong>Total</strong>
-                        <strong>0,00 €</strong>
+                        <div><strong><?php echo number_format($cartTotals['total_carrito'] + $cartTotals['total_quantity'], 2); ?> €</strong></div>
                     </div>
                 </div>
             </div>
+            <?php if (!empty($cartItemsData)) : ?>
+            <div class=" d-flex justify-content-center row mb-4 mt-5 ">
+                <button class="empty-cart-button  w-50 p-3 " type="submit" onclick="window.location.href='pago.html'">Pagar</button>
+            </div>
+            <?php endif; ?>
+            </form>
+        </div>
+
     </main>
 
-    <body>
         <!-- Footer -->
         <footer class="container-fluid p-5">
             <div class="d-flex flex-column align-items-center">
@@ -139,7 +203,6 @@
             </div>
             
         </footer>
-    </body>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
