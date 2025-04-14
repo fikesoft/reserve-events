@@ -1,13 +1,13 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <!--CSS Header -->
-    <link rel="stylesheet" href="../assets/style/header.css">
-    <!-- CSS Footer -->
-    <link rel="stylesheet" href="../assets/style/footer.css">
     <!-- CSS Login -->
     <link rel="stylesheet" href="../assets/style/login.css">
     <!-- Importar Bootstrap CSS -->
@@ -18,33 +18,9 @@
 </head>
 
 <body>
-    <!-- Encabezado -->
-    <header class="d-flex justify-content-center justify-content-md-between p-3 flex-md-row flex-column">
-        <div class="d-flex flex-md-row flex-column align-items-center gap-4">
-            <img class="logo-header" src="../assets/img/logo.png" alt="Logo de la empresa">
-            <nav class="d-flex flex-grow-1 justify-content-center justify-content-md-start">
-                <ul class="d-flex gap-4 m-0 p-0 list-unstyled align-items-center justify-content-start">
-                    <li><a href="home.php" class="nav-header">Home</a></li>
-                    <li><a href="catalog-events.html" class="nav-header">Events</a></li>
-                    <li><a href="about-us.html" class="nav-header">About us</a></li>
-                </ul>
-            </nav>
-        </div>
-        
-        <!-- Buscador e Iconos -->
-        <div class="d-flex align-items-center gap-4 mt-3 mt-md-0 flex-md-row flex-column">
-            <div class="d-flex align-items-center search-box">
-                <input class="search-box-input" type="text" placeholder="Search...">
-                <button class="search-box-button"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-            <div class="d-flex">
-                <a href="cart.html" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
-                <a href="login.php" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
-            </div>
-            
-        </div>
-    </header>
-
+    <!-- Botón para cerrar y volver a la página anterior -->
+    <button onclick="window.history.back()" class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close"></button>
+    
     <!-- Página principal -->
     <main class="d-flex align-items-center justify-content-center font-family_login min-vh-100">
         <div class="container d-flex justify-content-center align-items-center mt-5 mb-5">
@@ -56,7 +32,6 @@
                         <form class="font-size_login" action="../../backend/controllers/login.php" method="POST">
 
                             <?php
-                            session_start();
                             $form_data = $_SESSION['form_data'] ?? [];
                             $errors = $_SESSION['error'] ?? '';
                             unset($_SESSION['form_data'], $_SESSION['error']); // Limpiar variables
@@ -122,43 +97,6 @@
         </div>
     </main>
     
-    <!-- Footer -->
-    <footer class="container-fluid p-5">
-        <div class="d-flex flex-column align-items-center">
-            <div class="row">
-                <!-- Menú de navegación -->
-                <nav class=" col-12 col-md-6 mt-3">    
-                    <ul class=" list-unstyled">
-                        <li><a href="home.php" class="nav-footer">Home</a></li>
-                        <li><a href="catalog-events.html" class="nav-footer">Events</a></li>
-                        <li><a href="about-us.html" class="nav-footer">About us</a></li>
-                    </ul>
-                </nav>
-            
-                <!-- Información de contacto -->
-                <div class="footer-contact col-12 col-md-6 mt-3">
-                    <p class="text-nowrap m-1"><i class="fa-solid fa-phone me-2"></i> +34 123 456 789</p>
-                    <p class="text-nowrap m-1"><i class="fa-solid fa-envelope me-2"></i> contacto@empresa.com</p>
-                    <p class="text-nowrap m-1"><i class="fa-solid fa-map-marker-alt me-2"></i> Calle Falsa 123, Madrid, España</p>
-                </div>
-            </div>
-        </div>
-
-            <!-- Redes Sociales -->
-            <div class="d-flex justify-content-center align-items-center gap-3 mt-3 col-12">
-                <a href="#" class="footer-social"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#" class="footer-social"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#" class="footer-social"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" class="footer-social"><i class="fa-brands fa-linkedin"></i></a>
-            </div>
-        
-    
-        <!-- Derechos de autor -->
-        <div class="footer-bottom text-center pt-4 col-12">
-            <p>&copy; 2025 Random Events. All rights reserved.</p>
-        </div>
-        
-    </footer>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
