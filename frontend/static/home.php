@@ -33,7 +33,7 @@ if (!isset($_SESSION['user_id'])) {
                 <ul class="d-flex gap-4 m-0 p-0 list-unstyled align-items-center justify-content-start">
                     <li><a href="home.php" class="nav-header">Home</a></li>
                     <li><a href="catalog-events.php" class="nav-header">Events</a></li>
-                    <li><a href="about-us.html" class="nav-header">About us</a></li>
+                    <li><a href="about-us.php" class="nav-header">About us</a></li>
                 </ul>
             </nav>
         </div>
