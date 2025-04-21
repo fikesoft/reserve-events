@@ -1,0 +1,49 @@
+/* General container spacing */
+main {
+    margin-bottom: 3rem;
+}
+
+/* Imagen del evento */
+.event-image-container {
+    position: relative;
+    height: 100%;
+}
+
+.event-image-container img {
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+/* Icono flotante */
+.event-fav-icon {
+    background-color: black;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    padding: 7px;
+    position: absolute;
+    top: 8px;
+    left: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Botón personalizado */
+.btn-event-card {
+    background-color: #4d194d !important;
+    border-color: #4d194d !important;
+    color: white !important;
+}
+
+.btn-event-card:hover {
+    background-color: #B44CB4 !important;
+    border-color: #B44CB4 !important;
+    color: white !important;
+}
+
+/* Separador personalizado */
+.custom-separador {
+    border-color: #4d194d !important;
+}

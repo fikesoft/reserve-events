@@ -8,10 +8,8 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- Estilos Header-->
-    <link rel="stylesheet" href="../assets/style/header.css">
-    <!-- Estilos footer-->
-    <link rel="stylesheet" href="../assets/style/footer.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/style/buscador.css">
     <!-- Cargar Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Cargar Font Awesome -->
@@ -42,7 +40,7 @@ session_start();
 
         // Consulta SQL para buscar eventos que coincidan con el término de búsqueda
         $sql_search_events = "
-        SELECT * FROM events WHERE event_name LIKE ? OR description LIKE ?
+        SELECT * FROM events WHERE event_name LIKE ? OR location LIKE ?
         ";
         $stmt = $conn->prepare($sql_search_events);
 
@@ -64,17 +62,15 @@ session_start();
             while ($row = $result->fetch_assoc()) {
     ?>
 
-    <main class="mb-5">
+    <main>
         <div class="container mt-4">
             <h1 class="text-left"><?= htmlspecialchars($row['event_name']) ?></h1>
 
             <div class="row mt-4">
-                <!-- Columna de la imagen -->
-                <div class="col-md-4" style="position: relative;">
-                    <img src="<?= $row['image_url'] ?>" class="img-fluid"
-                        alt="Imagen del evento">
-                    <div
-                        style="background-color: black; border-radius: 40px; max-width: 25px; display: flex;padding: 7px; justify-content: center; align-items: center; height: 25px; position: absolute; top: 8px; left: 24px;">
+                <!-- Imagen del evento -->
+                <div class="col-md-4 event-image-container">
+                    <img src="<?= $row['image_url'] ?>" class="img-fluid" alt="Imagen del evento">
+                    <div class="event-fav-icon">
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M3.72692 1C2.22077 1 1 2.29358 1 3.88889C1 6.2963 3.27308 8.22222 6 10.6296C8.72769 8.22222 11 6.2963 11 3.88889C11 2.29358 9.77923 1 8.27231 1C7.32385 1 6.48846 1.51358 6 2.29197C5.75419 1.89622 5.41753 1.57076 5.02059 1.34514C4.62364 1.11952 4.17896 1.00089 3.72692 1Z"
@@ -83,20 +79,18 @@ session_start();
                     </div>
                 </div>
 
-                <!-- Columna de las entradas -->
-                <div class="col-md-8" style="max-width: 600px;">
+                <!-- Tarjeta del evento -->
+                <div class="col-md-8">
                     <div class="d-flex flex-column gap-3">
-
-
+                        <!-- Tarjeta 1 -->
                         <div class="d-flex align-items-stretch border rounded">
-                            <div class="text-white text-center px-3 py-4 d-flex flex-column justify-content-center rounded-start"
-                                style="background-color:#4d194d;">
+                            <div class="text-white text-center px-3 py-4 d-flex flex-column justify-content-center rounded-start" style="background-color:#4d194d;">
                                 <p class="mb-2 fw-bold"><?= date("d M", strtotime($row['event_date'])) ?></p>
                                 <p class="mb-2"><?= strtoupper(date("D", strtotime($row['event_date']))) ?></p>
                                 <p class="mb-0"><?= date("h:i A", strtotime($row['event_time'])) ?></p>
                             </div>
+                            
                             <div class="ms-3 w-100 d-flex flex-column justify-content-around">
-
                                 <div class="d-flex flex-column gap-2">
                                     <p class="fw-bold mb-1"><?= htmlspecialchars($row['event_name']) ?></p>
                                     <p class="mb-1"><?= htmlspecialchars($row['location']) ?></p>
@@ -114,30 +108,21 @@ session_start();
                                     </div>
                                     <div class="d-flex flex-column align-items-center gap-2 mx-2">
                                         <p class="mb-0"><?= htmlspecialchars($row['price']) ?>$/person</p>
-                                        <div class="d-flex align-items-center justify-content-between rounded-pill px-3 py-1"
-                                            style="background-color: #4d194d; width: 120px;">
-                                            <button
-                                                class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                                                style="background-color: transparent; width: 30px; height: 30px; font-size: 18px;">-</button>
-                                            <span class="text-white fs-6">0</span>
-                                            <button
-                                                class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                                                style="background-color: transparent; width: 30px; height: 30px; font-size: 18px;">+</button>
-                                        </div>
+                                        <button class="btn w-100 btn-event-card">Book Now</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- Tarjeta 2 -->
                         <div class="d-flex align-items-stretch border rounded">
-                            <div class="text-white text-center px-3 py-4 d-flex flex-column justify-content-center rounded-start"
-                                style="background-color:#b44cb4;">
+                            <div class="text-white text-center px-3 py-4 d-flex flex-column justify-content-center rounded-start" style="background-color:#b44cb4;">
                                 <p class="mb-2 fw-bold"><?= date("d M", strtotime($row['event_date'])) ?></p>
                                 <p class="mb-2"><?= strtoupper(date("D", strtotime($row['event_date']))) ?></p>
                                 <p class="mb-0"><?= date("h:i A", strtotime($row['event_time'])) ?></p>
                             </div>
+                            
                             <div class="ms-3 w-100 d-flex flex-column justify-content-around">
-
                                 <div class="d-flex flex-column gap-2">
                                     <p class="fw-bold mb-1"><?= htmlspecialchars($row['event_name']) ?></p>
                                     <p class="mb-1"><?= htmlspecialchars($row['location']) ?></p>
@@ -155,30 +140,21 @@ session_start();
                                     </div>
                                     <div class="d-flex flex-column align-items-center gap-2 mx-2">
                                         <p class="mb-0"><?= htmlspecialchars($row['price']) ?>$/person</p>
-                                        <div class="d-flex align-items-center justify-content-between rounded-pill px-3 py-1"
-                                            style="background-color: #b44cb4; width: 120px;">
-                                            <button
-                                                class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                                                style="background-color: transparent; width: 30px; height: 30px; font-size: 18px;">-</button>
-                                            <span class="text-white fs-6">0</span>
-                                            <button
-                                                class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                                                style="background-color: transparent; width: 30px; height: 30px; font-size: 18px;">+</button>
-                                        </div>
+                                        <button class="btn w-100 btn-event-card">Book Now</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
+                        
+                        <!-- Tarjeta 3 -->
                         <div class="d-flex align-items-stretch border rounded">
-                            <div class="text-white text-center px-3 py-4 d-flex flex-column justify-content-center rounded-start"
-                                style="background-color:#f5a6f5;">
+                            <div class="text-white text-center px-3 py-4 d-flex flex-column justify-content-center rounded-start" style="background-color:#f5a6f5;">
                                 <p class="mb-2 fw-bold"><?= date("d M", strtotime($row['event_date'])) ?></p>
                                 <p class="mb-2"><?= strtoupper(date("D", strtotime($row['event_date']))) ?></p>
                                 <p class="mb-0"><?= date("h:i A", strtotime($row['event_time'])) ?></p>
                             </div>
+                            
                             <div class="ms-3 w-100 d-flex flex-column justify-content-around">
-
                                 <div class="d-flex flex-column gap-2">
                                     <p class="fw-bold mb-1"><?= htmlspecialchars($row['event_name']) ?></p>
                                     <p class="mb-1"><?= htmlspecialchars($row['location']) ?></p>
@@ -194,37 +170,21 @@ session_start();
                                             <p class="mb-1 text-primary fw-bold">Class Normal</p>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-column align-items-center gap-2 mx-2 ">
+                                    <div class="d-flex flex-column align-items-center gap-2 mx-2">
                                         <p class="mb-0"><?= htmlspecialchars($row['price']) ?>$/person</p>
-                                        <div class="d-flex align-items-center justify-content-between rounded-pill px-3 py-1"
-                                            style="background-color: #f5a6f5; width: 120px;">
-                                            <button
-                                                class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                                                style="background-color: transparent; width: 30px; height: 30px; font-size: 18px;">-</button>
-                                            <span class="text-white fs-6">0</span>
-                                            <button
-                                                class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                                                style="background-color: transparent; width: 30px; height: 30px; font-size: 18px;">+</button>
-                                        </div>
+                                        <button class="btn w-100 btn-event-card">Book Now</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
+                        
                     </div>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div>
-                    <p><?= htmlspecialchars($row['description']) ?></p>
-                </div>
-                <div class="d-flex justify-content-around mt-5">
-                    <button class="border rounded p-3" style="background-color: white; border: 2px solid black !important; ">Go back</button>
-                    <button class="border rounded p-3 text-white" style="background-color: #4d194d;">Añadir al carrito</button>
-                </div>
-
+                </div>  
             </div>
         </div>
+
+        <!--Separador-->
+        <hr class="my-4 me-4 ms-4 border-4 custom-separador">
     </main>
 
 <?php
@@ -244,6 +204,6 @@ session_start();
     ?>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-?>
+
 </body>
 </html>
