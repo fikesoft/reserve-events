@@ -145,7 +145,7 @@
                 <div class="col mt-3">
                     <label class="d-flex" for="zip-code">Zip Code*</label>
                     <input class="pago-select border border-black rounded text-center" type="text" id="zip-code"
-                        name="zip-code" maxlength="9" minlength="4" pattern="\d{9}" placeholder="*Zip Code" required>
+                        name="zip-code" maxlength="9" minlength="4" pattern="\d{4,9}" placeholder="*Zip Code" required>
                 </div>
             </div>
 

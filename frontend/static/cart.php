@@ -158,7 +158,7 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
             </div>
             <?php if (!empty($cartItemsData)) : ?>
             <div class=" d-flex justify-content-center row mb-4 mt-5 ">
-                <button class="empty-cart-button  w-50 p-3 " type="submit" onclick="window.location.href='pago.html'">Pagar</button>
+                <button class="empty-cart-button  w-50 p-3 " type="submit" onclick="window.location.href='pago.php'">Pagar</button>
             </div>
             <?php endif; ?>
             </form>
