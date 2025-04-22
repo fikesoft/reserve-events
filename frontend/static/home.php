@@ -51,7 +51,7 @@ if (!isset($_SESSION['user_id'])) {
             
             </div>
             <div class="d-flex align-items-center gap-3">
-                <a href="cart.html" class="icons mx-3" aria-label="Ver carrito">
+                <a href="cart.php" class="icons mx-3" aria-label="Ver carrito">
                     <i class="fa-solid fa-cart-shopping"></i>
                 </a>
                 

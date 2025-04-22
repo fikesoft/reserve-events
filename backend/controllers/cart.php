@@ -21,10 +21,19 @@ class Cart {
         }
     }
 
-    public function getEventDetails($eventId) {
-        $sqlEvt = "SELECT * FROM events WHERE id = {$eventId}";
-        $resultEvt = $this->conn->query($sqlEvt);
-        return $resultEvt->fetch_assoc();
+    public function getCartItemsData($cartItems) {
+        $itemsData = [];
+        foreach ($cartItems as $item) {
+            $event = $this->getEventDetails($item['event_id']);
+            if ($event) {
+                $itemsData[] = [
+                    'item' => $item,
+                    'event' => $event,
+                    'subtotal' => $event['price'] * $item['quantity'],
+                ];
+            }
+        }
+        return $itemsData;
     }
 
     public function calculateCartTotals($cartItems) {
@@ -46,19 +55,10 @@ class Cart {
         ];
     }
 
-    public function getCartItemsData($cartItems) {
-        $itemsData = [];
-        foreach ($cartItems as $item) {
-            $event = $this->getEventDetails($item['event_id']);
-            if ($event) {
-                $itemsData[] = [
-                    'item' => $item,
-                    'event' => $event,
-                    'subtotal' => $event['price'] * $item['quantity'],
-                ];
-            }
-        }
-        return $itemsData;
+    public function getEventDetails($eventId) {
+        $sqlEvt = "SELECT * FROM events WHERE id = {$eventId}";
+        $resultEvt = $this->conn->query($sqlEvt);
+        return $resultEvt->fetch_assoc();
     }
 }
 ?>

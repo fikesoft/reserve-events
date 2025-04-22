@@ -79,6 +79,45 @@ if ($conn->query($sql_create_table_events) !== TRUE) {
     die("Error al crear la tabla de eventos: " . $conn->error);
 }
 
+$sql_create_table_orders = "
+CREATE TABLE IF NOT EXISTS orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    terms_accepted BOOLEAN NOT NULL,
+    privacy_policy_accepted BOOLEAN NOT NULL,
+    total DECIMAL(10, 2) NOT NULL,
+    country VARCHAR(100) NOT NULL,
+    province VARCHAR(100) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    zip_code VARCHAR(10) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    payment_method VARCHAR(50) NOT NULL,
+    card_holder VARCHAR(100),
+    card_expiry_month VARCHAR(2),
+    card_expiry_year VARCHAR(4),
+    card_number VARCHAR(20),
+    cvv VARCHAR(4),
+    shipping_method VARCHAR(50) NOT NULL
+);";
+
+if ($conn->query($sql_create_table_orders) !== TRUE) {
+    die("Error al crear la tabla de pedidos: " . $conn->error);
+}
+
+$sql_create_table_order_detail = "
+CREATE TABLE IF NOT EXISTS order_detail (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    product_id INT NOT NULL, 
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(id)
+);";
+
+if ($conn->query($sql_create_table_order_detail) !== TRUE) {
+    die("Error al crear la tabla de detalles pedido: " . $conn->error);
+}
+
 // Consulta para contar cuántos eventos existen en la tabla
 $sql_count_events = "SELECT COUNT(*) AS total_events FROM events";
 $result = $conn->query($sql_count_events);

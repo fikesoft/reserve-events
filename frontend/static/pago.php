@@ -1,3 +1,20 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+require_once '../../backend/config/database.php';
+require_once '../../backend/controllers/cart.php';
+
+$userId = $_SESSION['user_id'];
+$cartLogic = new Cart($conn, $userId);
+$cartItems = $cartLogic->getCartItems();
+$cartTotals = $cartLogic->calculateCartTotals($cartItems);
+$cartItemsData = $cartLogic->getCartItemsData($cartItems);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -66,8 +83,8 @@
                 <input class="search-box-input" type="text" placeholder="Search...">
                 <button class="search-box-button"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
-            <div class="d-flex">
-                <a href="cart.html" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
+            <div class="d-flex">    
+                <a href="cart.php" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
                 <a href="login.php" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
             </div>
 
@@ -85,20 +102,20 @@
             <!--Contenedor solo título "Tus datos"-->
 
             <div class="pago-seccion-row row">
-                <h1 class="pago-h1-datos">Tus datos</h1>
+                <h1 class="pago-h1-datos">Shipping Information</h1>
             </div>
 
             <!--Contenedor formulario sección País y Provincia-->
 
             <div class="pago-seccion-row row">
-                <h6 class="pago-titulo-seccion mb-0">Detalles de tu dirección</h6>
+                <h6 class="pago-titulo-seccion mb-0">Your address details</h6>
                 <hr class="mt-0 mb-0">
-                <i class="pago-mandatory text-end mt-0 fs-6">*Campo obligatorio</i>
+                <i class="pago-mandatory text-end mt-0 fs-6">*Mandatory field</i>
 
                 <!--Columna de Pais-->
 
                 <div class="pago-form-col col mt-3 ms-0">
-                    <form action="#">
+                    <form action="../../backend/controllers/pago.php" method="post">
                         <label class="d-flex justify-content-start text-start" for="country">Country*</label>
                         <select class="pago-select border border-black rounded text-center" name="country" id="country">
                             <option value="España" selected>España</option>
@@ -160,7 +177,7 @@
             <!--Contenedor de título "Detalles sobre el método de pago"-->
 
             <div class="pago-seccion-row row mt-3">
-                <h6 class="pago-titulo-seccion mb-0 mt-3">Detalles sobre el método de pago</h6>
+                <h6 class="pago-titulo-seccion mb-0 mt-3">Details about the payment method</h6>
                 <hr class="mb-3">
             </div>
 
@@ -212,10 +229,10 @@
 
                 <div class="row mb-1">
                     <div class="col d-flex">
-                        <input type="text" id="pago-date-card" name="pago-date-card" placeholder="MM"
+                        <input type="text" id="month-date-card" name="month-date-card" placeholder="MM"
                             class="pago-date-creditcard border border-grey rounded me-2 text-center" required>
 
-                        <input type="text" id="pago-date-card" name="pago-date-card" placeholder="AA"
+                        <input type="text" id="year-date-card" name="year-date-card" placeholder="AA"
                             class="pago-date-creditcard border border-grey rounded text-center" required>
                     </div>
 
@@ -230,7 +247,7 @@
                     <div class="col">
                         <input type="text" id="pago-card-number" name="pago-card-number"
                             class="pago-card-number border border-grey rounded text-center" maxlength="19"
-                            minlength="13" pattern="\d{19}" placeholder="*Card number" required>
+                            minlength="13" pattern="\d{13,19}" placeholder="*Card number" required>
                     </div>
 
                     <!--CVV-->
@@ -253,7 +270,7 @@
             <!--Fila titulo "Forma de envío"-->
 
             <div class="pago-seccion-row row mt-3">
-                <h6 class="pago-titulo-seccion mb-0">Forma de envío</h6>
+                <h6 class="pago-titulo-seccion mb-0">Shipping method</h6>
                 <hr class="mt-0">
             </div>
 
@@ -274,7 +291,7 @@
 
                 <div class="pago-formaenvio-row row border border-grey rounded mb-2">
                     <div class="col">
-                        <label for="ticket-fisico">Ticket físico &nbsp; &nbsp; X€</label>
+                        <label for="ticket-fisico"> Physical ticket &nbsp; &nbsp; X€</label>
                     </div>
                     <div class="col-2">
                         <input type="radio" id="forma-pago" name="forma-pago" value="ticket-fisico" required>
@@ -285,7 +302,7 @@
 
                 <div class="pago-formaenvio-row row border border-grey rounded mb-2">
                     <div class="col">
-                        <label for="express-ticket-fisico">Express ticket físico &nbsp; &nbsp; X€</label>
+                        <label for="express-ticket-fisico">Express Physical ticket &nbsp; &nbsp; X€</label>
                     </div>
                     <div class="col-2">
                         <input type="radio" id="forma-pago" name="forma-pago" value="express-ticket-fisico" required>
@@ -296,7 +313,7 @@
             <!--Fila para título términos y condiciones-->
 
             <div class="pago-seccion-row row mt-3 mb-3">
-                <h6 class="pago-titulo-seccion mb-0">Términos y condiciones </h6>
+                <h6 class="pago-titulo-seccion mb-0">Terms and conditions</h6>
                 <hr class="mt-0">
             </div>
 
@@ -304,12 +321,12 @@
 
             <div class="pago-terminos-row row d-flex mb-3 d-flex">
                 <label class="mb-2" for="terms">
-                <input type="checkbox" id="terms" name="terms" required> He leído y acepto los términos y condiciones
+                <input type="checkbox" id="terms" name="terms" required> I have read and accept the terms and conditions
                 </label>
                 <br>
                 
                 <label class="mb-2" for="privacy-policy">
-                <input type="checkbox" id="privacy-policy" name="privacy-policy" required> He leído y acepto la política de privacidad
+                <input type="checkbox" id="privacy-policy" name="privacy-policy" required> I have read and accept the privacy policy
                 </label>
             
             </div>
@@ -317,23 +334,56 @@
             <!--Botón de pagar/aceptar-->
 
             <div class="row mb-4 mt-3 justify-content-center">
-                <button class="pago-button-pagar w-50 p-3" type="submit">Pagar</button>
+                <button class="pago-button-pagar w-50 p-3" type="submit">Pay</button>
             </div>
             </form>
         </div>
 
         <!--Contenedor de resumen de pago-->
 
-        <div class="pago-resumen-container d-flex flex-column container-sm p-5 ms-5 mt-5 align-items-center justify-content-center">
+        <div class="pago-resumen-container d-flex flex-column container-sm col-md-4 align-items-center justify-content-center">
+                <div class="card p-4" style="padding-bottom: 3px; margin-bottom: 0px;">
+                    <h2 class="resumen-pedido">Order Summary</h2>
+                    <hr style="margin-top: 0px; border: 1px solid #4d194d; font-size: 24px;"/>
+                    <div class="text-center" style="height: 300px; font-size: 12px;">
+                        <?php if (!empty($cartItemsData)) : ?>
+                            <?php foreach ($cartItemsData as $data) : ?>
+                                <li class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <strong><?php echo htmlspecialchars($data['event']['event_name']); ?></strong>
+                                    </div>
+                                    <div><strong><?php echo number_format($data['subtotal'], 2); ?> €</strong></div>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                        <div class="col-12 text-center"><p>Your cart is empty</p></div>
+                        <?php endif; ?>
+                </div>
+                    <hr style="margin-top: 0px; border: 1px solid #4d194d" />
+                    <div class="d-flex justify-content-between">
+                        <span>Taxes</span>
+                        <div><?php echo number_format($cartTotals['total_carrito']*0.1, 2); ?> €</div>
+                    </div>
+                    <div class="d-flex justify-content-between flex-wrap">
+                        <span>Management</span>
+                        <div><?php echo number_format($cartTotals['total_quantity'], 2); ?> €</div>
+                    </div>
+                    <hr style=" border: 1px solid #4d194d" >
+                    <div class="d-flex justify-content-between flex-wrap">
+                        <strong>Total</strong>
+                        <div><strong><?php echo number_format($cartTotals['total_carrito'] + $cartTotals['total_quantity'], 2); ?> €</strong></div>
+                    </div>
+                </div>
+        </div>
 
-            <!--Fila de título resumen-->
+        <!--<div class="pago-resumen-container d-flex flex-column container-sm p-5 ms-5 mt-5 align-items-center justify-content-center">
+
+            Fila de título resumen
 
             <div class="row">
                 <h3 class="pago-resumen-h3 mb-0">Resumen del pedido</h3>
                 <hr class="pago-resumen-hr">
             </div>
-
-            <!--Fila de resumen de pedido-->
 
             <div class="row">
                 <div class="pago-col-lista-resumen col">
@@ -344,7 +394,6 @@
                 <hr class="pago-resumen-hr-final">
             </div>
 
-            <!--Fila para impuestos-->
 
             <div class="row">
                 <div class="col">
@@ -354,8 +403,6 @@
                     <p class="pago-resumen-price text-end">0,00€</p>
                 </div>
             </div>
-
-            <!--Fila para gestión-->
 
             <div class="row">
                 <div class="col">
@@ -367,8 +414,6 @@
                 <hr>
             </div>
 
-            <!--Fila para total-->
-
             <div class="row">
                 <div class="col">
                     <p class="pago-resumen-impuestos">Total</p>
@@ -377,7 +422,8 @@
                     <p class="pago-resumen-price text-end">0,00€</p>
                 </div>
             </div>
-        </div>
+        </div>-->
+        
     </div>
 
 
