@@ -17,6 +17,6 @@ if (ini_get("session.use_cookies")) {
 }
 
 // Redirigir al login o página principal
-header("Location: ../../frontend/static/login.php");
+header("Location: ../../frontend/static/home.php");
 exit();
 

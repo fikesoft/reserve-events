@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Footer</title>
-    <link rel="stylesheet" href="../assets/style/footer.css">
+    
     <!-- Cargar Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/style/footer.css">
     <!-- Cargar Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -19,8 +21,8 @@
                 <nav class=" col-12 col-md-6 mt-3">    
                     <ul class="list-unstyled">
                         <li><a href="home.php" class="nav-footer">Home</a></li>
-                        <li><a href="catalog-events.html" class="nav-footer">Events</a></li>
-                        <li><a href="about-us.html" class="nav-footer">About us</a></li>
+                        <li><a href="catalog-events.php" class="nav-footer">Events</a></li>
+                        <li><a href="about-us.php" class="nav-footer">About us</a></li>
                     </ul>
                 </nav>
             
