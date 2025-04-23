@@ -20,10 +20,10 @@ if (!isset($_SESSION['user_id'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="../assets/style/style_home.css">
-    
-    
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+
     <!-- Cargar Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -31,7 +31,7 @@ if (!isset($_SESSION['user_id'])) {
 <body>
     <!-- Encabezado -->
     <?php
-        include "../static/header.php";
+    include "../static/header.php";
     ?>
 
     <main>
@@ -73,12 +73,11 @@ if (!isset($_SESSION['user_id'])) {
                                 $sql = "SELECT * FROM events LIMIT 5";
                                 $result = $conn->query($sql);
 
-<<<<<<< HEAD
                                 // Verificar si hay resultados
                                 if ($result->num_rows > 0) {
                                     // Iterar sobre los resultados
                                     while ($event = $result->fetch_assoc()) {
-                                        ?>
+                            ?>
                                         <div class="col-lg-2 col-md-4 col-6 event-card">
                                             <?php if ($_SESSION['user_role'] === "admin"): ?>
                                                 <div class="d-flex justify-content-end gap-3 fs-5">
@@ -96,33 +95,13 @@ if (!isset($_SESSION['user_id'])) {
                                                 <p><?= htmlspecialchars($event['location']) ?></p>
                                                 <p><?= htmlspecialchars($event['event_date']) ?></p>
                                                 <p>From <?= htmlspecialchars($event['price']) ?> $</p>
-=======
-                            // Verificar si hay resultados
-                            if ($result->num_rows > 0) {
-                                // Iterar sobre los resultados
-                                while ($event = $result->fetch_assoc()) {
-                        ?>
-                                    <div class="col-lg-2 col-md-4 col-6 event-card">
-                                        <?php if ($_SESSION['user_role'] === "admin"): ?>
-                                            <div class="d-flex justify-content-end gap-3 fs-5">
-                                                <a href="../../backend/controllers/edit_event.php?id=<?= $event['id'] ?>"><i
-                                                        class="fa-solid fa-pen-to-square"></i></a>
-                                                <a class="text-danger"
-                                                    href="../../backend/controllers/delete_event.php?id=<?= $event['id'] ?>"><i
-                                                        class="fa-solid fa-trash"></i></a>
->>>>>>> logica-catalogo-evento
                                             </div>
                                         </div>
-<<<<<<< HEAD
-                                        <?php
+                            <?php
                                     }
                                 } else {
                                     // Si no hay eventos, mostrar un mensaje
                                     echo '<div class="col-12 text-center"><p>No events found.</p></div>';
-=======
-                                    </div>
-                        <?php
->>>>>>> logica-catalogo-evento
                                 }
                             } catch (Exception $e) {
                                 // Manejar errores
@@ -146,29 +125,12 @@ if (!isset($_SESSION['user_id'])) {
                 </div>
             </section>
         </div>
-<<<<<<< HEAD
     </main>
-    
+
     <!-- Footer -->
     <?php
-        include '../static/footer.php';
+    include '../static/footer.php';
     ?>
-=======
-
-        <section class="aboutUs mt-5">
-            <div class="container d-flex flex-column justify-content-center align-items-center text-center gap-3">
-                <h3>RANDOM EVENTS OFFERS BEST EXPERIENCE OF CREATING</h3>
-                <h2>YOUR EVENT RESERVATION EASY</h2>
-                <p>
-                    We’ve always believed that random can change lives. So we created a platform for fans to experience
-                    more of the shows they love in the most hassle-free way possible.
-                </p>
-                <a href="about-us.html">About us</a>
-            </div>
-        </section>
-    </div>
-
->>>>>>> logica-catalogo-evento
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
