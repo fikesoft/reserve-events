@@ -17,7 +17,7 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<body d-flex flex-column min-vh-100>
+<body class="d-flex flex-column min-vh-100">
     <!-- Encabezado -->
     <?php
     include "../static/header.php";
@@ -37,7 +37,11 @@ session_start();
 
         // Si la búsqueda está vacía, redirige al inicio
         if (empty($search_query)) {
-            echo "<div class='alert alert-warning text-center m-4 font-family_buscador'>Please enter a search term</div>";
+            echo 
+            "<div class='alert alert-warning text-center m-4 font-family_buscador'>
+                Please enter a search term
+            </div>
+            <img src='/frontend/assets/img/searchEmpty.png' alt='Imagen de busqueda vacia' class='img-fluid mx-auto d-block mt-3 w-25'>";
         } else {
 
             // Consulta SQL para buscar eventos que coincidan con el término de búsqueda
@@ -63,7 +67,7 @@ session_start();
                 echo
                 "<h2 class='mb-4 font-family_buscador num-resultados-custom'>
                         <span class='text-muted'>" . $result->num_rows . " Results for </span>" . htmlspecialchars($search_query) .
-                    "</h2>";
+                "</h2>";
 
                 while ($row = $result->fetch_assoc()) {
         ?>
@@ -71,25 +75,25 @@ session_start();
                     <!-- Tarjeta del evento -->
                     <div class="container my-4">
                         <div class="row justify-content-center">
-                            <div class="col-md-8">
-                                <div class="d-flex align-items-stretch border rounded overflow-hidden">
+                            <div class="col-12 col-md-8">
+                                <div class="d-flex flex-column flex-lg-row align-items-stretch border rounded overflow-hidden">
                                     <div class="text-white text-center p-4 d-flex flex-column justify-content-center tarjeta-event_buscador">
                                         <p class="mb-2 fw-bold"><?= date("d M", strtotime($row['event_date'])) ?></p>
                                         <p class="mb-2"><?= strtoupper(date("D", strtotime($row['event_date']))) ?></p>
                                         <p class="mb-0"><?= date("h:i A", strtotime($row['event_time'])) ?></p>
                                     </div>
 
-                                    <div class="ms-3 w-100 d-flex flex-column justify-content-around">
-                                        <div class="d-flex flex-column">
-                                            <p class="fw-bold mb-1"><?= htmlspecialchars($row['event_name']) ?></p>
+                                    <div class="ms-lg-3 mt-3 mt-lg-0 w-100 d-flex flex-column justify-content-around">
+                                        <div class="d-flex flex-column mb-2">
+                                            <p class="fw-bold mb-1 text-center text-lg-start"><?= htmlspecialchars($row['event_name']) ?></p>
                                         </div>
-                                        <div class="d-flex justify-content-between ">
-                                            <div class="d-flex flex-column gap-2">
-                                                <div class="d-flex gap-2">
+                                        <div class="d-flex flex-column flex-lg-row justify-content-between text-center text-lg-start gap-3">
+                                            <div class="d-flex flex-column align-items-center align-items-lg-start">
+                                                <div class="d-flex align-items-center gap-2">
                                                     <i class="fa-solid fa-map-location"></i>
                                                     <p class="mb-1 text-tarjeta-event_buscador fw-bold"><?= htmlspecialchars($row['location']) ?></p>
                                                 </div>
-                                                <div class="d-flex gap-2">
+                                                <div class="d-flex align-items-center gap-2">
                                                     <i class="fa-solid fa-city"></i>
                                                     <p class="mb-1 text-tarjeta-event_buscador fw-bold"><?= htmlspecialchars($row['city']) ?></p>
                                                 </div>
@@ -100,7 +104,6 @@ session_start();
                                                 <button class="btn w-100 btn-event-card" onclick="window.location.href='./Pagina-evento.php?id=<?= $row['id'] ?>'">
                                                     Find Tickets
                                                 </button>
-
                                             </div>
                                         </div>
                                     </div>
@@ -117,8 +120,9 @@ session_start();
             } else {
                 echo
                 "<div class='alert alert-danger text-center m-4 font-family_buscador'>
-                        No results for <strong>" . htmlspecialchars($search_query) . "</strong>.
-                    </div>";
+                    No results for <strong>" . htmlspecialchars($search_query) . "</strong>.
+                </div>
+                <img src='/frontend/assets/img/noResults.png' alt='Imagen sin resultados' class='img-fluid mx-auto d-block mt-3 w-25'>";
             }
 
             // Cerrar la conexión
