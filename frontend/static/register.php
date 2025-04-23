@@ -44,59 +44,59 @@
                                 <label for="name" class="form-label">Name</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa-solid fa-user-pen"></i></span>
-                                    <input 
-                                    type="text" 
-                                    class="form-control" 
-                                    id="name"
-                                    name="name" 
-                                    required 
-                                    placeholder="Enter your name"
-                                    value="<?= htmlspecialchars($form_data['name'] ?? '') ?>">
-                                </div> 
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="name"
+                                        name="name"
+                                        required
+                                        placeholder="Enter your name"
+                                        value="<?= htmlspecialchars($form_data['name'] ?? '') ?>">
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
-                                    <input 
-                                    type="email" 
-                                    class="form-control" 
-                                    id="email" 
-                                    name="email" 
-                                    required 
-                                    placeholder="Enter your email"
-                                    value="<?= htmlspecialchars($form_data['email'] ?? '') ?>">
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        id="email"
+                                        name="email"
+                                        required
+                                        placeholder="Enter your email"
+                                        value="<?= htmlspecialchars($form_data['email'] ?? '') ?>">
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                                    <input 
-                                    type="password" 
-                                    class="form-control" 
-                                    id="password" 
-                                    name="password" 
-                                    required 
-                                    placeholder="Create a password">
+                                    <input
+                                        type="password"
+                                        class="form-control"
+                                        id="password"
+                                        name="password"
+                                        required
+                                        placeholder="Create a password">
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="confirm_password" class="form-label">Confirm Password</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                                    <input 
-                                    type="password" 
-                                    class="form-control" 
-                                    id="confirm_password" 
-                                    name="confirm_password"
-                                    required 
-                                    placeholder="Confirm your password">
+                                    <input
+                                        type="password"
+                                        class="form-control"
+                                        id="confirm_password"
+                                        name="confirm_password"
+                                        required
+                                        placeholder="Confirm your password">
                                 </div>
                             </div>
 
                             <?php if (!empty($errors)): ?>
-                            <div class="alert alert-danger"><?= $errors ?></div>
+                                <div class="alert alert-danger"><?= $errors ?></div>
                             <?php endif; ?>
 
                             <button type="submit" class="button_register btn w-100 mt-3">Create an account</button>
@@ -106,7 +106,7 @@
                         <div class="text-center mt-3">
                             <p class="font-size_register">Have an account? <a href="login.php" class="login-link">Sign in</a></p>
                         </div>
-                        
+
                     </div>
                 </div>
 
@@ -114,7 +114,7 @@
                 <div class="col-md-6 d-flex d-none d-md-block"> <!-- En pantallas pequeñas no aparece la imagen -->
                     <img src="../assets/img/Foto_Register.png" alt="Imagen Register" class="img-fluid w-100 h-100 rounded-end img_register">
                 </div>
-            
+
             </div>
         </div>
     </main>
@@ -124,14 +124,14 @@
         <div class="d-flex flex-column align-items-center">
             <div class="row">
                 <!-- Menú de navegación -->
-                <nav class=" col-12 col-md-6 mt-3">    
+                <nav class=" col-12 col-md-6 mt-3">
                     <ul class="list-unstyled">
                         <li><a href="home.php" class="nav-footer">Home</a></li>
                         <li><a href="catalog-events.html" class="nav-footer">Events</a></li>
                         <li><a href="about-us.html" class="nav-footer">About us</a></li>
                     </ul>
                 </nav>
-            
+
                 <!-- Información de contacto -->
                 <div class="footer-contact col-12 col-md-6 mt-3">
                     <p class="text-nowrap m-1"><i class="fa-solid fa-phone me-2"></i> +34 123 456 789</p>
@@ -141,20 +141,20 @@
             </div>
         </div>
 
-            <!-- Redes Sociales -->
-            <div class="d-flex justify-content-center align-items-center gap-3 mt-3 col-12">
-                <a href="#" class="footer-social"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#" class="footer-social"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#" class="footer-social"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" class="footer-social"><i class="fa-brands fa-linkedin"></i></a>
-            </div>
-        
-    
+        <!-- Redes Sociales -->
+        <div class="d-flex justify-content-center align-items-center gap-3 mt-3 col-12">
+            <a href="#" class="footer-social"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" class="footer-social"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" class="footer-social"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="footer-social"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+
+
         <!-- Derechos de autor -->
         <div class="footer-bottom text-center pt-4 col-12">
             <p>&copy; 2025 Random Events. All rights reserved.</p>
         </div>
-        
+
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

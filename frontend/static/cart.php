@@ -42,11 +42,15 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
 </head>
 
 <body>
+<<<<<<< HEAD
     <!-- Encabezado -->
     <?php
         include "../static/header.php";
     ?>
 
+=======
+    <?php include 'header.php'; ?>
+>>>>>>> logica-catalogo-evento
     <main class="d-flex align-items-center justify-content-center font-family_cart mt-5 mb-5">
         <div class="container row d-flex flex-md-row flex-column">
 
@@ -57,42 +61,45 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
                         <i class="fas fa-shopping-cart"></i> <span class="badge badge-primary"></span>
                     </div>
                 </div>
-                <hr style="border: 1px solid #4d194d"/>
+                <hr style="border: 1px solid #4d194d" />
                 <div class="p-5 text-center">
-                <?php if (!empty($cartItemsData)) : ?>
-                    <?php foreach ($cartItemsData as $data) : ?>
-                        <li class="d-flex justify-content-between align-items-center mb-3">
-                            <div class="col-4 d-flex flex-column justify-content-center">
-                                <strong><?php echo htmlspecialchars($data['event']['event_name']); ?></strong>
-                                <p class="text-muted"><?php echo htmlspecialchars($data['event']['name']); ?> - <?php echo htmlspecialchars(date('d/m/Y', strtotime($data['event']['event_date']))); ?></p>
-                            </div>
+                    <?php if (!empty($cartItemsData)) : ?>
+                        <?php foreach ($cartItemsData as $data) : ?>
+                            <li class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="col-4 d-flex flex-column justify-content-center">
+                                    <strong><?php echo htmlspecialchars($data['event']['event_name']); ?></strong>
+                                    <p class="text-muted"><?php echo htmlspecialchars($data['event']['name']); ?> - <?php echo htmlspecialchars(date('d/m/Y', strtotime($data['event']['event_date']))); ?></p>
+                                </div>
 
-                            <div class="col-4 d-flex align-items-center justify-content-between rounded-pill px-3 py-1" style="background-color: #b44cb4; width: 100px;">
-                                <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                                    href="../../backend/controllers/update_cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=decrement"
-                                    style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
-                                    <i class="fas fa-minus"></i>
-                                </a>
+                                <div class="col-4 d-flex align-items-center justify-content-between rounded-pill px-3 py-1" style="background-color: #b44cb4; width: 100px;">
+                                    <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
+                                        href="../../backend/controllers/update_cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=decrement"
+                                        style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
+                                        <i class="fas fa-minus"></i>
+                                    </a>
 
-                                <span class="text-white fs-6"><?php echo $data['item']['quantity']; ?></span>
+                                    <span class="text-white fs-6"><?php echo $data['item']['quantity']; ?></span>
 
-                                <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                                    href="../../backend/controllers/update_cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=increment"
-                                    style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
-                                    <i class="fas fa-plus"></i>
-                                </a>
-                                                
-                            </div>
+                                    <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
+                                        href="../../backend/controllers/update_cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=increment"
+                                        style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
 
-                            <div class="col-4"><?php echo number_format($data['event']['price'], 2); ?> € x <?php echo $data['item']['quantity']; ?> = <strong><?php echo number_format($data['subtotal'], 2); ?> €</strong>
-                            <a class=" ms-4 text-danger" href="../../backend/controllers/delete_cart.php?id=<?= $data['item']['id'] ?>"><i class="fa-solid fa-trash"></i></a></div>
-                        </li>
+                                </div>
 
-                    <?php endforeach; ?>
+                                <div class="col-4"><?php echo number_format($data['event']['price'], 2); ?> € x <?php echo $data['item']['quantity']; ?> = <strong><?php echo number_format($data['subtotal'], 2); ?> €</strong>
+                                    <a class=" ms-4 text-danger" href="../../backend/controllers/delete_cart.php?id=<?= $data['item']['id'] ?>"><i class="fa-solid fa-trash"></i></a>
+                                </div>
+                            </li>
+
+                        <?php endforeach; ?>
                     <?php else : ?>
-                        <div class="col-12 text-center"><p>Your cart is empty</p></div>
+                        <div class="col-12 text-center">
+                            <p>Your cart is empty</p>
+                        </div>
                         <button class="empty-cart-button">Find your event here!</button>
-                <?php endif; ?>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -100,7 +107,7 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
                 <h2 class="text-left mb-5">Total</h2>
                 <div class="card p-4" style="padding-bottom: 3px; margin-bottom: 0px;">
                     <h2 class="resumen-pedido">Order Summary</h2>
-                    <hr style="margin-top: 0px; border: 1px solid #4d194d; font-size: 24px;"/>
+                    <hr style="margin-top: 0px; border: 1px solid #4d194d; font-size: 24px;" />
                     <div class="text-center" style="height: 300px; font-size: 12px;">
                         <?php if (!empty($cartItemsData)) : ?>
                             <?php foreach ($cartItemsData as $data) : ?>
@@ -112,19 +119,21 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
                                 </li>
                             <?php endforeach; ?>
                         <?php else : ?>
-                        <div class="col-12 text-center"><p>Your cart is empty</p></div>
+                            <div class="col-12 text-center">
+                                <p>Your cart is empty</p>
+                            </div>
                         <?php endif; ?>
-                </div>
+                    </div>
                     <hr style="margin-top: 0px; border: 1px solid #4d194d" />
                     <div class="d-flex justify-content-between">
                         <span>Taxes</span>
-                        <div><?php echo number_format($cartTotals['total_carrito']*0.1, 2); ?> €</div>
+                        <div><?php echo number_format($cartTotals['total_carrito'] * 0.1, 2); ?> €</div>
                     </div>
                     <div class="d-flex justify-content-between flex-wrap">
                         <span>Management</span>
                         <div><?php echo number_format($cartTotals['total_quantity'], 2); ?> €</div>
                     </div>
-                    <hr style=" border: 1px solid #4d194d" >
+                    <hr style=" border: 1px solid #4d194d">
                     <div class="d-flex justify-content-between flex-wrap">
                         <strong>Total</strong>
                         <div><strong><?php echo number_format($cartTotals['total_carrito'] + $cartTotals['total_quantity'], 2); ?> €</strong></div>
@@ -132,9 +141,9 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
                 </div>
             </div>
             <?php if (!empty($cartItemsData)) : ?>
-            <div class=" d-flex justify-content-center row mb-4 mt-5 ">
-                <button class="empty-cart-button  w-50 p-3 " type="submit" onclick="window.location.href='pago.html'">Pagar</button>
-            </div>
+                <div class=" d-flex justify-content-center row mb-4 mt-5 ">
+                    <button class="empty-cart-button  w-50 p-3 " type="submit" onclick="window.location.href='pago.html'">Pagar</button>
+                </div>
             <?php endif; ?>
             </form>
         </div>
@@ -142,11 +151,50 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
     </main>
 
     <!-- Footer -->
+<<<<<<< HEAD
     <?php
         include '../static/footer.php';
     ?>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+=======
+    <footer class="container-fluid p-5">
+        <div class="d-flex flex-column align-items-center">
+            <div class="row">
+                <!-- Menú de navegación -->
+                <nav class=" col-12 col-md-6 mt-3">
+                    <ul class="list-unstyled">
+                        <li><a href="home.php" class="nav-footer">Home</a></li>
+                        <li><a href="catalog-events.html" class="nav-footer">Events</a></li>
+                        <li><a href="about-us.html" class="nav-footer">About us</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Información de contacto -->
+                <div class="footer-contact col-12 col-md-6 mt-3">
+                    <p class="text-nowrap m-1"><i class="fa-solid fa-phone me-2"></i> +34 123 456 789</p>
+                    <p class="text-nowrap m-1"><i class="fa-solid fa-envelope me-2"></i> contacto@empresa.com</p>
+                    <p class="text-nowrap m-1"><i class="fa-solid fa-map-marker-alt me-2"></i> Calle Falsa 123, Madrid, España</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Redes Sociales -->
+        <div class="d-flex justify-content-center align-items-center gap-3 mt-3 col-12">
+            <a href="#" class="footer-social"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" class="footer-social"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" class="footer-social"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="footer-social"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+
+
+        <!-- Derechos de autor -->
+        <div class="footer-bottom text-center pt-4 col-12">
+            <p>&copy; 2025 Random Events. All rights reserved.</p>
+        </div>
+
+    </footer>
+>>>>>>> logica-catalogo-evento
 
 </body>
 
