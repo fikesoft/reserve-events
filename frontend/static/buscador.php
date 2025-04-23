@@ -96,7 +96,11 @@ session_start();
                                             </div>
                                             <div class="d-flex flex-column align-items-center gap-2 mx-2">
                                                 <p class="mb-0">From <?= htmlspecialchars($row['price']) ?>$/person</p>
-                                                <button class="btn w-100 btn-event-card">Find Tickets</button>
+                                                <!-- Botón para acceder al evento -->
+                                                <button class="btn w-100 btn-event-card" onclick="window.location.href='./Pagina-evento.php?id=<?= $row['id'] ?>'">
+                                                    Find Tickets
+                                                </button>
+
                                             </div>
                                         </div>
                                     </div>
