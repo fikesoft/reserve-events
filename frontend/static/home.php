@@ -1,9 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -20,10 +17,10 @@ if (!isset($_SESSION['user_id'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="../assets/style/style_home.css">
-    
-    
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+
     <!-- Cargar Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -31,7 +28,7 @@ if (!isset($_SESSION['user_id'])) {
 <body>
     <!-- Encabezado -->
     <?php
-        include "../static/header.php";
+    include "../static/header.php";
     ?>
 
     <main>
@@ -44,7 +41,7 @@ if (!isset($_SESSION['user_id'])) {
 
                         <p class="text-start">Incredible live shows. Upfront pricing. Relevant recommendations. We make
                             going out easy.</p>
-                        <button class="browse-btn">Browse events</button>
+                        <button class="browse-btn"><a href="./catalog-events.php" class="text-white ">Browse events </a></button>
                     </div>
                     <div class="row col-lg-7 d-flex justify-content-center">
                         <div class="row col-6 gap-3">
@@ -58,9 +55,11 @@ if (!isset($_SESSION['user_id'])) {
                 <section class="row d-flex flex-column align-items-center mt-5 w-100">
                     <div class="w-100 text-center">
                         <h1 class="titleRandom">RANDOM SELECTION</h1>
-                        <?php if ($_SESSION['user_role'] === "admin"): ?>
+
+                        <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
                             <a href="add_your_event.php">Create Event</a>
-                        <?php endif ?>
+                        <?php endif; ?>
+
                     </div>
                     <div class="d-flex flex-column justify-content-center align-items-center gap-4">
                         <div class="row d-flex flex-row justify-content-center flex-wrap w-100 gap-3 mt-5">
@@ -77,9 +76,9 @@ if (!isset($_SESSION['user_id'])) {
                                 if ($result->num_rows > 0) {
                                     // Iterar sobre los resultados
                                     while ($event = $result->fetch_assoc()) {
-                                        ?>
+                            ?>
                                         <div class="col-lg-2 col-md-4 col-6 event-card">
-                                            <?php if ($_SESSION['user_role'] === "admin"): ?>
+                                            <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
                                                 <div class="d-flex justify-content-end gap-3 fs-5">
                                                     <a href="../../backend/controllers/edit_event.php?id=<?= $event['id'] ?>"><i
                                                             class="fa-solid fa-pen-to-square"></i></a>
@@ -97,7 +96,7 @@ if (!isset($_SESSION['user_id'])) {
                                                 <p>From <?= htmlspecialchars($event['price']) ?> $</p>
                                             </div>
                                         </div>
-                                        <?php
+                            <?php
                                     }
                                 } else {
                                     // Si no hay eventos, mostrar un mensaje
@@ -121,15 +120,15 @@ if (!isset($_SESSION['user_id'])) {
                         We’ve always believed that random can change lives. So we created a platform for fans to experience
                         more of the shows they love in the most hassle-free way possible.
                     </p>
-                    <a href="about-us.html">About us</a>
+                    <a href="./about-us.php">About us</a>
                 </div>
             </section>
         </div>
     </main>
-    
+
     <!-- Footer -->
     <?php
-        include '../static/footer.php';
+    include '../static/footer.php';
     ?>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

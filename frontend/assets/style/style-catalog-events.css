@@ -129,6 +129,11 @@
     border: none;
 }
 
+.c-e-btn-card a{
+    text-decoration: none;
+    color: white;
+}
+
 
 .c-e-container-img-btn > .c-e-container-btn-fav{
     position: relative;
@@ -163,4 +168,22 @@
 
   .img-fluid .rounded .shadow img{
     size: 315px;
+  }
+
+  .c-e-input-date{
+    max-width: 100px;
+    max-height: 50px;
+    display: flex;
+  }
+
+  .c-e-form-filters > * {
+    margin-right: 10px;
+  }
+
+  .c-e-range-price{
+    max-width: 85px;
+  }
+
+  .c-e-img-catalog{
+    aspect-ratio: 1/1;
   }
