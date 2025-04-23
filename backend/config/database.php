@@ -107,7 +107,6 @@ if ($result) {
             die("Error al insertar eventos predeterminados: " . $conn->error);
         }
     }
-    } else {
+} else {
     die("Error al contar los eventos: " . $conn->error);
 }
-?>

@@ -7,7 +7,7 @@
 
 /*Fondo de pantalla*/
 .bg_addYourEvent{
-    background-image: url('/frontend/assets/img/bg_AddYourEvent.png');
+    background-image: url('../assets/img/bg_AddYourEvent.png') !important;
     background-size: cover; 
 }
 

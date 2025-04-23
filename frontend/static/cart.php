@@ -26,14 +26,11 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
     <!--Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
     <!-- Icons Bootstrap-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
     <!--CSS-->
     <link rel="stylesheet" href="../assets/style/cart.css">
-    <link rel="stylesheet" href="../assets/style/footer.css">
-    <link rel="stylesheet" href="../assets/style/header.css">
+
 
     <!-- Cargar Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -45,34 +42,9 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
 </head>
 
 <body>
-    <!-- Encabezado -->
-    <header class="d-flex justify-content-center justify-content-md-between p-3 flex-md-row flex-column">
-        <div class="d-flex flex-md-row flex-column align-items-center gap-4">
-            <img class="logo-header" src="../assets/img/logo.png" alt="Logo de la empresa">
-            <nav class="d-flex flex-grow-1 justify-content-center justify-content-md-start">
-                <ul class="d-flex gap-4 m-0 p-0 list-unstyled align-items-center justify-content-start">
-                    <li><a href="home.php" class="nav-header">Home</a></li>
-                    <li><a href="catalog-events.html" class="nav-header">Events</a></li>
-                    <li><a href="about-us.html" class="nav-header">About us</a></li>
-                </ul>
-            </nav>
-        </div>
-        
-        <!-- Buscador e Iconos -->
-        <div class="d-flex align-items-center gap-4 mt-3 mt-md-0 flex-md-row flex-column">
-            <div class="d-flex align-items-center search-box">
-                <input class="search-box-input" type="text" placeholder="Search...">
-                <button class="search-box-button"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-            <div class="d-flex">
-                <a href="cart.php" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
-                <a href="login.php" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
-            </div>
-            
-        </div>
-    </header>
 
-    <main class="d-flex align-items-center justify-content-center font-family_cart mt-5 mb-5">
+    <?php include 'header.php'; ?>
+    <main class="d-flex align-items-center justify-content-center font-family_cart mt-5 mb-5 h-100">
         <div class="container row d-flex flex-md-row flex-column">
 
             <div class="col-md-8 ">
@@ -82,42 +54,45 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
                         <i class="fas fa-shopping-cart"></i> <span class="badge badge-primary"></span>
                     </div>
                 </div>
-                <hr style="border: 1px solid #4d194d"/>
+                <hr style="border: 1px solid #4d194d" />
                 <div class="p-5 text-center">
-                <?php if (!empty($cartItemsData)) : ?>
-                    <?php foreach ($cartItemsData as $data) : ?>
-                        <li class="d-flex justify-content-between align-items-center mb-3">
-                            <div class="col-4 d-flex flex-column justify-content-center">
-                                <strong><?php echo htmlspecialchars($data['event']['event_name']); ?></strong>
-                                <p class="text-muted"><?php echo htmlspecialchars($data['event']['name']); ?> - <?php echo htmlspecialchars(date('d/m/Y', strtotime($data['event']['event_date']))); ?></p>
-                            </div>
+                    <?php if (!empty($cartItemsData)) : ?>
+                        <?php foreach ($cartItemsData as $data) : ?>
+                            <li class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="col-4 d-flex flex-column justify-content-center">
+                                    <strong><?php echo htmlspecialchars($data['event']['event_name']); ?></strong>
+                                    <p class="text-muted"><?php echo htmlspecialchars($data['event']['name']); ?> - <?php echo htmlspecialchars(date('d/m/Y', strtotime($data['event']['event_date']))); ?></p>
+                                </div>
 
-                            <div class="col-4 d-flex align-items-center justify-content-between rounded-pill px-3 py-1" style="background-color: #b44cb4; width: 100px;">
-                                <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                                    href="../../backend/controllers/update_cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=decrement"
-                                    style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
-                                    <i class="fas fa-minus"></i>
-                                </a>
+                                <div class="col-4 d-flex align-items-center justify-content-between rounded-pill px-3 py-1" style="background-color: #b44cb4; width: 100px;">
+                                    <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
+                                        href="../../backend/controllers/update_cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=decrement"
+                                        style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
+                                        <i class="fas fa-minus"></i>
+                                    </a>
 
-                                <span class="text-white fs-6"><?php echo $data['item']['quantity']; ?></span>
+                                    <span class="text-white fs-6"><?php echo $data['item']['quantity']; ?></span>
 
-                                <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                                    href="../../backend/controllers/update_cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=increment"
-                                    style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
-                                    <i class="fas fa-plus"></i>
-                                </a>
-                                                
-                            </div>
+                                    <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
+                                        href="../../backend/controllers/update_cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=increment"
+                                        style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
 
-                            <div class="col-4"><?php echo number_format($data['event']['price'], 2); ?> € x <?php echo $data['item']['quantity']; ?> = <strong><?php echo number_format($data['subtotal'], 2); ?> €</strong>
-                            <a class=" ms-4 text-danger" href="../../backend/controllers/delete_cart.php?id=<?= $data['item']['id'] ?>"><i class="fa-solid fa-trash"></i></a></div>
-                        </li>
+                                </div>
 
-                    <?php endforeach; ?>
+                                <div class="col-4"><?php echo number_format($data['event']['price'], 2); ?> € x <?php echo $data['item']['quantity']; ?> = <strong><?php echo number_format($data['subtotal'], 2); ?> €</strong>
+                                    <a class=" ms-4 text-danger" href="../../backend/controllers/delete_cart.php?id=<?= $data['item']['id'] ?>"><i class="fa-solid fa-trash"></i></a>
+                                </div>
+                            </li>
+
+                        <?php endforeach; ?>
                     <?php else : ?>
-                        <div class="col-12 text-center"><p>Your cart is empty</p></div>
+                        <div class="col-12 text-center">
+                            <p>Your cart is empty</p>
+                        </div>
                         <button class="empty-cart-button">Find your event here!</button>
-                <?php endif; ?>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -125,7 +100,7 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
                 <h2 class="text-left mb-5">Total</h2>
                 <div class="card p-4" style="padding-bottom: 3px; margin-bottom: 0px;">
                     <h2 class="resumen-pedido">Order Summary</h2>
-                    <hr style="margin-top: 0px; border: 1px solid #4d194d; font-size: 24px;"/>
+                    <hr style="margin-top: 0px; border: 1px solid #4d194d; font-size: 24px;" />
                     <div class="text-center" style="height: 300px; font-size: 12px;">
                         <?php if (!empty($cartItemsData)) : ?>
                             <?php foreach ($cartItemsData as $data) : ?>
@@ -137,19 +112,21 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
                                 </li>
                             <?php endforeach; ?>
                         <?php else : ?>
-                        <div class="col-12 text-center"><p>Your cart is empty</p></div>
+                            <div class="col-12 text-center">
+                                <p>Your cart is empty</p>
+                            </div>
                         <?php endif; ?>
-                </div>
+                    </div>
                     <hr style="margin-top: 0px; border: 1px solid #4d194d" />
                     <div class="d-flex justify-content-between">
                         <span>Taxes</span>
-                        <div><?php echo number_format($cartTotals['total_carrito']*0.1, 2); ?> €</div>
+                        <div><?php echo number_format($cartTotals['total_carrito'] * 0.1, 2); ?> €</div>
                     </div>
                     <div class="d-flex justify-content-between flex-wrap">
                         <span>Management</span>
                         <div><?php echo number_format($cartTotals['total_quantity'], 2); ?> €</div>
                     </div>
-                    <hr style=" border: 1px solid #4d194d" >
+                    <hr style=" border: 1px solid #4d194d">
                     <div class="d-flex justify-content-between flex-wrap">
                         <strong>Total</strong>
                         <div><strong><?php echo number_format($cartTotals['total_carrito'] + $cartTotals['total_quantity'], 2); ?> €</strong></div>
@@ -157,54 +134,22 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
                 </div>
             </div>
             <?php if (!empty($cartItemsData)) : ?>
-            <div class=" d-flex justify-content-center row mb-4 mt-5 ">
-                <button class="empty-cart-button  w-50 p-3 " type="submit" onclick="window.location.href='pago.html'">Pagar</button>
-            </div>
+                <div class=" d-flex justify-content-center row mb-4 mt-5 ">
+                    <button class="empty-cart-button  w-50 p-3 " type="submit" onclick="window.location.href='pago.html'">Pagar</button>
+                </div>
             <?php endif; ?>
             </form>
         </div>
 
     </main>
 
-        <!-- Footer -->
-        <footer class="container-fluid p-5">
-            <div class="d-flex flex-column align-items-center">
-                <div class="row">
-                    <!-- Menú de navegación -->
-                    <nav class=" col-12 col-md-6 mt-3">    
-                        <ul class="list-unstyled">
-                            <li><a href="home.php" class="nav-footer">Home</a></li>
-                            <li><a href="catalog-events.html" class="nav-footer">Events</a></li>
-                            <li><a href="about-us.html" class="nav-footer">About us</a></li>
-                        </ul>
-                    </nav>
-                
-                    <!-- Información de contacto -->
-                    <div class="footer-contact col-12 col-md-6 mt-3">
-                        <p class="text-nowrap m-1"><i class="fa-solid fa-phone me-2"></i> +34 123 456 789</p>
-                        <p class="text-nowrap m-1"><i class="fa-solid fa-envelope me-2"></i> contacto@empresa.com</p>
-                        <p class="text-nowrap m-1"><i class="fa-solid fa-map-marker-alt me-2"></i> Calle Falsa 123, Madrid, España</p>
-                    </div>
-                </div>
-            </div>
-    
-                <!-- Redes Sociales -->
-                <div class="d-flex justify-content-center align-items-center gap-3 mt-3 col-12">
-                    <a href="#" class="footer-social"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#" class="footer-social"><i class="fa-brands fa-twitter"></i></a>
-                    <a href="#" class="footer-social"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="footer-social"><i class="fa-brands fa-linkedin"></i></a>
-                </div>
-            
-        
-            <!-- Derechos de autor -->
-            <div class="footer-bottom text-center pt-4 col-12">
-                <p>&copy; 2025 Random Events. All rights reserved.</p>
-            </div>
-            
-        </footer>
+    <!-- Footer -->
+    <?php
+    include '../static/footer.php';
+    ?>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
