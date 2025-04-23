@@ -164,3 +164,21 @@
   .img-fluid .rounded .shadow img{
     size: 315px;
   }
+
+  .c-e-input-date{
+    max-width: 100px;
+    max-height: 50px;
+    display: flex;
+  }
+
+  .c-e-form-filters > * {
+    margin-right: 10px;
+  }
+
+  .c-e-range-price{
+    max-width: 85px;
+  }
+
+  .c-e-img-catalog{
+    aspect-ratio: 1/1;
+  }
