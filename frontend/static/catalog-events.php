@@ -120,7 +120,7 @@ $result_events = $stmt->get_result();
                         <!--Filtro ciudad-->
 
 
-                        <form method="POST" action="/backend/controllers/consulta_filtros.php"
+                        <form method="POST" action="../../backend/controllers/consulta_filtros.php"
                             class="d-flex c-e-form-filters">
                             <select name="city" id="city" class="c-e-location">
                                 <option value="" selected> City </option>

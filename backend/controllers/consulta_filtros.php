@@ -25,7 +25,7 @@ var_dump($_SESSION);
 
 $conn->close();
 
-header("Location: /../frontend/static/catalog-events.php");
+header("Location: ../../frontend/static/catalog-events.php");
 exit();
 
 ?>
