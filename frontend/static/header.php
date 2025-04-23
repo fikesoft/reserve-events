@@ -47,7 +47,7 @@
 
                     <!-- Menú desplegable de usuario -->
                     <div class="dropdown">
-                        <a class="btn dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="btn dropdown-toggle text-white" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             <?= htmlspecialchars($_SESSION['user_name']) ?>
                         </a>
 
