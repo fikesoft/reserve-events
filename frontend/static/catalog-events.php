@@ -198,7 +198,7 @@ $result_events = $stmt->get_result();
                                     <p class="text-muted"><?= htmlspecialchars($event['city']) ?> -
                                         <?= htmlspecialchars($event['style']) ?></p>
                                     <button class="c-e-btn-card btn btn-primary w-100 custom"><a
-                                            href="filter_events.php"></a>Book Now</button>
+                                            href="pagina-evento.php?id=<?= $event['id'] ?>">Book Now</a></button>
                                 </div>
                             </div>
                         </div>

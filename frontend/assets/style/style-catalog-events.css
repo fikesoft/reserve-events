@@ -129,6 +129,11 @@
     border: none;
 }
 
+.c-e-btn-card a{
+    text-decoration: none;
+    color: white;
+}
+
 
 .c-e-container-img-btn > .c-e-container-btn-fav{
     position: relative;
