@@ -21,9 +21,9 @@
             <img class="logo-header" src="../assets/img/logo.png" alt="Logo de la empresa">
             <nav class="d-flex flex-grow-1 justify-content-center justify-content-md-start">
                 <ul class="d-flex gap-4 m-0 p-0 list-unstyled align-items-center justify-content-start">
-                    <li><a href="home.php" class="nav-header">Home</a></li>
-                    <li><a href="catalog-events.php" class="nav-header">Events</a></li>
-                    <li><a href="about-us.php" class="nav-header">About us</a></li>
+                    <li><a href="./home.php" class="nav-header">Home</a></li>
+                    <li><a href="./catalog-events.php " class="nav-header">Events</a></li>
+                    <li><a href="./about-us.php" class="nav-header">About us</a></li>
                 </ul>
             </nav>
         </div>
@@ -32,7 +32,7 @@
         <div class="d-flex align-items-center gap-4 mt-3 mt-md-0 flex-md-row flex-column me-3">
             <div class="d-flex align-items-center search-box">
                 <!-- Buscador -->
-                <form action="/frontend/static/buscador.php" method="GET">
+                <form action="./buscador.php" method="GET">
                     <input class="search-box-input" type="text" name="query" placeholder="Search...">
                     <button class="search-box-button">
                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -48,8 +48,8 @@
                 <?php if (isset($_SESSION['user_id'])): ?>
 
                     <!-- Menú desplegable de usuario -->
-                    <div class="dropdown">
-                        <a class="btn dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="dropdown  ">
+                        <a class="btn dropdown-toggle text-white" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             <?= htmlspecialchars($_SESSION['user_name']) ?>
                         </a>
 

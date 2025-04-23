@@ -46,7 +46,7 @@ $event = $result->fetch_assoc();
     <!-- Header -->
     <?php include 'header.php'; ?>
 
-    <main class="container my-5">
+    <main class="container my-5 vh-100">
         <div class="row">
             <div class="col-md-4 position-relative">
                 <img src="<?= htmlspecialchars($event['image_url']); ?>" class="img-fluid" alt="<?= htmlspecialchars($event['event_name']); ?>">

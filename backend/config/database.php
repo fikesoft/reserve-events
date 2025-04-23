@@ -43,19 +43,6 @@ if ($conn->query($sql_create_table_users) !== TRUE) {
     die("Error al crear la tabla de usuarios: " . $conn->error);
 }
 
-$sql_create_table_cart = "
-CREATE TABLE IF NOT EXISTS cart (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    event_id INT NOT NULL,
-    quantity INT NOT NULL DEFAULT 1,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (event_id) REFERENCES events(id)
-);";
-
-if ($conn->query($sql_create_table_cart) !== TRUE) {
-    die("Error al crear la tabla de carrito: " . $conn->error);
-}
 
 
 $sql_create_table_events = "
@@ -78,6 +65,19 @@ CREATE TABLE IF NOT EXISTS events (
 
 if ($conn->query($sql_create_table_events) !== TRUE) {
     die("Error al crear la tabla de eventos: " . $conn->error);
+}
+$sql_create_table_cart = "
+CREATE TABLE IF NOT EXISTS cart (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    event_id INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 1,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (event_id) REFERENCES events(id)
+);";
+
+if ($conn->query($sql_create_table_cart) !== TRUE) {
+    die("Error al crear la tabla de carrito: " . $conn->error);
 }
 
 // Consulta para contar cuántos eventos existen en la tabla
@@ -105,7 +105,6 @@ if ($result) {
             die("Error al insertar eventos predeterminados: " . $conn->error);
         }
     }
-    } else {
+} else {
     die("Error al contar los eventos: " . $conn->error);
 }
-?>
