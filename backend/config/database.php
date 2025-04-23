@@ -97,10 +97,11 @@ $sql_create_table_order_detail = "
 CREATE TABLE IF NOT EXISTS order_detail (
     id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
-    product_id INT NOT NULL, 
+    event_id INT NOT NULL,
     quantity INT NOT NULL,
     unit_price DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES orders(id)
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    FOREIGN KEY (event_id) REFERENCES events(id)
 );";
 
 if ($conn->query($sql_create_table_order_detail) !== TRUE) {

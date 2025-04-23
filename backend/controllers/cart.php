@@ -112,9 +112,8 @@ class Cart
 require_once 'init.php';
 require_once '../../backend/config/database.php';
 
-// Asegúrate de que el user_id esté en la sesión
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../../frontend/static/login.php"); // Ajusta la ruta si es necesario
+    header("Location: ../../frontend/static/login.php"); 
     exit();
 }
 
@@ -141,11 +140,14 @@ if (isset($_POST['action']) && $_POST['action'] === 'addToCart') {
 } elseif (isset($_GET['action'])) {
     $action = $_GET['action'];
 
+       // llamada a la funcion de eliminar 
     if ($action === 'deleteCart' && isset($_GET['id'])) {
         $itemIdToDelete = (int)$_GET['id'];
         $cartLogic->deleteCart($itemIdToDelete);
         header('Location: ../../frontend/static/cart.php');
         exit();
+
+        // llamada a la funcion de incrementar de la cantidad 
     } elseif ($action === 'increment' && isset($_GET['id']) && isset($_GET['quantity'])) {
         $itemIdToUpdate = (int)$_GET['id'];
         $currentQuantity = (int)$_GET['quantity'];
@@ -153,6 +155,8 @@ if (isset($_POST['action']) && $_POST['action'] === 'addToCart') {
         $cartLogic->updateCartItemQuantity($itemIdToUpdate, $newQuantity);
         header('Location: ../../frontend/static/cart.php');
         exit();
+
+        // llamada a la funcion de decremento de la cantidad 
     } elseif ($action === 'decrement' && isset($_GET['id']) && isset($_GET['quantity'])) {
         $itemIdToUpdate = (int)$_GET['id'];
         $currentQuantity = (int)$_GET['quantity'];

@@ -1,11 +1,11 @@
 <?php
-session_start();
+require_once '../../backend/config/database.php';
+require_once '../../backend/controllers/cart.php';
+require_once '../../backend/controllers/init.php';
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
-require_once '../../backend/config/database.php';
-require_once '../../backend/controllers/cart.php';
 
 $userId = $_SESSION['user_id'];
 $cartLogic = new Cart($conn, $userId);
@@ -71,7 +71,7 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
             <nav class="d-flex flex-grow-1 justify-content-center justify-content-md-start">
                 <ul class="d-flex gap-4 m-0 p-0 list-unstyled align-items-center justify-content-start">
                     <li><a href="home.html" class="nav-header">Home</a></li>
-                    <li><a href="catalog-events.html" class="nav-header">Events</a></li>
+                    <li><a href="catalog-events.php" class="nav-header">Events</a></li>
                     <li><a href="about-us.html" class="nav-header">About us</a></li>
                 </ul>
             </nav>
