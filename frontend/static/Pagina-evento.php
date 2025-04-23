@@ -88,7 +88,8 @@ $event = $result->fetch_assoc();
                 <!-- AQUI BUTTON -->
                 <div class="d-flex justify-content-between mt-4">
                     <a href="catalog-events.php" class="btn btn-outline-dark">Volver</a>
-                    <form action="../../backend/controllers/add_to_cart.php" method="POST" class="d-inline">
+                    <form action="../../backend/controllers/cart.php" method="POST" class="d-inline">
+                        <input type="hidden" name="action" value="addToCart">
                         <input type="hidden" name="event_id" value="<?= $event['id'] ?>">
                         <input type="hidden" name="quantity" id="quantityInput" value="1">
                         <button type="submit" class="btn text-white" style="background-color: #4d194d;">

@@ -1,11 +1,13 @@
 <?php
-session_start();
+require_once '../../backend/config/database.php';
+require_once '../../backend/controllers/cart.php';
+require_once '../../backend/controllers/init.php';
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
-require_once '../../backend/config/database.php';
-require_once '../../backend/controllers/cart.php';
+
 
 $userId = $_SESSION['user_id'];
 $cartLogic = new Cart($conn, $userId);
@@ -66,7 +68,7 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
 
                                 <div class="col-4 d-flex align-items-center justify-content-between rounded-pill px-3 py-1" style="background-color: #b44cb4; width: 100px;">
                                     <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                                        href="../../backend/controllers/update_cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=decrement"
+                                        href="../../backend/controllers/cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=decrement"
                                         style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
                                         <i class="fas fa-minus"></i>
                                     </a>
@@ -74,7 +76,7 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
                                     <span class="text-white fs-6"><?php echo $data['item']['quantity']; ?></span>
 
                                     <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                                        href="../../backend/controllers/update_cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=increment"
+                                        href="../../backend/controllers/cart.php?id=<?= $data['item']['id'] ?>&quantity=<?= $data['item']['quantity'] ?>&action=increment"
                                         style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
                                         <i class="fas fa-plus"></i>
                                     </a>
@@ -82,7 +84,7 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
                                 </div>
 
                                 <div class="col-4"><?php echo number_format($data['event']['price'], 2); ?> € x <?php echo $data['item']['quantity']; ?> = <strong><?php echo number_format($data['subtotal'], 2); ?> €</strong>
-                                    <a class=" ms-4 text-danger" href="../../backend/controllers/delete_cart.php?id=<?= $data['item']['id'] ?>"><i class="fa-solid fa-trash"></i></a>
+                                    <a class=" ms-4 text-danger" href="../../backend/controllers/cart.php?id=<?= $data['item']['id'] ?>&action=deleteCart"><i class="fa-solid fa-trash"></i></a>
                                 </div>
                             </li>
 
@@ -135,7 +137,7 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
             </div>
             <?php if (!empty($cartItemsData)) : ?>
                 <div class=" d-flex justify-content-center row mb-4 mt-5 ">
-                    <button class="empty-cart-button  w-50 p-3 " type="submit" onclick="window.location.href='pago.html'">Pagar</button>
+                    <button class="empty-cart-button  w-50 p-3 " type="submit" onclick="window.location.href='pago.html'">Pay</button>
                 </div>
             <?php endif; ?>
             </form>
