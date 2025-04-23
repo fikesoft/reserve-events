@@ -50,11 +50,6 @@ $event = $result->fetch_assoc();
         <div class="row">
             <div class="col-md-4 position-relative">
                 <img src="<?= htmlspecialchars($event['image_url']); ?>" class="img-fluid" alt="<?= htmlspecialchars($event['event_name']); ?>">
-                <div style="background-color: rgba(0,0,0,0.7); border-radius: 40px; padding: 7px; position: absolute; top: 8px; left: 24px;">
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3.72692 1C2.22077 1 1 2.29358 1 3.88889C1 6.2963 3.27308 8.22222 6 10.6296C8.72769 8.22222 11 6.2963 11 3.88889C11 2.29358 9.77923 1 8.27231 1C7.32385 1 6.48846 1.51358 6 2.29197C5.75419 1.89622 5.41753 1.57076 5.02059 1.34514C4.62364 1.11952 4.17896 1.00089 3.72692 1Z" stroke="white" />
-                    </svg>
-                </div>
             </div>
             <div class="col-md-8">
                 <div class="d-flex align-items-stretch border rounded">
@@ -90,7 +85,7 @@ $event = $result->fetch_assoc();
                 <div class="mt-4">
                     <p><?= nl2br(htmlspecialchars($event['description'])); ?></p>
                 </div>
-
+                <!-- AQUI BUTTON -->
                 <div class="d-flex justify-content-between mt-4">
                     <a href="catalog-events.php" class="btn btn-outline-dark">Volver</a>
                     <form action="../../backend/controllers/add_to_cart.php" method="POST" class="d-inline">
