@@ -93,7 +93,7 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
                         <div class="col-12 text-center">
                             <p>Your cart is empty</p>
                         </div>
-                        <button class="empty-cart-button">Find your event here!</button>
+                        <button class="empty-cart-button"><a href="./catalog-events.php" class="text-white" style="text-decoration: none;">Find your event here!</a></button>
                     <?php endif; ?>
                 </div>
             </div>

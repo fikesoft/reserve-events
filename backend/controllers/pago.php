@@ -15,6 +15,32 @@ $cartItems = $cartLogic->getCartItems();
 $cartTotals = $cartLogic->calculateCartTotals($cartItems);
 $cartItemsData = $cartLogic->getCartItemsData($cartItems);
 
+// Array para almacenar los errores de validación
+$errors = [];
+
+// Función para validar los datos de la tarjeta de crédito (solo si se selecciona ese método)
+function validateCreditCard($paymentMethod, $holder, $month, $year, $number, $cvv) {
+    $errors = [];
+    if ($paymentMethod === 'credit-card') {
+        if (empty(trim($holder))) {
+            $errors['card-holder'] = "El nombre del titular de la tarjeta es obligatorio.";
+        }
+        if (empty(trim($month))) {
+            $errors['month-date-card'] = "El mes de caducidad es obligatorio.";
+        }
+        if (empty(trim($year))) {
+            $errors['year-date-card'] = "El año de caducidad es obligatorio.";
+        }
+        if (empty(trim($number))) {
+            $errors['pago-card-number'] = "El número de tarjeta es obligatorio.";
+        }
+        if (empty(trim($cvv))) {
+            $errors['pago-cvv'] = "El CVV es obligatorio.";
+        }
+    }
+    return $errors;
+}
+
 
 //Verificar si se han eenviado dato por POST
 if ($_SERVER["REQUEST_METHOD"]=="POST") {
@@ -36,6 +62,17 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
     $card_expiry_year = $_POST["year-date-card"] ?? "";
     $card_number = $_POST["pago-card-number"] ?? "";
     $cvv = $_POST["pago-cvv"] ?? "";
+
+     // Validar datos de la tarjeta de crédito si el método de pago es "credit-card"
+     $creditCardErrors = validateCreditCard($payment_method, $card_holder, $card_expiry_month, $card_expiry_year, $card_number, $cvv);
+     $errors = array_merge($errors, $creditCardErrors);
+
+     // Si hay errores, devolvemos una respuesta (por ejemplo, en formato JSON)
+    if (!empty($errors)) {
+        header('Content-Type: application/json');
+        echo json_encode(['errors' => $errors]);
+        exit();
+    }
 
     // Iniciar la transacción
     $conn->begin_transaction();
@@ -69,7 +106,10 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         
 
         $conn->commit();
-        echo "Pedido realizado con éxito. ID de la orden: " . $order_id;
+
+        $_SESSION['order_id'] = $order_id;
+        header("Location: ../../frontend/static/confirmation.php");
+        exit();
 
     } catch (Exception $e) {
         // Si ocurre algún error, deshacer la transacción

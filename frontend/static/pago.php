@@ -34,35 +34,10 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
     <link rel="stylesheet" href="../assets/style/footer.css">
     <link rel="stylesheet" href="../assets/style/header.css">
     <link rel="stylesheet" href="../assets/style/pago.css">
-    <link rel="script" href="../js/pago.js">
+    
 </head>
 
 <body>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const radioCreditCard = document.getElementById("credit-card");
-            const radioPaypal = document.getElementById("paypal");
-            const divCreditCard = document.getElementById("div-credit-card");
-            const divPaypal = document.getElementById("div-paypal");
-
-            function togglePayment(){
-                if (radioCreditCard.checked){
-                    divCreditCard.removeAttribute("hidden");
-                    divPaypal.setAttribute("hidden", true);
-                }else if (radioPaypal.checked) {
-                    divCreditCard.setAttribute("hidden", true);
-                    divPaypal.removeAttribute("hidden");
-                }
-                
-            }
-
-            radioCreditCard.addEventListener("change", togglePayment);
-            radioPaypal.addEventListener("change", togglePayment);
-
-        });
-    </script>
-
 
     <!-- Encabezado -->
     <header class="d-flex justify-content-center justify-content-md-between p-3 flex-md-row flex-column">
@@ -260,13 +235,6 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
                 </div>
             </div>
 
-
-            <!--Botón paypal hidden-->
-            <div class="row align-items-center justify-content-center mt-4 mb-4" id="div-paypal" >
-                <button class="pago-btn-paypal w-50 rounded"> <i class="pago-icon-paypal bi bi-paypal"></i>
-                    PayPal</button>
-            </div>
-
             <!--Fila titulo "Forma de envío"-->
 
             <div class="pago-seccion-row row mt-3">
@@ -375,54 +343,6 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
                     </div>
                 </div>
         </div>
-
-        <!--<div class="pago-resumen-container d-flex flex-column container-sm p-5 ms-5 mt-5 align-items-center justify-content-center">
-
-            Fila de título resumen
-
-            <div class="row">
-                <h3 class="pago-resumen-h3 mb-0">Resumen del pedido</h3>
-                <hr class="pago-resumen-hr">
-            </div>
-
-            <div class="row">
-                <div class="pago-col-lista-resumen col">
-                    <i class="pago-carrito-vacio">Tu carrito está vacío</i>
-                </div>
-            </div>
-            <div class="row">
-                <hr class="pago-resumen-hr-final">
-            </div>
-
-
-            <div class="row">
-                <div class="col">
-                    <p class="pago-resumen-impuestos">Impuestos</p>
-                </div>
-                <div class="col">
-                    <p class="pago-resumen-price text-end">0,00€</p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <p class="pago-resumen-impuestos">Gestión</p>
-                </div>
-                <div class="col">
-                    <p class="pago-resumen-price text-end">0,00€</p>
-                </div>
-                <hr>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <p class="pago-resumen-impuestos">Total</p>
-                </div>
-                <div class="col">
-                    <p class="pago-resumen-price text-end">0,00€</p>
-                </div>
-            </div>
-        </div>-->
         
     </div>
 
@@ -466,6 +386,8 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
         </div>
 
     </footer>
+
+    <script src="../js/pago.js"></script>
 </body>
 
 </html>
