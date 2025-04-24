@@ -99,7 +99,7 @@ session_start();
                                                 </div>
                                             </div>
                                             <div class="d-flex flex-column align-items-center gap-2 mx-2">
-                                                <p class="mb-0">From <?= htmlspecialchars($row['price']) ?>$/person</p>
+                                                <p class="mb-0"><?= htmlspecialchars($row['price']) ?>$/person</p>
                                                 <!-- Botón para acceder al evento -->
                                                 <button class="btn w-100 btn-event-card" onclick="window.location.href='./Pagina-evento.php?id=<?= $row['id'] ?>'">
                                                     Find Tickets
