@@ -26,8 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'image_url' => htmlspecialchars($_POST['image']),
         'location' => htmlspecialchars($_POST['location']),
         'price' => (float)$_POST['price'],
-        'number_of_tickets' => (int)$_POST['number_tickets'],
-        'ticket_type' => implode(',', $_POST['ticket-types'] ?? [])
+        'number_of_tickets' => (int)$_POST['number_tickets']
     ];
 
     // Actualizar en la base de datos
@@ -42,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             location = ?,
             price = ?,
             number_of_tickets = ?,
-            ticket_type = ?
             WHERE id = ?";
 
     $stmt = $conn->prepare($sql);
@@ -57,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data['location'],
         $data['price'],
         $data['number_of_tickets'],
-        $data['ticket_type'],
         $eventId
     );
 
