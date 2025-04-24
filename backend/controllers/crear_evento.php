@@ -17,7 +17,6 @@ $time = $_POST['time'] ?? '';
 $image = $_POST['image'] ?? '';
 $location = $_POST['location'] ?? '';
 $price = $_POST['price'] ?? 0;
-$ticketTypes = $_POST['ticket-types'] ?? [];
 $numberTickets = $_POST['number_tickets'] ?? 0;
 
 // Validar datos
@@ -25,15 +24,13 @@ if (empty($name) || empty($email) || empty($eventName) || empty($date) || empty(
     die("Todos los campos son obligatorios.");
 }
 
-// Convertir los tipos de boletos en una cadena separada por comas
-$ticketTypesStr = implode(',', $ticketTypes);
+
 
 // Preparar la consulta SQL
 $sql = "INSERT INTO events (
     name, email, event_name, description, event_date, event_time, image_url, 
     location,
-     price,
-     ticket_type, 
+     price, 
     number_of_tickets
 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -49,7 +46,6 @@ $stmt->bind_param(
     $image,
     $location,
     $price,
-    $ticketTypesStr,
     $numberTickets
 );
 
