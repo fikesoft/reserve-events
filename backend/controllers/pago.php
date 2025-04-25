@@ -41,12 +41,24 @@ function validateCreditCard($paymentMethod, $holder, $month, $year, $number, $cv
     return $errors;
 }
 
+function calculateCartTotal($cartTotals, $shipping_method) {
+    $shippingPrices = [
+        'eticket' => 1,
+        'ticket-fisico' => 3,
+        'express-ticket-fisico' => 5
+    ];
+
+    $shippingPrice = $shippingPrices[$shipping_method] ?? 0;
+
+    return $cartTotals['total_carrito'] + $cartTotals['total_quantity'] + $shippingPrice;
+}
+
 
 //Verificar si se han eenviado dato por POST
 if ($_SERVER["REQUEST_METHOD"]=="POST") {
     // Recuperar los datos del formulario
-    $country = $_POST["country"] ?? "";
-    $province = $_POST["province"] ?? "";
+    $country = $_POST["country_name"] ?? "";
+    $province = $_POST["province_name"] ?? "";
     $city = $_POST["city"] ?? '';
     $zip_code = $_POST["zip-code"] ?? "";
     $address = $_POST["address"] ?? "";
@@ -82,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         $stmt_order = $conn->prepare("INSERT INTO orders (order_date, terms_accepted, privacy_policy_accepted, total, country, province, city, zip_code,
             address, payment_method, card_holder, card_expiry_month, card_expiry_year, card_number, cvv, shipping_method) VALUES (NOW(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-        $stmt_order->bind_param("ssdssssssssssss", $terms_accepted, $privacy_policy_accepted, $cartTotals['total_carrito'], $country, $province, $city, $zip_code, $address, $payment_method, $card_holder,
+        $stmt_order->bind_param("ssdssssssssssss", $terms_accepted, $privacy_policy_accepted, calculateCartTotal($cartTotals, $shipping_method), $country, $province, $city, $zip_code, $address, $payment_method, $card_holder,
             $card_expiry_month, $card_expiry_year, $card_number, $cvv, $shipping_method);
 
         $stmt_order->execute();

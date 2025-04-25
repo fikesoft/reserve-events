@@ -13,6 +13,39 @@ $cartItems = $cartLogic->getCartItems();
 $cartTotals = $cartLogic->calculateCartTotals($cartItems);
 $cartItemsData = $cartLogic->getCartItemsData($cartItems);
 
+// 1. Obtener datos de la tabla 'countries'
+$sql_countries = "SELECT * FROM countries";
+$result_countries = $conn->query($sql_countries);
+
+// 2. Obtener datos de la tabla 'provinces'
+$sql_provinces = "SELECT * FROM provinces";
+$result_provinces = $conn->query($sql_provinces);
+
+// Almacenar las ciudades en un array para usarlas en JavaScript
+$provinces_by_country = array();
+if ($result_provinces->num_rows > 0) {
+    while ($row_province = $result_provinces->fetch_assoc()) {
+        $country_id = $row_province['country_id'];
+        if (!isset($provinces_by_country[$country_id])) {
+            $provinces_by_country[$country_id] = array();
+        }
+        $provinces_by_country[$country_id][] = array(
+            'id' => $row_province['id'],
+            'province_name' => $row_province['province_name']
+        );
+    }
+}
+
+// 3. Generar el HTML para el select de países
+$country_options = '<option value="" disabled selected>Select country</option>'; // Opción por defecto
+if ($result_countries->num_rows > 0) {
+    while ($row_country = $result_countries->fetch_assoc()) {
+        $country_options .= '<option value="' . $row_country['id'] . '">' . $row_country['country_name'] . '</option>';
+    }
+}
+
+$conn->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -30,6 +63,7 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
 
     <!--Iconos Bootstrap-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
 
     <link rel="stylesheet" href="../assets/style/footer.css">
     <link rel="stylesheet" href="../assets/style/header.css">
@@ -92,12 +126,8 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
                 <div class="pago-form-col col mt-3 ms-0">
                     <form action="../../backend/controllers/pago.php" method="post">
                         <label class="d-flex justify-content-start text-start" for="country">Country*</label>
-                        <select class="pago-select border border-black rounded text-center" name="country" id="country">
-                            <option value="España" selected>España</option>
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                            <option value="">4</option>
+                        <select class="country pago-select border border-black rounded text-center" name="country" id="country" required>
+                            <?php echo $country_options; ?>
                         </select>
                 </div>
 
@@ -105,12 +135,8 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
 
                 <div class="col mt-3">
                     <label class="d-flex justify-content-start text-start" for="province">Province*</label>
-                    <select class="pago-select border border-black rounded text-center" name="province" id="province">
-                        <option value="Madrid" selected>Madrid</option>
-                        <option value="">1</option>
-                        <option value="">2</option>
-                        <option value="">3</option>
-                        <option value="">4</option>
+                    <select class="province pago-select border border-black rounded text-center" name="province" id="province" disabled required>
+                        <option value="" disabled selected>Select a country first</option>
                     </select>
                 </div>
             </div>
@@ -123,13 +149,8 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
 
                 <div class="col mt-3">
                     <label class="d-flex" for="city">City*</label>
-                    <select class="pago-select border border-black rounded text-center" name="city" id="city">
-                        <option value="Madrid">Madrid</option>
-                        <option value="">1</option>
-                        <option value="">2</option>
-                        <option value="">3</option>
-                        <option value="">4</option>
-                    </select>
+                    <input class="pago-select border border-black rounded text-center" type="text" name="city" id="city"
+                     placeholder="*City" required>
                 </div>
 
                 <!--Columna de codigo postal-->
@@ -248,7 +269,7 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
 
                 <div class="pago-formaenvio-row row border border-grey rounded mb-2">
                     <div class="col">
-                        <label for="eticket">e-Ticket &nbsp; &nbsp; X€</label>
+                        <label for="eticket">e-Ticket &nbsp; &nbsp; 1€</label>
                     </div>
                     <div class="col-2">
                         <input type="radio" id="forma-pago" name="forma-pago" value="eticket" required>
@@ -259,7 +280,7 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
 
                 <div class="pago-formaenvio-row row border border-grey rounded mb-2">
                     <div class="col">
-                        <label for="ticket-fisico"> Physical ticket &nbsp; &nbsp; X€</label>
+                        <label for="ticket-fisico"> Physical ticket &nbsp; &nbsp; 3€</label>
                     </div>
                     <div class="col-2">
                         <input type="radio" id="forma-pago" name="forma-pago" value="ticket-fisico" required>
@@ -270,7 +291,7 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
 
                 <div class="pago-formaenvio-row row border border-grey rounded mb-2">
                     <div class="col">
-                        <label for="express-ticket-fisico">Express Physical ticket &nbsp; &nbsp; X€</label>
+                        <label for="express-ticket-fisico">Express Physical ticket &nbsp; &nbsp; 5€</label>
                     </div>
                     <div class="col-2">
                         <input type="radio" id="forma-pago" name="forma-pago" value="express-ticket-fisico" required>
@@ -299,6 +320,9 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
             
             </div>
 
+            <input type="hidden" name="country_name" id="country_name">
+            <input type="hidden" name="province_name" id="province_name">
+
             <!--Botón de pagar/aceptar-->
 
             <div class="row mb-4 mt-3 justify-content-center">
@@ -309,7 +333,7 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
 
         <!--Contenedor de resumen de pago-->
 
-        <div class="pago-resumen-container d-flex flex-column container-sm col-md-4 align-items-center justify-content-center">
+        <div class="pago-resumen-container d-flex flex-column container-sm col-md-4 pb-4 align-items-center justify-content-center">
                 <div class="card p-4" style="padding-bottom: 3px; margin-bottom: 0px;">
                     <h2 class="resumen-pedido">Order Summary</h2>
                     <hr style="margin-top: 0px; border: 1px solid #4d194d; font-size: 24px;"/>
@@ -335,6 +359,10 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
                     <div class="d-flex justify-content-between flex-wrap">
                         <span>Management</span>
                         <div><?php echo number_format($cartTotals['total_quantity'], 2); ?> €</div>
+                    </div>
+                    <div class="d-flex justify-content-between flex-wrap">
+                        <span>Shipping</span>
+                        <div><?php echo number_format(0, 2); ?> €</div>
                     </div>
                     <hr style=" border: 1px solid #4d194d" >
                     <div class="d-flex justify-content-between flex-wrap">
@@ -387,6 +415,12 @@ $cartItemsData = $cartLogic->getCartItemsData($cartItems);
 
     </footer>
 
+    <script>
+        const provincesByCountry = <?php echo json_encode($provinces_by_country); ?>;
+        const cartTotals = <?php echo json_encode($cartTotals); ?>;
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../js/pago.js"></script>
 </body>
 

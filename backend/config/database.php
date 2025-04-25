@@ -122,6 +122,29 @@ if ($conn->query($sql_create_table_cart) !== TRUE) {
     die("Error al crear la tabla de carrito: " . $conn->error);
 }
 
+$sql_create_table_country = "
+CREATE TABLE IF NOT EXISTS countries (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    country_name VARCHAR(100) NOT NULL
+);";
+
+if ($conn->query($sql_create_table_country) !== TRUE) {
+    die("Error al crear la tabla de paises: " . $conn->error);
+}
+
+$sql_create_table_provinces = "
+CREATE TABLE IF NOT EXISTS provinces (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    province_name VARCHAR(100) NOT NULL,
+    country_id INT, 
+    FOREIGN KEY (country_id) REFERENCES countries(id)
+);";
+
+if ($conn->query($sql_create_table_provinces) !== TRUE) {
+    die("Error al crear la tabla de provincias: " . $conn->error);
+}
+
+
 // Consulta para contar cuántos eventos existen en la tabla
 $sql_count_events = "SELECT COUNT(*) AS total_events FROM events";
 $result = $conn->query($sql_count_events);
@@ -150,4 +173,40 @@ if ($result) {
     }
 } else {
     die("Error al contar los eventos: " . $conn->error);
+}
+
+
+// Consulta para contar si hay paises y ciudades
+$sql_count_country = "SELECT COUNT(*) AS total_countries FROM countries";
+$result_country = $conn->query($sql_count_country);
+
+$sql_count_city = "SELECT COUNT(*) AS total_provinces FROM provinces";
+$result_city = $conn->query($sql_count_city);
+
+if ($result) {
+    $row = $result_country->fetch_assoc();
+    $total_countries = $row['total_countries'];
+
+    $row = $result_city->fetch_assoc();
+    $total_provinces = $row['total_provinces'];
+
+    // Verificar si hay menos de 6 eventos
+    if ($total_countries == 0) {
+
+        $sql_insert_countries = "INSERT INTO countries (country_name) VALUES('España'),('Portugal'),('Francia'),('Alemania'),('Italia')";
+
+        if ($conn->query($sql_insert_countries) !== TRUE) {
+            die("Error al insertar paises: " . $conn->error);
+        }
+    }
+    if ($total_provinces == 0) {
+
+        $sql_insert_cities = "INSERT INTO provinces (province_name, country_id) VALUES
+        ('Madrid', 1), ('Barcelona', 1), ('Malaga', 1), ('Sevilla', 1), ('Almería', 1), ('Valencia', 1), ('Lugo', 1), ('Bilbao', 1), ('Oporto', 2),
+        ('Lisboa', 2), ('Paris', 3), ('Lyon', 3), ('Berlin', 4), ('Munich', 4), ('Roma', 5), ('Milan', 5)";
+
+        if ($conn->query($sql_insert_cities) !== TRUE) {
+            die("Error al insertar provincias: " . $conn->error);
+        }
+    }
 }
