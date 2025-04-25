@@ -16,6 +16,23 @@ body {
     text-align: center;
 }
 
+/*Imágenes*/
+.home-img-small,
+.home-img-big {
+    object-fit: cover;
+    width: 100%;
+}
+
+.home-img-small {
+    height: 300px !important;
+}
+
+.home-img-big {
+    height: 615px !important;
+}
+
+
+/*Botón BROWSE EVENTS*/
 .browse-btn {
     background-color: #4D194D;
     border-radius: 3px;
@@ -26,6 +43,11 @@ body {
     text-transform: uppercase;
     border: none;
     cursor: pointer;
+    text-decoration: none;
+}
+
+.browse-btn:hover{
+    background-color: #B44CB4;
 }
 
 .titleRandom {
@@ -35,12 +57,43 @@ body {
     text-align: center;
 }
 
-.event-card {
+/*Botón crear evento*/
+.create-event-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #4D194D;
+    color: white;
+    font-size: 18px;
     text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 30px;
 }
 
-.event-card img {
-    max-height: 200px;
+.create-event-btn:hover {
+    background-color: #B44CB4;
+}
+/*Tarjeta de evento*/
+.event-card {
+    transition: all 0.3s ease-in-out;
+    background-color: #fff;
+    border: 2px solid #4D194D;
+    padding: 10px;
+    height: 100%;
+    
+}
+
+.event-card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.event-card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 1.1rem;
 }
 
 .aboutUs {
@@ -71,8 +124,15 @@ body {
 
 .aboutUs a {
     font-size: 3rem;
+    border: 2px solid #4D194D;
     color: #D9D9D9;
-    text-decoration: underline;
+    text-decoration: none;
+}
+
+.aboutUs a:hover {
+    background-color: #4D194D;
+    color: #fff;
+    border: 2px solid #4D194D;
 }
 
 @media (max-width: 576px) {

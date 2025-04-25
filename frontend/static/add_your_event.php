@@ -17,17 +17,12 @@ if (isset($_GET['edit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add your event</title>
-    <!--CSS Header -->
-    <link rel="stylesheet" href="../assets/style/header.css">
-    <!-- CSS Footer -->
-    <link rel="stylesheet" href="../assets/style/footer.css">
-    <!-- CSS Login -->
-    <link rel="stylesheet" href="../assets/style/add_your_event.css">
-    <link rel="stylesheet" href="../assets/style/header.css">
-    <link rel="stylesheet" href="../assets/style/footer.css">
-
+    
+    
     <!-- Importar Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/style/add_your_event.css">
     <!-- Cargar Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -112,6 +107,14 @@ if (isset($_GET['edit'])) {
                     </div>
 
                     <div class="mb-3">
+                        <label for="city" class="form-label">City</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-city"></i></span>
+                            <input type="text" class="form-control" id="city" name="city" value="<?= htmlspecialchars($eventData['city'] ?? '') ?>" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
                         <label for="location" class="form-label">Location</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-map-location"></i></span>
@@ -120,37 +123,18 @@ if (isset($_GET['edit'])) {
                     </div>
 
                     <div class="mb-3">
-                        <label for="price" class="form-label">Price</label>
+                        <label for="musicalStyle" class="form-label">Musical Style</label>
                         <div class="input-group">
-                            <span class="input-group-text"><i class="fa-solid fa-money-check-dollar"></i></span>
-                            <input type="number" step="0.01" class="form-control" id="price" name="price" value="<?= htmlspecialchars($eventData['price'] ?? '') ?>" required>
+                            <span class="input-group-text"><i class="fa-solid fa-music"></i></span>
+                            <input type="text" class="form-control" id="musicalStyle" name="musicalStyle" value="<?= htmlspecialchars($eventData['style'] ?? '') ?>" required>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label d-block">Ticket Types</label>
-                        <div class="btn-group w-100" role="group">
-                            <?php
-                            // Inicializar tipos de tickets
-                            $ticketTypes = isset($eventData['ticket_types'])
-                                ? array_map('trim', explode(',', $eventData['ticket_types']))
-                                : [];
-                            $allowedTypes = ['general', 'vip', 'premium'];
-
-                            foreach ($allowedTypes as $type) {
-                                $checked = in_array($type, $ticketTypes) ? 'checked' : '';
-                            ?>
-                                <input type="checkbox" class="btn-check"
-                                    id="<?= htmlspecialchars($type) ?>"
-                                    name="ticket-types[]"
-                                    value="<?= htmlspecialchars($type) ?>"
-                                    autocomplete="off"
-                                    <?= $checked ?>>
-                                <label class="btn btn-outline-primary"
-                                    for="<?= htmlspecialchars($type) ?>">
-                                    <?= ucfirst(htmlspecialchars($type)) ?>
-                                </label>
-                            <?php } ?>
+                        <label for="price" class="form-label">Price</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-money-check-dollar"></i></span>
+                            <input type="number" step="0.01" class="form-control" id="price" name="price" value="<?= htmlspecialchars($eventData['price'] ?? '') ?>" required>
                         </div>
                     </div>
 

@@ -42,41 +42,40 @@ $event = $result->fetch_assoc();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <!-- Header -->
     <?php include 'header.php'; ?>
 
-    <main class="container my-5 vh-100">
+    <main class="container-fluid my-5 px-3 px-md-5 flex-fill">
         <div class="row">
-            <div class="col-md-4 position-relative">
-                <img src="<?= htmlspecialchars($event['image_url']); ?>" class="img-fluid" alt="<?= htmlspecialchars($event['event_name']); ?>">
+            <div class="col-12 col-md-5 d-flex justify-content-center align-items-center mb-3 mb-md-0">
+                <img src="<?= htmlspecialchars($event['image_url']); ?>" class="img-fluid" style="max-height: 300px; object-fit: cover;" alt="<?= htmlspecialchars($event['event_name']); ?>">
             </div>
-            <div class="col-md-8">
-                <div class="d-flex align-items-stretch border rounded">
-                    <div class="text-white text-center px-3 py-4 d-flex flex-column justify-content-center rounded-start" style="background-color:#4d194d;">
+            <div class="col-12 col-md-7 align-content-center">
+                <div class="d-flex flex-column flex-md-row align-items-stretch border rounded overflow-hidden">
+                    <div class="text-white text-center p-4 d-flex flex-column justify-content-center rounded-start" style="background-color:#4d194d; min-width:120px;">
                         <p class="mb-2 fw-bold"><?= date('d', strtotime($event['event_date'])); ?></p>
                         <p class="mb-2"><?= strtoupper(date('D', strtotime($event['event_date']))); ?></p>
                         <p class="mb-0"><?= date('H:i', strtotime($event['event_time'])); ?></p>
                     </div>
-                    <div class="ms-3 w-100 d-flex flex-column justify-content-around">
-                        <div class="d-flex flex-column gap-2">
-                            <p class="fw-bold mb-1"><?= htmlspecialchars($event['event_name']); ?></p>
-                            <p class="mb-1"><?= htmlspecialchars($event['location']); ?></p>
+
+                    <div class="ms-md-3 mt-3 mt-md-0 w-100 d-flex flex-column justify-content-around">
+                        <div class="d-flex flex-column mb-2">
+                            <p class="fw-bold mb-1 text-center text-md-start"><?= htmlspecialchars($event['event_name']); ?></p>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-column gap-2">
-                                <div class="d-flex gap-2">
-                                    <i class="fa-solid fa-map-marker-alt text-primary"></i>
-                                    <p class="mb-1 text-primary fw-bold"><?= htmlspecialchars($event['location']); ?></p>
+                        <div class="d-flex flex-column flex-md-row justify-content-between text-center text-md-start gap-3">
+                            <div class="d-flex flex-column align-items-center align-items-md-start">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="fa-solid fa-map-location"></i>
+                                    <p class="mb-1 fw-bold" style="color: #4d194d;"><?= htmlspecialchars($event['location']); ?></p>
                                 </div>
-                                <div class="d-flex gap-2">
-                                    <i class="fa-solid fa-ticket text-primary"></i>
-                                    <p class="mb-1 text-primary fw-bold"><?= htmlspecialchars($event['ticket_type']); ?></p>
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="fa-solid fa-city"></i>
+                                    <p class="mb-1 fw-bold" style="color: #4d194d;"><?= htmlspecialchars($event['city']); ?></p>
                                 </div>
                             </div>
-                            <div class="d-flex flex-column align-items-center gap-2">
-                                <p class="mb-0">From <?= number_format($event['price'], 2); ?> € / person</p>
-
+                            <div class="d-flex flex-column align-items-center gap-2 mx-2">
+                                <p class="mb-0"><?= number_format($event['price'], 2); ?> € / person</p>
                             </div>
                         </div>
                     </div>
@@ -116,10 +115,10 @@ $event = $result->fetch_assoc();
             document.getElementById('quantityInput').value = parseInt(quantity.textContent);
         });
     </script>
-</body>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>
