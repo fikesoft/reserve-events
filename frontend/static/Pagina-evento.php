@@ -1,9 +1,13 @@
 <?php
+
+session_start();
 // Conexión a la base de datos
 $host = 'localhost';
 $db_user = 'root';
 $db_pass = '';
 $db_name = 'random_events_db';
+
+$userLogged = isset($_SESSION['user_id']);
 
 $conn = new mysqli($host, $db_user, $db_pass, $db_name);
 if ($conn->connect_error) {
@@ -87,7 +91,10 @@ $event = $result->fetch_assoc();
                 <!-- AQUI BUTTON -->
                 <div class="d-flex justify-content-between mt-4">
                     <a href="catalog-events.php" class="btn btn-outline-dark">Volver</a>
-                    <form action="../../backend/controllers/cart.php" method="POST" class="d-inline">
+                    <form id="addToCartForm"
+                        action="../../backend/controllers/cart.php"
+                        method="POST"
+                        class="d-inline">
                         <input type="hidden" name="action" value="addToCart">
                         <input type="hidden" name="event_id" value="<?= $event['id'] ?>">
                         <input type="hidden" name="quantity" id="quantityInput" value="1">
@@ -116,9 +123,46 @@ $event = $result->fetch_assoc();
         });
     </script>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Convertimos el flag PHP a JS
+        const userLogged = <?= $userLogged ? 'true' : 'false' ?>;
+        const form = document.getElementById('addToCartForm');
 
+        form.addEventListener('submit', function(e) {
+            // Si NO está logueado, guardamos en localStorage
+            if (!userLogged) {
+                e.preventDefault();
+
+                const eventId = form.querySelector('input[name="event_id"]').value;
+                const quantity = parseInt(
+                    form.querySelector('input[name="quantity"]').value, 10
+                );
+
+                // Cargo carrito actual o inicializo vacío
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                // Busco si ya existe este evento
+                const idx = cart.findIndex(item => item.event_id === eventId);
+                if (idx > -1) {
+                    // Si existe, sumo cantidades
+                    cart[idx].quantity += quantity;
+                } else {
+                    // Si no existe, lo añado
+                    cart.push({
+                        event_id: eventId,
+                        quantity
+                    });
+                }
+
+                // Guardo de nuevo
+                localStorage.setItem('cart', JSON.stringify(cart));
+                alert('✓ Producto añadido al carrito local.');
+            }
+            // Si está logueado, deja que el form se envíe normalmente
+        });
+    </script>
 </body>
 
 </html>
