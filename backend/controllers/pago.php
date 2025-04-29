@@ -42,15 +42,17 @@ function validateCreditCard($paymentMethod, $holder, $month, $year, $number, $cv
 }
 
 function calculateCartTotal($cartTotals, $shipping_method) {
+    return $cartTotals['total_carrito'] + $cartTotals['total_quantity'] + getShippingPrice($shipping_method);
+}
+
+function getShippingPrice($shipping_method){
     $shippingPrices = [
         'eticket' => 1,
         'ticket-fisico' => 3,
         'express-ticket-fisico' => 5
     ];
 
-    $shippingPrice = $shippingPrices[$shipping_method] ?? 0;
-
-    return $cartTotals['total_carrito'] + $cartTotals['total_quantity'] + $shippingPrice;
+    return $shippingPrices[$shipping_method] ?? 0;
 }
 
 
@@ -120,8 +122,71 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         $conn->commit();
 
         $_SESSION['order_id'] = $order_id;
+
+
+        // Seccion de envio de email
+
+        $stmt_user = $conn->prepare("SELECT email FROM users WHERE id = ?");
+        $stmt_user->bind_param("i", $userId);
+        $stmt_user->execute();
+        $result_user = $stmt_user->get_result();
+
+        if ($row_user = $result_user->fetch_assoc()) {
+            $user_email = $row_user['email'];
+            $subject = 'Confirmation of your order #' . $order_id . ' at Random Events';
+
+            $template_path = '../../frontend/static/email.php';
+            $body = file_get_contents($template_path);
+
+            // Generar la parte de los items del carrito
+            $cart_items_html = '';
+            foreach ($cartItemsData as $data) {
+                $cart_items_html .= '
+                            <tr>
+                                <td><img src="' . htmlspecialchars($data['event']['image_url']) . '" alt="' . htmlspecialchars($data['event']['event_name']) . '" style="max-width: 50px; vertical-align: middle; margin-right: 10px;">' . htmlspecialchars($data['event']['event_name']) . '</td>
+                                <td>' . $data['item']['quantity'] . '</td>
+                                <td>' . number_format($data['subtotal'], 2) . ' €</td>
+                            </tr>';
+            }
+
+            // Reemplazar los marcadores de posición con los datos dinámicos
+            $replacements = [
+                '{order_id}' => $order_id,
+                '{cart_items}' => $cart_items_html,
+                '{subtotal_cart}' => number_format($cartTotals['total_carrito'], 2),
+                '{taxes}' => number_format($cartTotals['total_carrito'] * 0.1, 2),
+                '{management_fees}' => number_format($cartTotals['total_quantity'], 2),
+                '{shipping}' => number_format(getShippingPrice($shipping_method), 2),
+                '{total_cart}' => number_format(calculateCartTotal($cartTotals, $shipping_method), 2),
+                '{country}' => htmlspecialchars($country),
+                '{province}' => htmlspecialchars($province),
+                '{city}' => htmlspecialchars($city),
+                '{zip_code}' => htmlspecialchars($zip_code),
+                '{address}' => htmlspecialchars($address),
+                '{payment_method}' => htmlspecialchars($payment_method),
+                '{shipping_method}' => htmlspecialchars($shipping_method),
+            ];
+
+            foreach ($replacements as $placeholder => $value) {
+                $body = str_replace($placeholder, $value, $body);
+            }
+
+            // Email headers
+            $headers = "From: Random Events <randomeventsinfo@gmail.com>\r\n"; 
+            $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+            $headers .= "X-Mailer: PHP/" . phpversion();
+
+            // Envio de email
+            if (!mail($user_email, $subject, $body, $headers)) {
+                error_log("Error sending HTML confirmation email to user " . $user_email);
+            }
+
+            $stmt_user->close();
+        }
+
         header("Location: ../../frontend/static/confirmation.php");
         exit();
+        
 
     } catch (Exception $e) {
         // Si ocurre algún error, deshacer la transacción
