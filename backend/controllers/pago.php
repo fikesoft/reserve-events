@@ -93,10 +93,10 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
     
     try {
         // Insertar el pedido con los datos de dirección y pago integrados
-        $stmt_order = $conn->prepare("INSERT INTO orders (order_date, terms_accepted, privacy_policy_accepted, total, country, province, city, zip_code,
-            address, payment_method, card_holder, card_expiry_month, card_expiry_year, card_number, cvv, shipping_method) VALUES (NOW(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $stmt_order = $conn->prepare("INSERT INTO orders (user_id, order_date, terms_accepted, privacy_policy_accepted, total, country, province, city, zip_code,
+            address, payment_method, card_holder, card_expiry_month, card_expiry_year, card_number, cvv, shipping_method) VALUES (?,NOW(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-        $stmt_order->bind_param("ssdssssssssssss", $terms_accepted, $privacy_policy_accepted, calculateCartTotal($cartTotals, $shipping_method), $country, $province, $city, $zip_code, $address, $payment_method, $card_holder,
+        $stmt_order->bind_param("issdssssssssssss", $userId, $terms_accepted, $privacy_policy_accepted, calculateCartTotal($cartTotals, $shipping_method), $country, $province, $city, $zip_code, $address, $payment_method, $card_holder,
             $card_expiry_month, $card_expiry_year, $card_number, $cvv, $shipping_method);
 
         $stmt_order->execute();
