@@ -70,6 +70,7 @@ if ($conn->query($sql_create_table_events) !== TRUE) {
 $sql_create_table_orders = "
 CREATE TABLE IF NOT EXISTS orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
     order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     terms_accepted BOOLEAN NOT NULL,
     privacy_policy_accepted BOOLEAN NOT NULL,
@@ -85,7 +86,8 @@ CREATE TABLE IF NOT EXISTS orders (
     card_expiry_year VARCHAR(4),
     card_number VARCHAR(20),
     cvv VARCHAR(4),
-    shipping_method VARCHAR(50) NOT NULL
+    shipping_method VARCHAR(50) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );";
 
 if ($conn->query($sql_create_table_orders) !== TRUE) {
