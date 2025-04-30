@@ -1,0 +1,44 @@
+/* Cargar la fuente Montserrat desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+.font-family_buscador {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.num-resultados-custom{
+    color: #4d194d;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: left;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/*Estilo de tarjeta de evento*/
+.tarjeta-event_buscador{
+    background-color:#4d194d;
+    min-width: 120px;
+}
+
+.text-tarjeta-event_buscador{
+    color: #4d194d;
+}
+/* Botón personalizado */
+.btn-event-card {
+    background-color: #4d194d !important;
+    border-color: #4d194d !important;
+    color: white !important;
+}
+
+.btn-event-card:hover {
+    background-color: #B44CB4 !important;
+    border-color: #B44CB4 !important;
+    color: white !important;
+}
+
+/* Separador personalizado */
+.custom-separador {
+    border-color: #4d194d !important;
+}

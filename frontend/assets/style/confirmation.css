@@ -1,0 +1,12 @@
+.btn.btn-primary.btn-lg.return-home-button {
+    background-color: #4d194d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.btn.btn-primary.btn-lg.return-home-button:hover {
+    background-color: #B44CB4;
+
+}

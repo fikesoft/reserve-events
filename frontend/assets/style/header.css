@@ -58,4 +58,35 @@
         transition: color 0.3s;
     }
 
+    /*Estilos del menú desplegable*/
+    .dropdown-toggle {
+        box-shadow: 0 0 0 2px white !important;
+        outline: none !important;
+        color:white !important;
+        background-color: #4D194D !important;
+        border-color: #4D194D !important;
+    }
+
+    .dropdown-toggle:hover {
+        background-color: white !important;
+        color: #4D194D !important;
+        border-color: #4D194D !important;
+    }
+    
+    .dropdown-toggle:focus {
+        box-shadow: 0 0 0 2px white !important;
+        outline: none !important;
+        background-color: white !important;
+        color: #4D194D !important;
+        border-color: #4D194D !important;
+    }
+    
+
+    /* Color del badge admin*/
+    .badge-custom {
+        background-color: #4D194D;
+        color: white;
+    }
+    
+
 
