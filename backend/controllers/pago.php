@@ -3,6 +3,7 @@ require_once '../../backend/controllers/init.php';
 // Incluir la conexión a la base de datos
 require_once '../config/database.php';
 require_once '../../backend/controllers/cart.php';
+require_once('../../vendor/tecnickcom/tcpdf/tcpdf.php');
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../../frontend/static/login.php"); 
@@ -123,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
         $_SESSION['order_id'] = $order_id;
 
-
+        /*
         // Seccion de envio de email
 
         $stmt_user = $conn->prepare("SELECT email FROM users WHERE id = ?");
@@ -183,7 +184,71 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
             $stmt_user->close();
         }
+        */
 
+        //Sección generar ticket PDF
+        function generatePaymentTicketPDF($order_id, $userId, $cartItemsData, $cartTotals, $shipping_method) {
+            // Crear una nueva instancia de TCPDF
+            $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+            $pdf->SetMargins(5, 5, 5);
+        
+            // Añadir una página
+            $pdf->AddPage();
+        
+            //Diseño del ticket
+            $pdf->SetFont('Helvetica', 'B', 14);
+            $pdf->Cell(0, 10, 'Random Events', 0, 1, 'C');
+            $pdf->SetFont('Helvetica', '', 10);
+            $pdf->Cell(0, 6, 'Pedido #' . $order_id, 0, 1, 'C');
+            $pdf->Cell(0, 6, 'Fecha: ' . date('Y-m-d'), 0, 1, 'C');
+            $pdf->Ln(2);
+        
+            $pdf->Ln(4);
+
+            foreach ($cartItemsData as $data) {
+                $pdf->SetFont('Helvetica', 'B', 12);
+                $pdf->MultiCell(0, 6, strtoupper($data['event']['event_name']), 0, 'C');
+                $pdf->SetFont('Helvetica', '', 10);
+                $pdf->Cell(0, 5, 'Cantidad: ' . $data['item']['quantity'], 0, 1, 'C');
+                $pdf->Cell(0, 5, 'Precio: ' . number_format($data['event']['price'], 2) . ' €', 0, 1, 'C');
+                $pdf->Ln(2);
+            }
+        
+            $pdf->Ln(4);
+        
+            $pdf->SetFont('Helvetica', '', 10);
+            $pdf->Cell(0, 5, 'Envío: ' . number_format(getShippingPrice($shipping_method), 2) . ' €', 0, 1, 'C');
+            $pdf->Cell(0, 5, 'Gastos de gestión: ' . number_format($cartTotals['total_quantity'], 2) . ' €', 0, 1, 'C');
+            $pdf->SetFont('Helvetica', 'B', 12);
+            $pdf->Cell(0, 8, 'TOTAL: ' . number_format(calculateCartTotal($cartTotals, $shipping_method), 2) . ' €', 0, 1, 'C');
+        
+            $pdf->Ln(5);
+            $pdf->SetFont('Helvetica', 'I', 8);
+            $pdf->MultiCell(0, 5, "Presenta esta entrada en la puerta del evento.\nNo es necesario imprimirla si llevas una versión digital.", 0, 'C');
+
+            // Generación del código QR con el ID del pedido
+            $qrData = 'https://example.com/order/' . $order_id; // Puedes cambiar esto a lo que prefieras, como una URL de verificación.
+            $pdf->Ln(10); 
+            $pdf->SetXY(10, $pdf->GetY()); // Ubicación del QR
+            $pdf->write2DBarcode($qrData, 'QRCODE', '', '', 30, 30, [], 'N'); // Generar QR (tamaño 30x30 mm)
+        
+        
+            // Salvar el archivo PDF
+            $ticketDirectory = __DIR__ . '/../../frontend/static/tickets/';
+            if (!is_dir($ticketDirectory)) {
+                mkdir($ticketDirectory, 0755, true); // Crea la carpeta si no existe
+            }
+            $pdf_output_path = $ticketDirectory . 'ticket_' . $order_id . '.pdf';
+            $pdf->Output($pdf_output_path, 'F');
+
+            return $pdf_output_path;
+        }
+
+        $_SESSION['order_id'] = $order_id;
+
+        // Llamar a la función para generar el ticket PDF
+        $pdf_output_path = generatePaymentTicketPDF($order_id, $userId, $cartItemsData, $cartTotals, $shipping_method);
+        
         header("Location: ../../frontend/static/confirmation.php");
         exit();
         
