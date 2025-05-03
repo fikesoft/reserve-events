@@ -113,6 +113,114 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         $stmt_order_detail->close();
         endforeach;
         
+        //Sección generar ticket PDF
+        function generatePaymentTicketPDF($order_id, $userId, $cartItemsData, $cartTotals, $shipping_method) {
+            // Crear una nueva instancia de TCPDF
+            $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+            $pdf->SetMargins(5, 5, 5);
+        
+            // Añadir una página
+            $pdf->AddPage();
+        
+            //Diseño del ticket
+            // Cabecera morada con logo y título
+            $headerHeight = 20;
+            $purpleColor = [128, 0, 128];
+            $pdf->SetFillColor($purpleColor[0], $purpleColor[1], $purpleColor[2]);
+
+            $pdf->Rect(0, 0, $pdf->getPageWidth(), $headerHeight, 'F'); // Fondo morado
+
+            // Logo (ajusta la ruta y el tamaño si es necesario)
+            $logoPath = __DIR__ . '/../../frontend/assets/img/logo.png'; // Reemplaza con tu ruta real
+            if (file_exists($logoPath)) {
+                $pdf->Image($logoPath, 5, 3, 14); // Posición (X=5, Y=3), Ancho=14 mm
+            }
+
+            // Título centrado
+            $pdf->SetTextColor(255, 255, 255); // Texto blanco
+            $pdf->SetFont('Helvetica', 'B', 20);
+            $pdf->SetXY(0, 5); // Posición inicial del texto
+            $pdf->Cell(0, 10, 'Random Events', 0, 1, 'C');
+
+            // Restablecer color y posición
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->Ln($headerHeight - 10);
+
+            foreach ($cartItemsData as $data) {
+                $pdf->SetFont('Helvetica', 'B', 16);
+                $pdf->MultiCell(0, 6, strtoupper($data['event']['event_name']), 0, 'C');
+                
+                //Linea horizontal
+                $pdf->SetDrawColor(0, 0, 0); // Color de la línea (negro)
+                $pdf->Line(10, $pdf->GetY(), $pdf->getPageWidth() - 10, $pdf->GetY()); // Línea horizontal (desde X=10 hasta el borde derecho)
+                $pdf->Ln(4);
+
+                $pdf->SetFont('Helvetica', '', 10);
+                // Fecha del evento
+                $pdf->Cell(0, 5, 'Event date: ' . date('d-m-Y', strtotime($data['event']['event_date'])), 0, 1, 'L');
+                $pdf->Ln(2);
+                
+                // Hora del evento
+                $pdf->Cell(0, 5, 'Time: ' . date('H:i', strtotime($data['event']['event_time'])), 0, 1, 'L');
+                $pdf->Ln(2);
+                
+                // Localización y lugar
+                $pdf->Cell(0, 5, 'Location: ' . $data['event']['location'], 0, 1, 'L');
+                $pdf->Ln(2);
+                $pdf->Cell(0, 5, 'City: ' . $data['event']['city'], 0, 1, 'L');
+                $pdf->Ln(2);
+                
+                //Linea horizontal
+                $pdf->SetDrawColor(0, 0, 0); // Color de la línea (negro)
+                $pdf->Line(10, $pdf->GetY(), $pdf->getPageWidth() - 10, $pdf->GetY()); // Línea horizontal (desde X=10 hasta el borde derecho)
+                $pdf->Ln(4);
+                
+                $xStart = $pdf->GetX();
+                $yStart = $pdf->GetY();
+
+                // Parte izquierda: datos del pedido
+                $pdf->SetFont('Helvetica', '', 10);
+                $pdf->Cell(0, 6, 'Order #' . $order_id, 0, 1, 'L');
+                $pdf->Cell(0, 6, 'Date: ' . date('d-m-Y'), 0, 1, 'L');
+                $pdf->Ln(2);
+                $pdf->Cell(0, 5, 'Price: ' . number_format($data['event']['price'], 2) . ' €', 0, 1, 'L');
+                $pdf->Cell(0, 5, 'Management: ' . number_format($cartTotals['management_fee'], 2) . ' €', 0, 1, 'L');
+
+                $taxRate = 0.10;
+                $taxAmount = $cartTotals['total_carrito'] * $taxRate;
+                $pdf->Cell(0, 5, 'Taxes: ' . number_format($taxAmount, 2) . ' €', 0, 1, 'L');
+
+                $pdf->Ln(4);
+                $pdf->SetFont('Helvetica', 'B', 12);
+                $pdf->Cell(0, 8, 'TOTAL ORDER: ' . number_format(calculateCartTotal($cartTotals, $shipping_method), 2) . ' €', 0, 1, 'L');
+
+                // Código QR
+                $pdf->SetXY($xStart + 120, $yStart); // Ajusta X según el ancho del bloque izquierdo
+                $qrData = 'https://example.com/order/' . $order_id;
+                $pdf->write2DBarcode($qrData, 'QRCODE', '', '', 30, 30, [], 'N'); // Generar QR (tamaño 30x30 mm)
+            
+                $pdf->Ln(20);
+                $pdf->SetFont('Helvetica', 'I', 8);
+                $pdf->MultiCell(0, 5, "Present this ticket at the event entrance.\nIt is not necessary to print it if you have a digital version.", 0, 'C');
+            }
+        
+        
+            // Salvar el archivo PDF
+            $ticketDirectory = __DIR__ . '/../../frontend/static/tickets/';
+            if (!is_dir($ticketDirectory)) {
+                mkdir($ticketDirectory, 0755, true); // Crea la carpeta si no existe
+            }
+            $pdf_output_path = $ticketDirectory . 'ticket_' . $order_id . '.pdf';
+            $pdf->Output($pdf_output_path, 'F');
+
+            return $pdf_output_path;
+        }
+
+        $_SESSION['order_id'] = $order_id;
+
+        // Llamar a la función para generar el ticket PDF
+        $pdf_output_path = generatePaymentTicketPDF($order_id, $userId, $cartItemsData, $cartTotals, $shipping_method);
+        
         // Eliminar los productos comprados del carrito
         $stmt_delete_cart = $conn->prepare("DELETE FROM cart WHERE user_id = ?");
         $stmt_delete_cart->bind_param("i", $userId);
@@ -185,69 +293,6 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
             $stmt_user->close();
         }
         */
-
-        //Sección generar ticket PDF
-        function generatePaymentTicketPDF($order_id, $userId, $cartItemsData, $cartTotals, $shipping_method) {
-            // Crear una nueva instancia de TCPDF
-            $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
-            $pdf->SetMargins(5, 5, 5);
-        
-            // Añadir una página
-            $pdf->AddPage();
-        
-            //Diseño del ticket
-            $pdf->SetFont('Helvetica', 'B', 14);
-            $pdf->Cell(0, 10, 'Random Events', 0, 1, 'C');
-            $pdf->SetFont('Helvetica', '', 10);
-            $pdf->Cell(0, 6, 'Pedido #' . $order_id, 0, 1, 'C');
-            $pdf->Cell(0, 6, 'Fecha: ' . date('Y-m-d'), 0, 1, 'C');
-            $pdf->Ln(2);
-        
-            $pdf->Ln(4);
-
-            foreach ($cartItemsData as $data) {
-                $pdf->SetFont('Helvetica', 'B', 12);
-                $pdf->MultiCell(0, 6, strtoupper($data['event']['event_name']), 0, 'C');
-                $pdf->SetFont('Helvetica', '', 10);
-                $pdf->Cell(0, 5, 'Cantidad: ' . $data['item']['quantity'], 0, 1, 'C');
-                $pdf->Cell(0, 5, 'Precio: ' . number_format($data['event']['price'], 2) . ' €', 0, 1, 'C');
-                $pdf->Ln(2);
-            }
-        
-            $pdf->Ln(4);
-        
-            $pdf->SetFont('Helvetica', '', 10);
-            $pdf->Cell(0, 5, 'Envío: ' . number_format(getShippingPrice($shipping_method), 2) . ' €', 0, 1, 'C');
-            $pdf->Cell(0, 5, 'Gastos de gestión: ' . number_format($cartTotals['total_quantity'], 2) . ' €', 0, 1, 'C');
-            $pdf->SetFont('Helvetica', 'B', 12);
-            $pdf->Cell(0, 8, 'TOTAL: ' . number_format(calculateCartTotal($cartTotals, $shipping_method), 2) . ' €', 0, 1, 'C');
-        
-            $pdf->Ln(5);
-            $pdf->SetFont('Helvetica', 'I', 8);
-            $pdf->MultiCell(0, 5, "Presenta esta entrada en la puerta del evento.\nNo es necesario imprimirla si llevas una versión digital.", 0, 'C');
-
-            // Generación del código QR con el ID del pedido
-            $qrData = 'https://example.com/order/' . $order_id; // Puedes cambiar esto a lo que prefieras, como una URL de verificación.
-            $pdf->Ln(10); 
-            $pdf->SetXY(10, $pdf->GetY()); // Ubicación del QR
-            $pdf->write2DBarcode($qrData, 'QRCODE', '', '', 30, 30, [], 'N'); // Generar QR (tamaño 30x30 mm)
-        
-        
-            // Salvar el archivo PDF
-            $ticketDirectory = __DIR__ . '/../../frontend/static/tickets/';
-            if (!is_dir($ticketDirectory)) {
-                mkdir($ticketDirectory, 0755, true); // Crea la carpeta si no existe
-            }
-            $pdf_output_path = $ticketDirectory . 'ticket_' . $order_id . '.pdf';
-            $pdf->Output($pdf_output_path, 'F');
-
-            return $pdf_output_path;
-        }
-
-        $_SESSION['order_id'] = $order_id;
-
-        // Llamar a la función para generar el ticket PDF
-        $pdf_output_path = generatePaymentTicketPDF($order_id, $userId, $cartItemsData, $cartTotals, $shipping_method);
         
         header("Location: ../../frontend/static/confirmation.php");
         exit();
