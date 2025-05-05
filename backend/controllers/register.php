@@ -77,20 +77,21 @@ if ($stmt->execute()) {
         header("Location: ../../frontend/static/home.php");
     } else {
         $_SESSION['success'] = "¡Registro exitoso!";
-         // Buscar si el usuario existe en la base de datos
-         $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
-         $stmt->bind_param("s", $email);
-         $stmt->execute();
-         $result = $stmt->get_result();
-         $user = $result->fetch_assoc();
-         // Inicio de sesión correcto
-         $_SESSION['user_id'] = $user['id']; // Corregido: Usar 'id' en lugar de 'user_id'
-         $_SESSION['user_name'] = $user['name'];
-         $_SESSION['user_role'] = $user['role'];
-         $_SESSION['success'] = "¡Bienvenido, " . $user['name'] . "!";
-        header("Location: ../../frontend/static/home.php");
+        // Buscar si el usuario existe en la base de datos
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+        // Inicio de sesión correcto
+        $_SESSION['user_id'] = $user['id']; // Corregido: Usar 'id' en lugar de 'user_id'
+        $_SESSION['user_name'] = $user['name'];
+        $_SESSION['user_role'] = $user['role'];
+        $_SESSION['success'] = "¡Bienvenido, " . $user['name'] . "!";
+        header("Location: ../../frontend/static/sync_cart.html");
+        exit();
     }
-    
+
     exit();
 } else {
     $_SESSION['error'] = "Error: " . $stmt->error;
@@ -101,4 +102,3 @@ if ($stmt->execute()) {
 // Cerrar recursos
 $stmt->close();
 $conn->close();
-?>
