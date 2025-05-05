@@ -239,7 +239,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
         $_SESSION['order_id'] = $order_id;
 
-        /*
+        
         // Seccion de envio de email
 
         $stmt_user = $conn->prepare("SELECT email FROM users WHERE id = ?");
@@ -288,18 +288,36 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
             }
 
             // Email headers
-            $headers = "From: Random Events <randomeventsinfo@gmail.com>\r\n"; 
-            $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-            $headers .= "X-Mailer: PHP/" . phpversion();
+            $file = $pdf_output_path;
+            $file_name = basename($file);
+            $boundary = md5("random".time());
+
+            $headers = "From: Random Events <randomeventsinfo@gmail.com>\r\n";
+            $headers .= "MIME-Version: 1.0\r\n"; 
+            $headers .= "Content-Type: multipart/mixed; boundary=\"" . $boundary . "\"\r\n\r\n";
+
+            // Cuerpo del email (parte HTML)
+            $message = "--" . $boundary . "\r\n";
+            $message .= "Content-Type: text/html; charset=UTF-8\r\n";
+            $message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
+            $message .= $body . "\r\n\r\n";
+
+            // Adjunto (parte PDF)
+            $message .= "--" . $boundary . "\r\n";
+            $message .= "Content-Type: application/pdf; name=\"" . $file_name . "\"\r\n";
+            $message .= "Content-Disposition: attachment; filename=\"" . $file_name . "\"\r\n";
+            $message .= "Content-Transfer-Encoding: base64\r\n\r\n";
+            $message .= chunk_split(base64_encode(file_get_contents($file))) . "\r\n\r\n";
+
+            $message .= "--" . $boundary . "--";
 
             // Envio de email
-            if (!mail($user_email, $subject, $body, $headers)) {
+            if (!mail($user_email, $subject, $message, $headers)) {
                 error_log("Error sending HTML confirmation email to user " . $user_email);
             }
 
             $stmt_user->close();
         }
-        */
         
         header("Location: ../../frontend/static/confirmation.php");
         exit();
