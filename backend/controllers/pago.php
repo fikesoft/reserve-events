@@ -119,89 +119,96 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
             $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
             $pdf->SetMargins(5, 5, 5);
         
-            // Añadir una página
-            $pdf->AddPage();
-        
-            //Diseño del ticket
-            // Cabecera morada con logo y título
-            $headerHeight = 20;
-            $purpleColor = [128, 0, 128];
-            $pdf->SetFillColor($purpleColor[0], $purpleColor[1], $purpleColor[2]);
-
-            $pdf->Rect(0, 0, $pdf->getPageWidth(), $headerHeight, 'F'); // Fondo morado
-
-            // Logo (ajusta la ruta y el tamaño si es necesario)
-            $logoPath = __DIR__ . '/../../frontend/assets/img/logo.png'; // Reemplaza con tu ruta real
-            if (file_exists($logoPath)) {
-                $pdf->Image($logoPath, 5, 3, 14); // Posición (X=5, Y=3), Ancho=14 mm
-            }
-
-            // Título centrado
-            $pdf->SetTextColor(255, 255, 255); // Texto blanco
-            $pdf->SetFont('Helvetica', 'B', 20);
-            $pdf->SetXY(0, 5); // Posición inicial del texto
-            $pdf->Cell(0, 10, 'Random Events', 0, 1, 'C');
-
-            // Restablecer color y posición
-            $pdf->SetTextColor(0, 0, 0);
-            $pdf->Ln($headerHeight - 10);
 
             foreach ($cartItemsData as $data) {
-                $pdf->SetFont('Helvetica', 'B', 16);
-                $pdf->MultiCell(0, 6, strtoupper($data['event']['event_name']), 0, 'C');
-                
-                //Linea horizontal
-                $pdf->SetDrawColor(0, 0, 0); // Color de la línea (negro)
-                $pdf->Line(10, $pdf->GetY(), $pdf->getPageWidth() - 10, $pdf->GetY()); // Línea horizontal (desde X=10 hasta el borde derecho)
-                $pdf->Ln(4);
+                $quantity = $data['item']['quantity'];
 
-                $pdf->SetFont('Helvetica', '', 10);
-                // Fecha del evento
-                $pdf->Cell(0, 5, 'Event date: ' . date('d-m-Y', strtotime($data['event']['event_date'])), 0, 1, 'L');
-                $pdf->Ln(2);
-                
-                // Hora del evento
-                $pdf->Cell(0, 5, 'Time: ' . date('H:i', strtotime($data['event']['event_time'])), 0, 1, 'L');
-                $pdf->Ln(2);
-                
-                // Localización y lugar
-                $pdf->Cell(0, 5, 'Location: ' . $data['event']['location'], 0, 1, 'L');
-                $pdf->Ln(2);
-                $pdf->Cell(0, 5, 'City: ' . $data['event']['city'], 0, 1, 'L');
-                $pdf->Ln(2);
-                
-                //Linea horizontal
-                $pdf->SetDrawColor(0, 0, 0); // Color de la línea (negro)
-                $pdf->Line(10, $pdf->GetY(), $pdf->getPageWidth() - 10, $pdf->GetY()); // Línea horizontal (desde X=10 hasta el borde derecho)
-                $pdf->Ln(4);
-                
-                $xStart = $pdf->GetX();
-                $yStart = $pdf->GetY();
+                for ($i = 0; $i < $quantity; $i++) {
+                    $pdf->AddPage();
 
-                // Parte izquierda: datos del pedido
-                $pdf->SetFont('Helvetica', '', 10);
-                $pdf->Cell(0, 6, 'Order #' . $order_id, 0, 1, 'L');
-                $pdf->Cell(0, 6, 'Date: ' . date('d-m-Y'), 0, 1, 'L');
-                $pdf->Ln(2);
-                $pdf->Cell(0, 5, 'Price: ' . number_format($data['event']['price'], 2) . ' €', 0, 1, 'L');
-                $pdf->Cell(0, 5, 'Management: ' . number_format($cartTotals['management_fee'], 2) . ' €', 0, 1, 'L');
+                    //Diseño del ticket
+                    // Cabecera morada con logo y título
+                    $headerHeight = 20;
+                    $purpleColor = [77, 25, 77];
+                    $pdf->SetFillColor($purpleColor[0], $purpleColor[1], $purpleColor[2]);
 
-                $taxRate = 0.10;
-                $taxAmount = $cartTotals['total_carrito'] * $taxRate;
-                $pdf->Cell(0, 5, 'Taxes: ' . number_format($taxAmount, 2) . ' €', 0, 1, 'L');
+                    $pdf->Rect(0, 0, $pdf->getPageWidth(), $headerHeight, 'F'); 
 
-                $pdf->Ln(4);
-                $pdf->SetFont('Helvetica', 'B', 12);
-                $pdf->Cell(0, 8, 'TOTAL ORDER: ' . number_format(calculateCartTotal($cartTotals, $shipping_method), 2) . ' €', 0, 1, 'L');
+                    // Logo
+                    $logoPath = __DIR__ . '/../../frontend/assets/img/logo.png';
+                    if (file_exists($logoPath)) {
+                        $pdf->Image($logoPath, 5, 3, 14);
+                    }
 
-                // Código QR
-                $pdf->SetXY($xStart + 120, $yStart); // Ajusta X según el ancho del bloque izquierdo
-                $qrData = 'https://example.com/order/' . $order_id;
-                $pdf->write2DBarcode($qrData, 'QRCODE', '', '', 30, 30, [], 'N'); // Generar QR (tamaño 30x30 mm)
-            
-                $pdf->Ln(20);
-                $pdf->SetFont('Helvetica', 'I', 8);
-                $pdf->MultiCell(0, 5, "Present this ticket at the event entrance.\nIt is not necessary to print it if you have a digital version.", 0, 'C');
+                    // Título centrado
+                    $pdf->SetTextColor(255, 255, 255);
+                    $pdf->SetFont('Helvetica', 'B', 20);
+                    $pdf->SetXY(0, 5); 
+                    $pdf->Cell(0, 10, 'Random Events', 0, 1, 'C');
+
+                    // Restablecer color y posición
+                    $pdf->SetTextColor(0, 0, 0);
+                    $pdf->Ln($headerHeight - 10);
+
+                    $pdf->SetFont('Helvetica', 'B', 16);
+                    $pdf->MultiCell(0, 6, strtoupper($data['event']['event_name']), 0, 'C');
+                    
+                    //Linea horizontal
+                    $pdf->SetDrawColor(0, 0, 0);
+                    $pdf->Line(10, $pdf->GetY(), $pdf->getPageWidth() - 10, $pdf->GetY()); 
+                    $pdf->Ln(4);
+
+                    $pdf->SetFont('Helvetica', '', 10);
+                    // Fecha del evento
+                    $pdf->Cell(0, 5, 'Event date: ' . date('d-m-Y', strtotime($data['event']['event_date'])), 0, 1, 'L');
+                    $pdf->Ln(2);
+                    
+                    // Hora del evento
+                    $pdf->Cell(0, 5, 'Time: ' . date('H:i', strtotime($data['event']['event_time'])), 0, 1, 'L');
+                    $pdf->Ln(2);
+                    
+                    // Localización y lugar
+                    $pdf->Cell(0, 5, 'Location: ' . $data['event']['location'], 0, 1, 'L');
+                    $pdf->Ln(2);
+                    $pdf->Cell(0, 5, 'City: ' . $data['event']['city'], 0, 1, 'L');
+                    $pdf->Ln(2);
+                    
+                    //Linea horizontal
+                    $pdf->SetDrawColor(0, 0, 0);
+                    $pdf->Line(10, $pdf->GetY(), $pdf->getPageWidth() - 10, $pdf->GetY()); 
+                    $pdf->Ln(4);
+                    
+                    $xStart = $pdf->GetX();
+                    $yStart = $pdf->GetY();
+
+                    // Parte izquierda: datos del pedido
+                    $pdf->SetFont('Helvetica', '', 10);
+                    $pdf->Cell(0, 6, 'Order #' . $order_id, 0, 1, 'L');
+                    $pdf->Cell(0, 6, 'Date: ' . date('d-m-Y'), 0, 1, 'L');
+                    $pdf->Ln(2);
+                    $pdf->Cell(0, 5, 'Price: ' . number_format($data['event']['price'], 2) . ' €', 0, 1, 'L');
+                    
+                    $taxRate = 0.10;
+                    $taxAmount = $cartTotals['total_carrito'] * $taxRate;
+                    $pdf->Cell(0, 5, 'Taxes: ' . number_format($taxAmount, 2) . ' €', 0, 1, 'L');
+                    $pdf->Cell(0, 5, 'Management: ' . number_format($cartTotals['total_quantity'], 2) . ' €', 0, 1, 'L');
+                    $pdf->Cell(0, 5, 'Shipping: ' . getShippingPrice($shipping_method, 2) . ' €', 0, 1, 'L');
+
+                    $pdf->Ln(4);
+                    $pdf->SetFont('Helvetica', 'B', 12);
+                    $pdf->Cell(0, 8, 'TOTAL ORDER: ' . number_format(calculateCartTotal($cartTotals, $shipping_method), 2) . ' €', 0, 1, 'L');
+
+                    // Código QR
+                    $pdf->SetXY($xStart + 120, $yStart); // Ajusta X según el ancho del bloque izquierdo
+                    $qrData = 'https://example.com/order/' . $order_id . '/ticket/' . ($order_id . '-' . $i . '-' . $data['event']['id']);
+                    $pdf->write2DBarcode($qrData, 'QRCODE', '', '', 30, 30, [], 'N');
+
+                
+                    $pdf->Ln(20);
+                    $pdf->SetFont('Helvetica', 'I', 8);
+                    $pdf->MultiCell(0, 5, "Present this ticket at the event entrance.\nIt is not necessary to print it if you have a digital version.", 0, 'C');
+                    $pdf->Ln(10);
+                }
             }
         
         
