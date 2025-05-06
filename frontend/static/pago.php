@@ -99,7 +99,7 @@ if ($result_countries->num_rows > 0) {
                 <!--Columna de Pais-->
 
                 <div class="pago-form-col col mt-3 ms-0">
-                    <form action="../../backend/controllers/pago.php" method="post">
+                    <form id="checkout-form" action="../../backend/controllers/pago.php" method="post">
                         <label class="d-flex justify-content-start text-start" for="country">Country*</label>
                         <select class="country pago-select border border-black rounded text-center" name="country" id="country" required>
                             <?php echo $country_options; ?>
@@ -192,7 +192,7 @@ if ($result_countries->num_rows > 0) {
 
                 <div class="row mb-1">
                     <input type="text" id="card-holder" name="card-holder"
-                        class="pago-card-holder border border-grey rounded text-center" placeholder="*Card Holder"
+                        class="pago-card-holder border border-grey rounded text-center w-75" placeholder="*Card Holder"
                         required>
                 </div>
 
@@ -242,7 +242,7 @@ if ($result_countries->num_rows > 0) {
 
             <div class="pago-seccion-row row mt-3 mb-3 ms-2 justify-content-center d-flex flex-column">
 
-                <div class="pago-formaenvio-row row border border-grey rounded mb-2">
+                <div class="pago-formaenvio-row row border border-grey rounded mb-2 col-md-6">
                     <div class="col">
                         <label for="eticket">e-Ticket &nbsp; &nbsp; 1€</label>
                     </div>
@@ -253,7 +253,7 @@ if ($result_countries->num_rows > 0) {
 
                 <br>
 
-                <div class="pago-formaenvio-row row border border-grey rounded mb-2">
+                <div class="pago-formaenvio-row row border border-grey rounded mb-2 col-md-6">
                     <div class="col">
                         <label for="ticket-fisico"> Physical ticket &nbsp; &nbsp; 3€</label>
                     </div>
@@ -264,7 +264,7 @@ if ($result_countries->num_rows > 0) {
 
                 <br>
 
-                <div class="pago-formaenvio-row row border border-grey rounded mb-2">
+                <div class="pago-formaenvio-row row border border-grey rounded mb-2 col-md-6">
                     <div class="col">
                         <label for="express-ticket-fisico">Express Physical ticket &nbsp; &nbsp; 5€</label>
                     </div>

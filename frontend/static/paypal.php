@@ -25,7 +25,7 @@
     </div>
     <script>
         function continuePayment() {
-            window.opener.document.querySelector('form').submit();
+            window.opener.document.getElementById('checkout-form').submit();
             window.close();
         }
     </script>
