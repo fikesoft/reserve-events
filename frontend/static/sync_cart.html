@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Syncing Cart...</title>
+</head>
+<body>
+  <p>Syncing your cart. Please wait...</p>
+
+  <script>
+    // Get cart from localStorage
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Send to backend
+    fetch("../../backend/controllers/sync-cart.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include", // Important to include PHP session cookie
+      body: JSON.stringify({ cart })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Sync result:", data);
+        if (data.success) {
+          localStorage.removeItem("cart"); // Optional: clear cart from localStorage
+        }
+        window.location.href = "home.php"; // Redirect after sync
+      })
+      .catch(err => {
+        console.error("Cart sync error:", err);
+        window.location.href = "home.php";
+      });
+  </script>
+</body>
+</html>
