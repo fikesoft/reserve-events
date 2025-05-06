@@ -82,7 +82,7 @@ if ($evRes && $evRes->num_rows > 0) {
     <link href="../assets/style/cart.css" rel="stylesheet">
 </head>
 
-<body class="vh-100">
+<body>
     <?php include 'header.php'; ?>
 
     <main class="d-flex align-items-center justify-content-center font-family_cart mt-5 mb-5 h-75">
