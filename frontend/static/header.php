@@ -43,6 +43,7 @@ if ($user_logged) {
                     <li><a href="./home.php" class="nav-header">Home</a></li>
                     <li><a href="./catalog-events.php " class="nav-header">Events</a></li>
                     <li><a href="./about-us.php" class="nav-header">About us</a></li>
+                    <li><a href="./contact.php" class="nav-header">Contact us</a></li>
                 </ul>
             </nav>
         </div>

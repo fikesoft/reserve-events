@@ -1,3 +1,6 @@
+<?php
+require_once '../../backend/controllers/init.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,30 +18,10 @@
 </head>
 
 <body>
-    <header class="d-flex justify-content-center justify-content-md-between p-3 flex-md-row flex-column">
-        <div class="d-flex flex-md-row flex-column align-items-center gap-4">
-            <img class="logo-header" src="../assets/img/logo.png" alt="Logo de la empresa">
-            <nav class="d-flex flex-grow-1 justify-content-center justify-content-md-start">
-                <ul class="d-flex gap-4 m-0 p-0 list-unstyled align-items-center justify-content-start">
-                    <li><a href="home.php" class="nav-header">Home</a></li>
-                    <li><a href="#Eventos" class="nav-header">Events</a></li>
-                    <li><a href="about-us.html" class="nav-header">About us</a></li>
-                </ul>
-            </nav>
-        </div>
-
-        <div class="d-flex align-items-center gap-4 mt-3 mt-md-0 flex-md-row flex-column">
-            <div class="d-flex align-items-center search-box">
-                <input class="search-box-input" type="text" placeholder="Search...">
-                <button class="search-box-button"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-            <div class="d-flex">
-                <a href="cart.html" class="icons mx-3"><i class="fa-solid fa-cart-shopping"></i></a>
-                <a href="login.php" class="icons mx-3"><i class="fa-solid fa-user"></i></a>
-            </div>
-
-        </div>
-    </header>
+    <!-- Encabezado -->
+    <?php
+    include "../static/header.php";
+    ?>
 
     <main class="d-flex align-items-center justify-content-center font-family_contact mt-5 mb-5 min-vh-100">
         <div class="container">
@@ -74,56 +57,50 @@
                             </div>
                             <button type="submit" class="button_register btn w-100 mt-3">
                             <i class="fa-solid fa-paper-plane me-2"></i>Send Message</button>
-                            
+                            <div id="mensaje-contenedor" class="mensaje-contenedor">
+                                <?php
+                                if (isset($_SESSION['message'])) {
+                                    $mensaje = $_SESSION['message'];
+                                    $tipo_mensaje = $_SESSION['message_type'];
+                                    echo '<div class="alerta-' . htmlspecialchars($tipo_mensaje) . '">' . htmlspecialchars($mensaje) . '</div>';
+                                    unset($_SESSION['message']);
+                                    unset($_SESSION['message_type']);
+                                }
+                                ?>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center me-5 pe-5">
                 <img 
                     class="img-fluid rounded-3" 
-                    src="../assets/img/aboutUs-img.png" 
+                    src="../assets/img/contact.png" 
                     alt="about-us-ER" 
                     style= "max-width: 100%; height: auto" 
                 />
             </div>
     </main>
 
-    <footer class="container-fluid p-5">
-        <div class="d-flex flex-column align-items-center">
-            <div class="row">
-                <nav class=" col-12 col-md-6 mt-3">
-                    <ul class="list-unstyled">
-                        <li><a href="home.php" class="nav-footer">Home</a></li>
-                        <li><a href="#" class="nav-footer">Events</a></li>
-                        <li><a href="about-us.html" class="nav-footer">About us</a></li>
-                    </ul>
-                </nav>
-
-                <div class="footer-contact col-12 col-md-6 mt-3">
-                    <p class="text-nowrap m-1"><i class="fa-solid fa-phone me-2"></i> +34 123 456 789</p>
-                    <p class="text-nowrap m-1"><i class="fa-solid fa-envelope me-2"></i> contacto@empresa.com</p>
-                    <p class="text-nowrap m-1"><i class="fa-solid fa-map-marker-alt me-2"></i> Calle Falsa 123, Madrid, España</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="d-flex justify-content-center align-items-center gap-3 mt-3 col-12">
-            <a href="#" class="footer-social"><i class="fa-brands fa-facebook"></i></a>
-            <a href="#" class="footer-social"><i class="fa-brands fa-twitter"></i></a>
-            <a href="#" class="footer-social"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" class="footer-social"><i class="fa-brands fa-linkedin"></i></a>
-        </div>
-
-
-        <div class="footer-bottom text-center pt-4 col-12">
-            <p>&copy; 2025 Random Events. All rights reserved.</p>
-        </div>
-
-    </footer>
+    <!-- Footer -->
+    <?php
+    include '../static/footer.php';
+    ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Restar form
+            const mensajeContenedor = document.getElementById('mensaje-contenedor');
+            const formularioContacto = document.getElementById('contactForm');
+            if (mensajeContenedor && mensajeContenedor.innerHTML.trim() !== '') {
+                if (formularioContacto) {
+                    formularioContacto.reset();
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

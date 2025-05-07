@@ -23,13 +23,14 @@
                         <li><a href="home.php" class="nav-footer">Home</a></li>
                         <li><a href="catalog-events.php" class="nav-footer">Events</a></li>
                         <li><a href="about-us.php" class="nav-footer">About us</a></li>
+                        <li><a href="contact.php" class="nav-footer">Contact us</a></li>
                     </ul>
                 </nav>
             
                 <!-- Información de contacto -->
                 <div class="footer-contact col-12 col-md-6 mt-3">
                     <p class="text-nowrap m-1"><i class="fa-solid fa-phone me-2"></i> +34 123 456 789</p>
-                    <p class="text-nowrap m-1"><i class="fa-solid fa-envelope me-2"></i> contacto@empresa.com</p>
+                    <p class="text-nowrap m-1"><i class="fa-solid fa-envelope me-2"></i> randomeventsinfo@gmail.com</p>
                     <p class="text-nowrap m-1"><i class="fa-solid fa-map-marker-alt me-2"></i> Calle Falsa 123, Madrid, España</p>
                 </div>
             </div>
