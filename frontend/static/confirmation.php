@@ -34,7 +34,21 @@ unset($_SESSION['order_id']);
                     <p class="lead">Thank you for your order. Your order number is:</p>
                     <h3 class="order-id mb-4"><?php echo htmlspecialchars($orderId); ?></h3>
                     <p class="mb-4">We will send you an email with your order details shortly.</p>
+                    <!-- Botón para descargar el PDF -->
+                    <?php
+                        $ticketPath = './tickets/ticket_' . $orderId . '.pdf';
+                        if (file_exists($ticketPath)) {
+                            echo '<div>';
+                            echo '<a href="' . htmlspecialchars($ticketPath) . '" download class="btn btn-primary btn-lg return-home-button mb-3">';
+                            echo 'Download Ticket';
+                            echo '</a>';
+                            echo '</div>';
+                        } else {
+                            echo '<p class="text-danger text-center">El ticket no está disponible aún.</p>';
+                        }
+                    ?>
                     <a href="home.php" class="btn btn-primary btn-lg return-home-button">Return to Homepage</a>
+                    
                 </div>
             </div>
         </div>
@@ -44,5 +58,8 @@ unset($_SESSION['order_id']);
     <?php
     include '../static/footer.php';
     ?>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

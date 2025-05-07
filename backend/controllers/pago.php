@@ -3,6 +3,7 @@ require_once '../../backend/controllers/init.php';
 // Incluir la conexión a la base de datos
 require_once '../config/database.php';
 require_once '../../backend/controllers/cart.php';
+require_once('../../vendor/tecnickcom/tcpdf/tcpdf.php');
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../../frontend/static/login.php"); 
@@ -112,6 +113,121 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         $stmt_order_detail->close();
         endforeach;
         
+        //Sección generar ticket PDF
+        function generatePaymentTicketPDF($order_id, $userId, $cartItemsData, $cartTotals, $shipping_method) {
+            // Crear una nueva instancia de TCPDF
+            $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+            $pdf->SetMargins(5, 5, 5);
+        
+
+            foreach ($cartItemsData as $data) {
+                $quantity = $data['item']['quantity'];
+
+                for ($i = 0; $i < $quantity; $i++) {
+                    $pdf->AddPage();
+
+                    //Diseño del ticket
+                    // Cabecera morada con logo y título
+                    $headerHeight = 20;
+                    $purpleColor = [77, 25, 77];
+                    $pdf->SetFillColor($purpleColor[0], $purpleColor[1], $purpleColor[2]);
+
+                    $pdf->Rect(0, 0, $pdf->getPageWidth(), $headerHeight, 'F'); 
+
+                    // Logo
+                    $logoPath = __DIR__ . '/../../frontend/assets/img/logo.png';
+                    if (file_exists($logoPath)) {
+                        $pdf->Image($logoPath, 5, 3, 14);
+                    }
+
+                    // Título centrado
+                    $pdf->SetTextColor(255, 255, 255);
+                    $pdf->SetFont('Helvetica', 'B', 20);
+                    $pdf->SetXY(0, 5); 
+                    $pdf->Cell(0, 10, 'Random Events', 0, 1, 'C');
+
+                    // Restablecer color y posición
+                    $pdf->SetTextColor(0, 0, 0);
+                    $pdf->Ln($headerHeight - 10);
+
+                    $pdf->SetFont('Helvetica', 'B', 16);
+                    $pdf->MultiCell(0, 6, strtoupper($data['event']['event_name']), 0, 'C');
+                    
+                    //Linea horizontal
+                    $pdf->SetDrawColor(0, 0, 0);
+                    $pdf->Line(10, $pdf->GetY(), $pdf->getPageWidth() - 10, $pdf->GetY()); 
+                    $pdf->Ln(4);
+
+                    $pdf->SetFont('Helvetica', '', 10);
+                    // Fecha del evento
+                    $pdf->Cell(0, 5, 'Event date: ' . date('d-m-Y', strtotime($data['event']['event_date'])), 0, 1, 'L');
+                    $pdf->Ln(2);
+                    
+                    // Hora del evento
+                    $pdf->Cell(0, 5, 'Time: ' . date('H:i', strtotime($data['event']['event_time'])), 0, 1, 'L');
+                    $pdf->Ln(2);
+                    
+                    // Localización y lugar
+                    $pdf->Cell(0, 5, 'Location: ' . $data['event']['location'], 0, 1, 'L');
+                    $pdf->Ln(2);
+                    $pdf->Cell(0, 5, 'City: ' . $data['event']['city'], 0, 1, 'L');
+                    $pdf->Ln(2);
+                    
+                    //Linea horizontal
+                    $pdf->SetDrawColor(0, 0, 0);
+                    $pdf->Line(10, $pdf->GetY(), $pdf->getPageWidth() - 10, $pdf->GetY()); 
+                    $pdf->Ln(4);
+                    
+                    $xStart = $pdf->GetX();
+                    $yStart = $pdf->GetY();
+
+                    // Parte izquierda: datos del pedido
+                    $pdf->SetFont('Helvetica', '', 10);
+                    $pdf->Cell(0, 6, 'Order #' . $order_id, 0, 1, 'L');
+                    $pdf->Cell(0, 6, 'Date: ' . date('d-m-Y'), 0, 1, 'L');
+                    $pdf->Ln(2);
+                    $pdf->Cell(0, 5, 'Price: ' . number_format($data['event']['price'], 2) . ' €', 0, 1, 'L');
+                    
+                    $taxRate = 0.10;
+                    $taxAmount = $cartTotals['total_carrito'] * $taxRate;
+                    $pdf->Cell(0, 5, 'Taxes: ' . number_format($taxAmount, 2) . ' €', 0, 1, 'L');
+                    $pdf->Cell(0, 5, 'Management: ' . number_format($cartTotals['total_quantity'], 2) . ' €', 0, 1, 'L');
+                    $pdf->Cell(0, 5, 'Shipping: ' . getShippingPrice($shipping_method, 2) . ' €', 0, 1, 'L');
+
+                    $pdf->Ln(4);
+                    $pdf->SetFont('Helvetica', 'B', 12);
+                    $pdf->Cell(0, 8, 'TOTAL ORDER: ' . number_format(calculateCartTotal($cartTotals, $shipping_method), 2) . ' €', 0, 1, 'L');
+
+                    // Código QR
+                    $pdf->SetXY($xStart + 120, $yStart); // Ajusta X según el ancho del bloque izquierdo
+                    $qrData = 'https://example.com/order/' . $order_id . '/ticket/' . ($order_id . '-' . $i . '-' . $data['event']['id']);
+                    $pdf->write2DBarcode($qrData, 'QRCODE', '', '', 30, 30, [], 'N');
+
+                
+                    $pdf->Ln(20);
+                    $pdf->SetFont('Helvetica', 'I', 8);
+                    $pdf->MultiCell(0, 5, "Present this ticket at the event entrance.\nIt is not necessary to print it if you have a digital version.", 0, 'C');
+                    $pdf->Ln(10);
+                }
+            }
+        
+        
+            // Salvar el archivo PDF
+            $ticketDirectory = __DIR__ . '/../../frontend/static/tickets/';
+            if (!is_dir($ticketDirectory)) {
+                mkdir($ticketDirectory, 0755, true); // Crea la carpeta si no existe
+            }
+            $pdf_output_path = $ticketDirectory . 'ticket_' . $order_id . '.pdf';
+            $pdf->Output($pdf_output_path, 'F');
+
+            return $pdf_output_path;
+        }
+
+        $_SESSION['order_id'] = $order_id;
+
+        // Llamar a la función para generar el ticket PDF
+        $pdf_output_path = generatePaymentTicketPDF($order_id, $userId, $cartItemsData, $cartTotals, $shipping_method);
+        
         // Eliminar los productos comprados del carrito
         $stmt_delete_cart = $conn->prepare("DELETE FROM cart WHERE user_id = ?");
         $stmt_delete_cart->bind_param("i", $userId);
@@ -123,7 +239,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
         $_SESSION['order_id'] = $order_id;
 
-
+        
         // Seccion de envio de email
 
         $stmt_user = $conn->prepare("SELECT email FROM users WHERE id = ?");
@@ -172,18 +288,37 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
             }
 
             // Email headers
-            $headers = "From: Random Events <randomeventsinfo@gmail.com>\r\n"; 
-            $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-            $headers .= "X-Mailer: PHP/" . phpversion();
+            $file = $pdf_output_path;
+            $file_name = basename($file);
+            $boundary = md5("random".time());
+
+            $headers = "From: Random Events <randomeventsinfo@gmail.com>\r\n";
+            $headers .= "MIME-Version: 1.0\r\n"; 
+            $headers .= "Content-Type: multipart/mixed; boundary=\"" . $boundary . "\"\r\n\r\n";
+
+            // Cuerpo del email (parte HTML)
+            $message = "--" . $boundary . "\r\n";
+            $message .= "Content-Type: text/html; charset=UTF-8\r\n";
+            $message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
+            $message .= $body . "\r\n\r\n";
+
+            // Adjunto (parte PDF)
+            $message .= "--" . $boundary . "\r\n";
+            $message .= "Content-Type: application/pdf; name=\"" . $file_name . "\"\r\n";
+            $message .= "Content-Disposition: attachment; filename=\"" . $file_name . "\"\r\n";
+            $message .= "Content-Transfer-Encoding: base64\r\n\r\n";
+            $message .= chunk_split(base64_encode(file_get_contents($file))) . "\r\n\r\n";
+
+            $message .= "--" . $boundary . "--";
 
             // Envio de email
-            if (!mail($user_email, $subject, $body, $headers)) {
+            if (!mail($user_email, $subject, $message, $headers)) {
                 error_log("Error sending HTML confirmation email to user " . $user_email);
             }
 
             $stmt_user->close();
         }
-
+        
         header("Location: ../../frontend/static/confirmation.php");
         exit();
         
