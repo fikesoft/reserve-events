@@ -37,6 +37,5 @@ $_SESSION['success'] = "¡Bienvenido, " . $user['name'] . "!";
 // Regenerar el ID de la sesión por seguridad
 session_regenerate_id();
 
-header("Location: ../../frontend/static/home.php");
+header("Location: ../../frontend/static/sync_cart.html");
 exit();
-?>

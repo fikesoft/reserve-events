@@ -1,3 +1,22 @@
+<?php
+
+
+$user_logged = isset($_SESSION['user_id']);
+$cart_count = 0;
+
+if ($user_logged) {
+    // Include database and cart logic
+    require_once '../../backend/config/database.php';
+    require_once '../../backend/controllers/cart.php';
+
+    $user_id = $_SESSION['user_id'];
+    $cart_logic = new Cart($conn, $user_id);
+    $cart_items = $cart_logic->getCartItems();
+
+    // Sum up all quantities
+    $cart_count = array_sum(array_column($cart_items, 'quantity'));
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,8 +60,12 @@
 
             </div>
             <div class="d-flex align-items-center gap-3">
-                <a href="cart.php" class="icons mx-3" aria-label="Ver carrito">
+                <a href="cart.php" class="icons mx-3 position-relative" aria-label="Ver carrito">
                     <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="cart-count"
+                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-white">
+                        <?= $cart_count ?>
+                    </span>
                 </a>
 
                 <?php if (isset($_SESSION['user_id'])): ?>
@@ -64,6 +87,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                             <?php endif; ?>
+                            <li><a class="dropdown-item-text" href="../static/historial_eventos.php">Historial</a></li>
                             <li><a class="dropdown-item text-danger" href="../../backend/controllers/logout.php">Sign out</a></li>
                         </ul>
                     </div>
@@ -78,5 +102,47 @@
     </header>
 
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cartCount = document.getElementById('cart-count');
+
+        if (!cartCount) return;
+
+        if (<?= json_encode($user_logged) ?>) return;
+
+        function updateCartCount() {
+            try {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                let total = 0;
+
+                if (Array.isArray(cart)) {
+                    total = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+                }
+
+                if (total > 0) {
+                    cartCount.textContent = total;
+                    cartCount.classList.remove('d-none');
+                } else {
+                    cartCount.textContent = '';
+                    cartCount.classList.add('d-none');
+                }
+            } catch (e) {
+                console.error('Error updating cart count:', e);
+            }
+        }
+
+        updateCartCount();
+
+        // Listen for localStorage changes (from other tabs)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'cart') {
+                updateCartCount();
+            }
+        });
+
+        // Optional: Manually trigger update after cart modifications
+        window.updateCartCount = updateCartCount;
+    });
+</script>
 
 </html>
