@@ -24,9 +24,8 @@ require_once '../../backend/controllers/init.php';
     ?>
 
     <main class="d-flex align-items-center justify-content-center font-family_contact mt-5 mb-5 min-vh-100">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
+        <div class="d-flex flex-column flex-lg-row container">
+            <div class="col-lg-8 row justify-content-center">
                     <div class="card shadow rounded-3 border-custom_register p-4">
                         <h2 class="text-center mb-4">CONTACT US</h2>
                         <form action="../../backend/controllers/contact.php" method="POST">
@@ -70,17 +69,17 @@ require_once '../../backend/controllers/init.php';
                             </div>
                         </form>
                     </div>
-                </div>
             </div>
-        </div>
-        <div class="d-flex justify-content-center me-5 pe-5">
+            <div class="d-flex justify-content-center">
                 <img 
                     class="img-fluid rounded-3" 
                     src="../assets/img/contact.png" 
                     alt="about-us-ER" 
-                    style= "max-width: 100%; height: auto" 
+                    style= "max-width: 100%; height: auto; object-fit: contain;" 
                 />
             </div>
+        </div>
+        
     </main>
 
     <!-- Footer -->
