@@ -1,10 +1,10 @@
 <?php
 require_once '../../backend/controllers/init.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = strip_tags(trim($_POST["name"]));
-    $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
-    $phone = strip_tags(trim($_POST["phone"]));
-    $comment = strip_tags(trim($_POST["comment"]));
+    $name = $_POST["name"] ?? "";
+    $email = $_POST["email"] ?? "";
+    $phone = $_POST["phone"] ?? "";
+    $comment = $_POST["comment"] ?? "";
 
     $to = "randomeventsinfo@gmail.com";
     $subject = "New contact message from your website";
@@ -15,22 +15,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            body { font-family: sans-serif; line-height: 1.6; }
-            .container { width: 100%; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #f0f0f0; border-radius: 5px; }
-            h2 { color: #333; margin-top: 0; }
-            p { margin-bottom: 10px; }
-            strong { font-weight: bold; }
+            .container {
+                max-width: 650px;
+                margin: 30px auto;
+                padding: 40px;
+                border: 1px solid #e0e0e0;
+            }
+            h2 {
+                color: #4d194d;
+                border-bottom: 3px solid #B44CB4;
+            }
+            .info-line {
+                padding: 10px 0;
+                border-bottom: 1px dashed #ddd;
+            }
+            .comment-section {
+                margin-top: 30px;
+                padding: 20px;
+                border: 1px solid #d4d4d4;
+                background-color: #f9f9f9;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <h2>New Contact Message</h2>
-            <p><strong>Name:</strong> ' . htmlspecialchars($name) . '</p>
-            <p><strong>Email:</strong> ' . htmlspecialchars($email) . '</p>';
+            <div class="info-line"><strong>Name:</strong> <span>' . htmlspecialchars($name) . '</span></div>
+            <div class="info-line"><strong>Email:</strong> <span>' . htmlspecialchars($email) . '</span></div>';
     if (!empty($phone)) {
-        $body .= '<p><strong>Phone Number:</strong> ' . htmlspecialchars($phone) . '</p>';
+        $body .= '<div class="info-line"><strong>Phone number:</strong> <span>' . htmlspecialchars($phone) . '</span></div>';
     }
-    $body .= '<p><strong>Comment:</strong><br>' . nl2br(htmlspecialchars($comment)) . '</p>
+    $body .= '<div class="comment-section">
+                <p><strong>Message:</strong></p>
+                <p>' . nl2br(htmlspecialchars($comment)) . '</p>
+            </div>
         </div>
     </body>
     </html>';
