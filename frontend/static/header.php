@@ -87,6 +87,7 @@ if ($user_logged) {
                                     <hr class="dropdown-divider">
                                 </li>
                             <?php endif; ?>
+                            <li><a class="dropdown-item-text" href="../static/historial_eventos.php?event_id=<?= $evento_id ?>">Historial</a></li>
                             <li><a class="dropdown-item text-danger" href="../../backend/controllers/logout.php">Sign out</a></li>
                         </ul>
                     </div>

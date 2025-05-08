@@ -1,0 +1,4 @@
+.info-eventos > p{
+    nowrap: break-word;
+    overflow: hidden;
+}
