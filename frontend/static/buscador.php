@@ -38,7 +38,7 @@ session_start();
         // Si la búsqueda está vacía, redirige al inicio
         if (empty($search_query)) {
             echo 
-            "<div class='alert alert-warning text-center m-4 font-family_buscador'>
+            "<div class='alert alert-warning text-center m-4 fs-5 font-family_buscador'>
                 Please enter a search term
             </div>
             <img src='/frontend/assets/img/searchEmpty.png' alt='Imagen de busqueda vacia' class='img-fluid mx-auto d-block mt-3 w-25'>";
@@ -119,8 +119,8 @@ session_start();
                 }
             } else {
                 echo
-                "<div class='alert alert-danger text-center m-4 font-family_buscador'>
-                    No results for <strong>" . htmlspecialchars($search_query) . "</strong>.
+                "<div class='alert alert-danger text-center m-4 fs-5 font-family_buscador'>
+                    No results for <strong>" . htmlspecialchars($search_query) . "</strong>
                 </div>
                 <img src='/frontend/assets/img/noResults.png' alt='Imagen sin resultados' class='img-fluid mx-auto d-block mt-3 w-25'>";
             }

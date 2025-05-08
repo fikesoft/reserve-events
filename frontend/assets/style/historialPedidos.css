@@ -1,0 +1,11 @@
+/* Cargar la fuente Montserrat desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+.font-family_historialPedidos {
+    font-family: 'Montserrat', sans-serif;
+}
+
+h2{
+    color: #4D194D !important;
+}
+
