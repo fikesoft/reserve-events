@@ -261,89 +261,127 @@ if ($evRes && $evRes->num_rows > 0) {
             const EVENT_DATA = <?= json_encode($eventsMap, JSON_HEX_TAG) ?>;
 
             (function() {
-                const cart = JSON.parse(localStorage.getItem('cart')) || [];
                 const list = document.getElementById('guest-cart-list');
                 const empty = document.getElementById('guest-empty');
                 const pay = document.getElementById('guest-pay-button');
-
                 const sumList = document.getElementById('guest-summary-list');
                 const taxField = document.getElementById('guest-tax');
                 const mgmtField = document.getElementById('guest-management');
                 const totField = document.getElementById('guest-total');
 
-                if (!cart.length) {
-                    empty.style.display = 'block';
-                    return;
-                }
-                empty.style.display = 'none';
-                pay.style.display = 'inline-block';
+                // Función para obtener el carrito del localStorage
+                const getCartFromLocalStorage = () => JSON.parse(localStorage.getItem('cart')) || [];
 
-                let totalCarrito = 0,
-                    totalQty = 0;
+                // Función para guardar el carrito en el localStorage y renderizar
+                const updateLocalStorageAndRender = (newCart) => {
+                    localStorage.setItem('cart', JSON.stringify(newCart));
+                    renderGuestCart(newCart);
+                };
 
-                cart.forEach(item => {
-                    const info = EVENT_DATA[item.event_id] || {
-                        event_name: 'Desconocido',
-                        price: 0,
-                        event_date: ''
-                    };
-                    const qty = item.quantity;
-                    const subtotal = info.price * qty;
-                    totalCarrito += subtotal;
-                    totalQty += qty;
+                const renderGuestCart = (currentCart) => {
+                    console.log('renderGuestCart llamada con:', currentCart);
+                    list.innerHTML = '';
+                    sumList.innerHTML = '';
+                    let totalCarrito = 0;
+                    let totalQty = 0;
 
-                    // 1) Ítem en carrito
-                    const li = document.createElement('li');
-                    li.className = 'd-flex justify-content-between align-items-center mb-3';
-                    li.innerHTML = `
-                    <div class="col-4 d-flex flex-column justify-content-center">
-                        <strong>${info.event_name}</strong>
-                        <p class="text-muted">
-                            ${ info.event_date
-                                ? new Date(info.event_date).toLocaleDateString('es-ES')
-                                : ''
-                            }
-                        </p>
-                    </div>
-                    <div class="col-4 d-flex align-items-center justify-content-between rounded-pill px-3 py-1"
-                         style="background-color: #b44cb4; width: 100px;">
-                        <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                           href="../../backend/controllers/cart.php?id=${item.id}&quantity=${qty}&action=decrement"
-                           style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
-                            <i class="fas fa-minus"></i>
-                        </a>
-                        <span class="text-white fs-6">${qty}</span>
-                        <a class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center"
-                           href="../../backend/controllers/cart.php?id=${item.id}&quantity=${qty}&action=increment"
-                           style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
-                            <i class="fas fa-plus"></i>
-                        </a>
-                    </div>
-                    <div class="col-4">
-                        ${info.price.toFixed(2)} € x ${qty} =
-                        <strong>${subtotal.toFixed(2)} €</strong>
-                        <a class="ms-4 text-danger"
-                           href="../../backend/controllers/cart.php?id=${item.id}&action=deleteCart">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
-                    </div>`;
-                    list.appendChild(li);
+                    if (!currentCart.length) {
+                        empty.style.display = 'block';
+                        pay.style.display = 'none';
+                        taxField.textContent = '0.00 €';
+                        mgmtField.textContent = '0.00 €';
+                        totField.textContent = '0.00 €';
+                        return;
+                    }
 
-                    // 2) Ítem en resumen
-                    const sumLi = document.createElement('li');
-                    sumLi.className = 'd-flex justify-content-between align-items-center mb-3';
-                    sumLi.innerHTML = `
-                    <div class="d-flex flex-column justify-content-center">
-                        <strong>${info.event_name}</strong>
-                    </div>
-                    <div><strong>${subtotal.toFixed(2)} €</strong></div>`;
-                    sumList.appendChild(sumLi);
+                    empty.style.display = 'none';
+                    pay.style.display = 'inline-block';
+
+                    currentCart.forEach(item => {
+                        const info = EVENT_DATA[item.event_id] || { event_name: 'Desconocido', price: 0, event_date: '' };
+                        const qty = item.quantity;
+                        const subtotal = info.price * qty;
+                        totalCarrito += subtotal;
+                        totalQty += qty;
+
+                        const li = document.createElement('li');
+                        li.className = 'd-flex justify-content-between align-items-center mb-3';
+                        li.innerHTML = `
+                            <div class="col-4 d-flex flex-column justify-content-center">
+                                <strong>${info.event_name}</strong>
+                                <p class="text-muted">
+                                    ${info.event_date ? new Date(info.event_date).toLocaleDateString('es-ES') : ''}
+                                </p>
+                            </div>
+                            <div class="col-4 d-flex align-items-center justify-content-between rounded-pill px-3 py-1"
+                                 style="background-color: #b44cb4; width: 100px;">
+                                <button class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center decrement-btn"
+                                        data-event-id="${item.event_id}"
+                                        style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span class="text-white fs-6 item-quantity">${qty}</span>
+                                <button class="btn p-0 border-0 text-white d-flex align-items-center justify-content-center increment-btn"
+                                        data-event-id="${item.event_id}"
+                                        style="background-color: transparent; width: 20px; height: 20px; font-size: 16px;">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <div class="col-4">
+                                ${info.price.toFixed(2)} € x ${qty} =
+                                <strong>${subtotal.toFixed(2)} €</strong>
+                                <button class="ms-4 text-danger delete-btn"
+                                        data-event-id="${item.event_id}"
+                                        style="border: none; background: none; padding: 0;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>`;
+                        list.appendChild(li);
+
+                        const sumLi = document.createElement('li');
+                        sumLi.className = 'd-flex justify-content-between align-items-center mb-3';
+                        sumLi.innerHTML = `
+                            <div class="d-flex flex-column justify-content-center">
+                                <strong>${info.event_name}</strong>
+                            </div>
+                            <div><strong>${subtotal.toFixed(2)} €</strong></div>`;
+                        sumList.appendChild(sumLi);
+                    });
+
+                    taxField.textContent = (totalCarrito * 0.1).toFixed(2) + ' €';
+                    mgmtField.textContent = totalQty.toFixed(2) + ' €';
+                    totField.textContent = (totalCarrito + totalQty).toFixed(2) + ' €';
+                };
+
+                list.addEventListener('click', function(event) {
+                    let targetElement = event.target;
+                    const cart = getCartFromLocalStorage();
+                
+                    while (targetElement && targetElement !== list) {
+                        if (targetElement.classList.contains('increment-btn')) {
+                            const eventIdToIncrement = parseInt(targetElement.dataset.eventId);
+                            const updatedCart = cart.map(item =>
+                                parseInt(item.event_id) === eventIdToIncrement ? { ...item, quantity: item.quantity + 1 } : item
+                            );
+                            updateLocalStorageAndRender(updatedCart);
+                            return;
+                        } else if (targetElement.classList.contains('decrement-btn')) {
+                            const eventIdToDecrement = parseInt(targetElement.dataset.eventId);
+                            const updatedCart = cart.map(item =>
+                                parseInt(item.event_id) === eventIdToDecrement && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
+                            ).filter(item => item.quantity > 0);
+                            updateLocalStorageAndRender(updatedCart);
+                            return;
+                        } else if (targetElement.classList.contains('delete-btn')) {
+                            const eventIdToDelete = parseInt(targetElement.dataset.eventId);
+                            const updatedCart = cart.filter(item => parseInt(item.event_id) !== eventIdToDelete);
+                            updateLocalStorageAndRender(updatedCart);
+                            return;
+                        }
+                        targetElement = targetElement.parentNode;
+                    }
                 });
-
-                // Actualizar totales
-                taxField.textContent = (totalCarrito * 0.1).toFixed(2) + ' €';
-                mgmtField.textContent = totalQty.toFixed(2) + ' €';
-                totField.textContent = (totalCarrito + totalQty).toFixed(2) + ' €';
+                renderGuestCart(getCartFromLocalStorage());
             })();
         </script>
     <?php endif; ?>

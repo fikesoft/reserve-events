@@ -23,20 +23,21 @@ if (!isset($data['cart']) || !is_array($data['cart'])) {
     exit();
 }
 
-// 3. Clear existing cart items for this user
-$clearStmt = $conn->prepare("DELETE FROM cart WHERE user_id = ?");
-$clearStmt->bind_param("i", $userId);
-$clearStmt->execute();
-
-// 4. Insert each guest item
+// 3. Insert each guest item
 foreach ($data['cart'] as $item) {
     $evtId = (int)($item['event_id'] ?? 0);
     $qty   = (int)($item['quantity'] ?? 0);
     if ($evtId > 0 && $qty > 0) {
-        // reuse your class’s method
-        $cartLogic->addToCart($evtId, $qty);
+
+        $existingItem = $cartLogic->getCartItemByEventId($evtId);
+        if ($existingItem) {
+            $newQuantity = $existingItem['quantity'] + $qty;
+            $cartLogic->updateCartItemQuantity($existingItem['id'], $newQuantity);
+        } else {
+            $cartLogic->addToCart($evtId, $qty);
+        }
     }
 }
 
-// 5. Return JSON
+// 4. Return JSON
 echo json_encode(['success' => true, 'message' => 'Cart synced']);
