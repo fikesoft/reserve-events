@@ -1,0 +1,104 @@
+<?php
+/*if (!isset($_SESSION['user_id'])) {
+    die("You must be logged in to rate this event.");
+}*/
+session_start();
+
+include '../../backend/config/database.php';
+
+if (isset($_GET['id'])) {
+    $event_id = $_GET['id'];
+} else {
+    die("Event not found");
+}
+
+$sql = "SELECT * FROM events WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $event_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$event = $result->fetch_assoc();
+
+if (isset($_GET['id'])) {
+    $event_id = $_GET['id'];
+} else {
+    die("Evento no encontrado.");
+}
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review</title>
+    <!-- CSS  -->
+    <link rel="stylesheet" href="../assets/style/encuesta.css">
+    <!-- Importar Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="font-family_encuesta">
+    <!-- Encabezado -->
+    <?php
+    include "../static/header.php";
+    ?>
+    <main class="mt-4">
+        <div class="card horizontal-card mb-4 shadow d-flex flex-row">
+            <div class="card-img-left">
+                <img src="<?php echo $event['image_url'] ? htmlspecialchars($event['image_url']) : 'default_image.jpg'; ?>" alt="Imagen del evento">
+            </div>
+            <div class="card-body p-4">
+                <h5 class="event-title"><?php echo htmlspecialchars($event['event_name']); ?></h5>
+                <p class="event-description"><?php echo nl2br(htmlspecialchars($event['description'])); ?></p>
+                <p class="event-detail"><strong>Date:</strong> <?php echo date('d/m/Y', strtotime($event['event_date'])); ?></p>
+                <p class="event-detail"><strong>Time:</strong> <?php echo date('H:i', strtotime($event['event_time'])); ?>h</p>
+                <p class="event-detail"><strong>Location:</strong> <?php echo htmlspecialchars($event['location']); ?></p>
+                <p class="event-detail"><strong>City:</strong> <?php echo htmlspecialchars($event['city']); ?></p>
+            </div>
+        </div>
+
+
+        <div class="card rating-card mt-5 shadow">
+            <div class="card-header text-white text-center fs-5">
+                How would you rate this event?
+            </div>
+
+            <div class="card-body">
+                <form method="POST" action="guardar_valoracion.php">
+                    <input type="hidden" name="id_evento" value="<?php echo $event['id']; ?>">
+
+                    <!-- Estrellas de calificación -->
+                    <div class="rating-stars mb-4 text-center">
+                        <input type="radio" name="rating" value="5" id="star5" required><label for="star5">&#9733;</label>
+                        <input type="radio" name="rating" value="4" id="star4"><label for="star4">&#9733;</label>
+                        <input type="radio" name="rating" value="3" id="star3"><label for="star3">&#9733;</label>
+                        <input type="radio" name="rating" value="2" id="star2"><label for="star2">&#9733;</label>
+                        <input type="radio" name="rating" value="1" id="star1"><label for="star1">&#9733;</label>
+                    </div>
+
+                    <!-- Comentario -->
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" name="comentario" placeholder="Share your opinion" id="comentario" style="height: 100px"></textarea>
+                        <label for="comentario">Comment (optional)</label>
+                    </div>
+
+                    <!-- Botón -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-submit_review">Submit review</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <?php
+    include '../static/footer.php';
+    ?>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+/* Cargar la fuente Montserrat desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+.font-family_encuesta {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.horizontal-card {
+    border-radius: 15px;
+    overflow: hidden;
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+.card-img-left img {
+    width: 300px;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-body {
+    flex: 1;
+}
+
+.event-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #001219;
+    margin-bottom: 10px;
+}
+
+.event-description {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.event-detail {
+    font-size: 1rem;
+    color: #4D194D;
+    margin-bottom: 6px;
+}
+
+
+
+/*Estilo encuesta*/
+.card-header {
+    background-color: #4D194D !important;
+}
+
+.rating-stars {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+}
+
+.rating-stars input[type="radio"] {
+    display: none;
+}
+
+.rating-stars label {
+    font-size: 4rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.rating-stars input[type="radio"]:checked ~ label,
+.rating-stars label:hover,
+.rating-stars label:hover ~ label {
+    color: #4D194D;
+}
+
+.rating-card {
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.btn-submit_review{
+    background-color: #4D194D !important;
+    color: #ffffff !important;
+}
+.btn-submit_review:hover{
+    background-color: #B44CB4 !important;
+    color: #ffffff !important;
+}
+

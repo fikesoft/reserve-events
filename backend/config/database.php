@@ -146,6 +146,19 @@ if ($conn->query($sql_create_table_provinces) !== TRUE) {
     die("Error al crear la tabla de provincias: " . $conn->error);
 }
 
+$sql_create_table_reviews = "
+CREATE TABLE reviews (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    event_id INT NOT NULL,
+    rating INT CHECK (rating BETWEEN 1 AND 5),
+    comment TEXT,
+    review_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, event_id), -- un usuario solo puede calificar una vez un evento
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (event_id) REFERENCES events(id)
+);";
+
 
 // Consulta para contar cuántos eventos existen en la tabla
 $sql_count_events = "SELECT COUNT(*) AS total_events FROM events";
