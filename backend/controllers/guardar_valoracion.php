@@ -34,7 +34,7 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("iiis", $user_id, $event_id, $rating, $comment);
 
 if ($stmt->execute()) {
-    header("Location:../../../../frontend/static/agradecimiento.php");
+    header("Location:../../frontend/static/agradecimiento.php");
     exit();
 } else {
     echo "Error al guardar la valoración.";

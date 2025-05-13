@@ -12,12 +12,21 @@ if (isset($_GET['id'])) {
     die("Event not found");
 }
 
+$user_id = $_SESSION['user_id'];
+
 $sql = "SELECT * FROM events WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $event_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $event = $result->fetch_assoc();
+
+$sqlRev = "SELECT * FROM reviews WHERE event_id = ? AND user_id = ?";
+$stmtRev = $conn->prepare($sqlRev);
+$stmtRev->bind_param("ii", $event_id, $user_id);
+$stmtRev->execute();
+$resultRev = $stmtRev->get_result();
+$review = $resultRev->fetch_assoc();
 
 ?>
 
@@ -60,7 +69,11 @@ $event = $result->fetch_assoc();
             </div>
         </div>
 
-
+        <?php if (!empty($review)): ?>
+                <p class="alert alert-warning text-center py-4 fs-5">
+                    You have already rated this event.
+                </p>
+        <?php else: ?>
         <div class="card rating-card mt-5 shadow">
             <div class="card-header text-white text-center fs-5">
                 How would you rate this event?
@@ -92,6 +105,7 @@ $event = $result->fetch_assoc();
                 </form>
             </div>
         </div>
+        <?php endif; ?>
     </main>
     <!-- Footer -->
     <?php

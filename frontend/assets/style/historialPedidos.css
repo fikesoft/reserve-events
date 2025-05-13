@@ -9,3 +9,15 @@ h2{
     color: #4D194D !important;
 }
 
+a.rate-button {
+    background-color: #4d194d;
+    color: white;
+    border: none;
+    padding: 5px 5px;
+}
+
+a.rate-button:hover {
+    background-color: #B44CB4;
+
+}
+

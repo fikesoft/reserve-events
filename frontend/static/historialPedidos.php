@@ -8,21 +8,24 @@ $sql = "SELECT
             o.id AS order_id,
             o.order_date,
             o.total,
+            e.id AS event_id,
             e.event_name,
             e.event_date,
             e.event_time,
             e.city,
             e.location,
             od.quantity,
-            od.unit_price
+            od.unit_price,
+            r.rating AS user_rating
         FROM orders o
         JOIN order_detail od ON o.id = od.order_id
         JOIN events e ON od.event_id = e.id
+        LEFT JOIN reviews r ON e.id = r.event_id AND r.user_id = ?
         WHERE o.user_id = ?
         ORDER BY o.order_date DESC";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $user_id);
+$stmt->bind_param("ii", $user_id, $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -89,6 +92,7 @@ while ($row = $result->fetch_assoc()) {
                                         <th>City</th>
                                         <th>Quantity</th>
                                         <th>Unit Price</th>
+                                        <th>Review</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -101,6 +105,16 @@ while ($row = $result->fetch_assoc()) {
                                 <td><?= $pedido['city'] ?></td>
                                 <td><?= $pedido['quantity'] ?></td>
                                 <td><?= number_format($pedido['unit_price'], 2) ?> €</td>
+                                <td class="text-center align-middle">
+                                    <?php $event_date_time = strtotime($pedido['event_date'] . ' ' . $pedido['event_time']);?>
+                                    <?php if ($event_date_time < time() && !isset($pedido['user_rating'])):?>
+                                        <a href="encuesta.php?id=<?= $pedido['event_id'] ?>" class="rate-button btn btn-outline-primary">Rate</a>
+                                    <?php elseif (isset($pedido['user_rating'])): ?>
+                                        <span class="text-success">Rated: <?= $pedido['user_rating'] ?> <i class="fas fa-star"></i></span>
+                                    <?php else: ?>
+                                        <button class="btn-sm btn-outline-secondary rate-button" disabled title="Event not yet passed">Rate</button>
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                 <?php
                 endforeach;
