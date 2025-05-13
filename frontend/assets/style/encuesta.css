@@ -23,21 +23,21 @@
     flex: 1;
 }
 
-.event-title {
+.card-title {
     font-size: 1.8rem;
     font-weight: bold;
     color: #001219;
     margin-bottom: 10px;
 }
 
-.event-description {
+.card-description {
     font-size: 1rem;
     color: #333;
     margin-bottom: 15px;
     line-height: 1.5;
 }
 
-.event-detail {
+.card-text {
     font-size: 1rem;
     color: #4D194D;
     margin-bottom: 6px;
@@ -77,11 +77,13 @@
     overflow: hidden;
 }
 
-.btn-submit_review{
+.btn-submit_review,
+.btn-back_home{
     background-color: #4D194D !important;
     color: #ffffff !important;
 }
-.btn-submit_review:hover{
+.btn-submit_review:hover,
+.btn-back_home:hover{
     background-color: #B44CB4 !important;
     color: #ffffff !important;
 }

@@ -19,12 +19,6 @@ $stmt->execute();
 $result = $stmt->get_result();
 $event = $result->fetch_assoc();
 
-if (isset($_GET['id'])) {
-    $event_id = $_GET['id'];
-} else {
-    die("Evento no encontrado.");
-}
-
 ?>
 
 
@@ -40,23 +34,29 @@ if (isset($_GET['id'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body class="font-family_encuesta">
+<body class="font-family_encuesta d-flex flex-column min-vh-100">
     <!-- Encabezado -->
     <?php
     include "../static/header.php";
     ?>
-    <main class="mt-4">
-        <div class="card horizontal-card mb-4 shadow d-flex flex-row">
-            <div class="card-img-left">
-                <img src="<?php echo $event['image_url'] ? htmlspecialchars($event['image_url']) : 'default_image.jpg'; ?>" alt="Imagen del evento">
-            </div>
-            <div class="card-body p-4">
-                <h5 class="event-title"><?php echo htmlspecialchars($event['event_name']); ?></h5>
-                <p class="event-description"><?php echo nl2br(htmlspecialchars($event['description'])); ?></p>
-                <p class="event-detail"><strong>Date:</strong> <?php echo date('d/m/Y', strtotime($event['event_date'])); ?></p>
-                <p class="event-detail"><strong>Time:</strong> <?php echo date('H:i', strtotime($event['event_time'])); ?>h</p>
-                <p class="event-detail"><strong>Location:</strong> <?php echo htmlspecialchars($event['location']); ?></p>
-                <p class="event-detail"><strong>City:</strong> <?php echo htmlspecialchars($event['city']); ?></p>
+    <main class="container mt-4 flex-grow-1">
+        <div class="card horizontal-card mb-4 shadow">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="<?php echo $event['image_url'] ? htmlspecialchars($event['image_url']) : 'default_image.jpg'; ?>" 
+                        class="img-fluid h-100 object-fit-cover" 
+                        alt="Imagen del evento">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body p-4">
+                        <h5 class="card-title"><?php echo htmlspecialchars($event['event_name']); ?></h5>
+                        <p class="card-description"><?php echo nl2br(htmlspecialchars($event['description'])); ?></p>
+                        <p class="card-text"><strong>Date:</strong> <?php echo date('d/m/Y', strtotime($event['event_date'])); ?></p>
+                        <p class="card-text"><strong>Time:</strong> <?php echo date('H:i', strtotime($event['event_time'])); ?>h</p>
+                        <p class="card-text"><strong>Location:</strong> <?php echo htmlspecialchars($event['location']); ?></p>
+                        <p class="card-text"><strong>City:</strong> <?php echo htmlspecialchars($event['city']); ?></p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -67,8 +67,8 @@ if (isset($_GET['id'])) {
             </div>
 
             <div class="card-body">
-                <form method="POST" action="guardar_valoracion.php">
-                    <input type="hidden" name="id_evento" value="<?php echo $event['id']; ?>">
+                <form method="POST" action="../../backend/controllers/guardar_valoracion.php">
+                    <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
 
                     <!-- Estrellas de calificación -->
                     <div class="rating-stars mb-4 text-center">
@@ -81,8 +81,8 @@ if (isset($_GET['id'])) {
 
                     <!-- Comentario -->
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" name="comentario" placeholder="Share your opinion" id="comentario" style="height: 100px"></textarea>
-                        <label for="comentario">Comment (optional)</label>
+                        <textarea class="form-control" name="comment" placeholder="Share your opinion" id="comment" style="height: 100px"></textarea>
+                        <label for="comment">Comment (optional)</label>
                     </div>
 
                     <!-- Botón -->
