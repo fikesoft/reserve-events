@@ -105,6 +105,42 @@ $event = $result->fetch_assoc();
                 </div>
             </div>
         </div>
+        <?php
+        //Obtener reseñas del evento
+        $sql_reviews = "
+        SELECT r.rating, r.comment, r.review_date, u.name
+        FROM reviews r
+        JOIN users u ON r.user_id = u.id
+        WHERE r.event_id = ?
+        ORDER BY r.review_date DESC
+        ";
+
+        $stmt_reviews = $conn->prepare($sql_reviews);
+        $stmt_reviews->bind_param("i", $event_id);
+        $stmt_reviews->execute();
+        $result_reviews = $stmt_reviews->get_result();
+        ?>
+        <div class="container mt-5">
+            <h4 class="mb-3">Reseñas del evento</h4>
+            <?php if ($result_reviews->num_rows > 0): ?>
+                <?php while ($review = $result_reviews->fetch_assoc()): ?>
+                <div class="border rounded p-3 mb-3 bg-light">
+                    <div class="d-flex justify-content-between">
+                        <strong><?= htmlspecialchars($review['name']); ?></strong>
+                        <span class="text-muted"><?= date('d/m/Y H:i', strtotime($review['review_date'])); ?></span>
+                    </div>
+                    <div class="text-warning">
+                        <?php for ($i = 0; $i < $review['rating']; $i++): ?>
+                            <i class="fas fa-star"></i>
+                        <?php endfor; ?>
+                    </div>
+                    <p class="mb-0"><?= nl2br(htmlspecialchars($review['comment'])); ?></p>
+                </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p class="text-muted">Este evento aún no tiene reseñas.</p>
+            <?php endif; ?>
+        </div>
     </main>
 
     <!-- Footer -->
